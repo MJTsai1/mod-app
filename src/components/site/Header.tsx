@@ -35,6 +35,21 @@ export function SiteHeader() {
           >
             Privacy
           </Link>
+          <Link
+            href="/admin/login"
+            className="btn btn-secondary px-3 py-2 text-sm sm:px-4"
+          >
+            <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden>
+              <circle cx="10" cy="6.5" r="3" stroke="currentColor" strokeWidth="1.5" />
+              <path
+                d="M3.5 17c1-3.5 4-5 6.5-5s5.5 1.5 6.5 5"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+            </svg>
+            <span className="hidden sm:inline">Staff Login</span>
+          </Link>
           <Link href="/apply" className="btn btn-primary text-sm">
             Apply Now
           </Link>

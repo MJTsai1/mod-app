@@ -6,7 +6,7 @@
  */
 
 export const siteConfig = {
-  serverName: "[SERVER NAME]",
+  serverName: "Washington D.C. ERLC Roleplay",
   tagline: "Think you've got what it takes to help our community?",
   description:
     "Apply to join the moderation team and help us keep the community safe, welcoming, and fun for everyone.",
@@ -17,7 +17,7 @@ export const siteConfig = {
   accentColorSoft: "#a78bfa", // purple-400
 
   discordInviteUrl: "https://discord.gg/fn4pCJqGSv",
-  contactEmail: "staff@example.com",
+  contactEmail: "coolmarcusjtsai1@gmail.com",
 
   socialLinks: {
     discord: "https://discord.gg/fn4pCJqGSv",
