@@ -14,6 +14,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               {siteConfig.serverName} <span className="text-[var(--color-text-muted)]">Staff Dashboard</span>
             </Link>
             <div className="flex items-center gap-4 text-sm text-[var(--color-text-muted)]">
+              {session.staff.role === "admin" && (
+                <Link href="/admin/staff" className="hidden hover:text-[var(--color-text)] sm:inline">
+                  Manage Staff
+                </Link>
+              )}
               <span className="hidden sm:inline">{session.email}</span>
               <span className="badge" style={{ background: "var(--color-info-bg)", color: "var(--color-info)" }}>
                 {session.staff.role}

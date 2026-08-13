@@ -10,48 +10,36 @@ export function LoginForm() {
   const next = searchParams.get("next");
 
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [password, setPassword] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    setStatus("sending");
+    setStatus("loading");
     setErrorMessage(null);
 
     try {
       const supabase = createSupabaseBrowserClient();
-      const redirectTo = new URL("/auth/callback", window.location.origin);
-      if (next) redirectTo.searchParams.set("next", next);
-
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: { emailRedirectTo: redirectTo.toString() },
-      });
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
 
       if (error) {
         setStatus("error");
-        setErrorMessage(error.message);
+        setErrorMessage(
+          error.message === "Invalid login credentials"
+            ? "Incorrect email or password."
+            : error.message
+        );
         return;
       }
 
-      setStatus("sent");
+      // Full navigation (not router.push) so the server picks up the fresh
+      // session cookie immediately on the next request.
+      window.location.href = next && next.startsWith("/admin") ? next : "/admin/dashboard";
     } catch {
       setStatus("error");
       setErrorMessage("Something went wrong. Please try again.");
     }
-  }
-
-  if (status === "sent") {
-    return (
-      <div className="text-center">
-        <p className="text-[var(--color-text)]">
-          Check <strong>{email}</strong> for a sign-in link.
-        </p>
-        <p className="field-hint mt-2">
-          The link will sign you in and redirect you to the dashboard. You can close this tab.
-        </p>
-      </div>
-    );
   }
 
   return (
@@ -62,7 +50,7 @@ export function LoginForm() {
           style={{ borderColor: "var(--color-danger)", background: "var(--color-danger-bg)", color: "var(--color-danger)" }}
           role="alert"
         >
-          Sign-in link was invalid or expired. Please request a new one.
+          Please sign in to continue.
         </div>
       )}
       {status === "error" && errorMessage && (
@@ -76,7 +64,7 @@ export function LoginForm() {
       )}
 
       <label htmlFor="email" className="field-label">
-        Staff email address
+        Email
       </label>
       <input
         id="email"
@@ -86,14 +74,28 @@ export function LoginForm() {
         value={email}
         onChange={(event) => setEmail(event.target.value)}
         placeholder="you@example.com"
+        className="field-input mb-4"
+      />
+
+      <label htmlFor="password" className="field-label">
+        Password
+      </label>
+      <input
+        id="password"
+        type="password"
+        required
+        autoComplete="current-password"
+        value={password}
+        onChange={(event) => setPassword(event.target.value)}
+        placeholder="••••••••"
         className="field-input"
       />
       <p className="field-hint">
-        Only accounts added by an administrator to the staff list can access the dashboard.
+        Don&apos;t have an account? Ask an admin to create one for you.
       </p>
 
-      <button type="submit" disabled={status === "sending"} className="btn btn-primary mt-6 w-full">
-        {status === "sending" ? "Sending link…" : "Send sign-in link"}
+      <button type="submit" disabled={status === "loading"} className="btn btn-primary mt-6 w-full">
+        {status === "loading" ? "Signing in…" : "Sign in"}
       </button>
     </form>
   );

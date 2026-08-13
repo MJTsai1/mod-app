@@ -61,29 +61,20 @@ window. This is the only file you should need to touch for a rebrand.
    - **anon public** key -> `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    - **service_role** key -> `SUPABASE_SERVICE_ROLE_KEY` (keep this secret — never commit it or
      put it in `NEXT_PUBLIC_*`)
-4. Go to **Authentication -> Sign In / Providers** and:
-   - Make sure **Email** provider is enabled (used for staff magic-link sign-in).
-   - Under **Authentication -> URL Configuration**, add your site's `/auth/callback` URL (e.g.
-     `https://your-domain.vercel.app/auth/callback` and `http://localhost:3000/auth/callback`
-     for local dev) to **Redirect URLs**.
-   - Consider disabling public sign-ups if you don't want random people creating Supabase Auth
-     accounts (Settings -> Authentication -> "Allow new users to sign up"). It doesn't grant
-     dashboard access either way — see below — but disabling it is tidier.
-5. **Add yourself as staff.** Sign in once on `/admin/login` with your email (this creates your
-   `auth.users` row via the magic link), then in the Supabase **SQL Editor** run:
+4. Staff sign-in uses email + an admin-assigned password (no self-service signup, no magic
+   link) — there's nothing to configure under Authentication for this to work.
+5. **Create your own admin account.** There's a chicken-and-egg problem the first time: the
+   "Manage Staff" page requires you to already be an admin. Bootstrap yourself once via the
+   Supabase **SQL Editor** and the [Admin API](https://supabase.com/docs/reference/api/introduction)
+   — easiest is to ask an AI coding assistant (or the person who built this) to run it for you
+   using your `SUPABASE_SERVICE_ROLE_KEY`, since it's two API calls (create the auth user, then
+   insert into `staff_members` with `role = 'admin'`). After that, sign in at `/admin/login` and
+   use **Manage Staff** in the dashboard header to create every other staff account — it assigns
+   the password for you, no further SQL needed.
 
-   ```sql
-   insert into staff_members (id, email, display_name, role)
-   values (
-     (select id from auth.users where email = 'you@example.com'),
-     'you@example.com',
-     'Your Name',
-     'admin'
-   );
-   ```
-
-   Only users with a row in `staff_members` can access `/admin/dashboard` — signing in with
-   Supabase Auth alone is not enough. Repeat this insert for each additional staff member.
+   Only users with a row in `staff_members` can access `/admin/dashboard` — having a Supabase
+   Auth login alone is not enough, and there's no page anywhere that lets someone create their
+   own staff row.
 
 ## 3. Configure environment variables
 
@@ -120,10 +111,8 @@ the staff email you added above to review it.
 4. Deploy. Vercel builds and serves the app globally via its CDN/edge network, so it will work
    for visitors in Singapore, Australia, Hong Kong, the UK, US, Europe, etc. without extra
    configuration.
-5. Back in Supabase, add your production `/auth/callback` URL to **Redirect URLs** (Authentication
-   -> URL Configuration) — e.g. `https://your-domain.vercel.app/auth/callback`.
-6. Re-run step 2.5 above (the `insert into staff_members ...` SQL) using your production staff
-   emails if they differ from local testing.
+5. Use **Manage Staff** in the dashboard to create accounts for your production staff emails, if
+   they differ from whoever you bootstrapped locally.
 
 ## Enabling optional features later
 
