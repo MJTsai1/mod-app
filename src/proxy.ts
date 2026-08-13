@@ -16,9 +16,12 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  if (pathname === "/admin/login" && user) {
-    return NextResponse.redirect(new URL("/admin/dashboard", request.url));
-  }
+  // Note: we deliberately do NOT redirect away from /admin/login just
+  // because a Supabase session cookie exists here — that would only be an
+  // optimistic (non-DB) check. A signed-in user who isn't in staff_members
+  // must still be able to land on /admin/login (that's where the dashboard
+  // sends them). The DB-backed "already staff, skip the form" redirect
+  // lives in src/app/admin/login/page.tsx instead.
 
   return supabaseResponse;
 }
