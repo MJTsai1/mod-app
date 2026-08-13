@@ -13,6 +13,20 @@ const MAX_BODY_BYTES = 50_000;
 const MAX_INSERT_ATTEMPTS = 3;
 
 export async function POST(request: Request) {
+  try {
+    return await handleSubmission(request);
+  } catch (error) {
+    // Catches misconfiguration (e.g. a missing environment variable) that
+    // would otherwise crash the function before any response is sent.
+    console.error("Unexpected error handling application submission:", error);
+    return NextResponse.json(
+      { error: "Something went wrong on our end. Please try again in a moment." },
+      { status: 500 }
+    );
+  }
+}
+
+async function handleSubmission(request: Request): Promise<NextResponse> {
   const contentLength = Number(request.headers.get("content-length") ?? "0");
   if (contentLength > MAX_BODY_BYTES) {
     return NextResponse.json(
