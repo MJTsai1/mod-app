@@ -16,11 +16,11 @@ export const siteConfig = {
   accentColorHover: "#7c3aed", // purple-600
   accentColorSoft: "#a78bfa", // purple-400
 
-  discordInviteUrl: "https://discord.gg/your-invite-code",
+  discordInviteUrl: "https://discord.gg/fn4pCJqGSv",
   contactEmail: "staff@example.com",
 
   socialLinks: {
-    discord: "https://discord.gg/your-invite-code",
+    discord: "https://discord.gg/fn4pCJqGSv",
     website: "",
     twitter: "",
   },
