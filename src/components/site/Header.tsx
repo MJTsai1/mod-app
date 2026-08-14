@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/lib/config";
 
@@ -9,16 +10,14 @@ export function SiteHeader() {
           href="/"
           className="flex items-center gap-2 text-lg font-bold tracking-tight text-[var(--color-text)]"
         >
-          <span
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-sm font-black text-white"
-            style={{
-              background:
-                "linear-gradient(135deg, var(--color-accent), var(--color-accent-hover))",
-            }}
-            aria-hidden
-          >
-            {siteConfig.serverName.trim().charAt(0) || "M"}
-          </span>
+          <Image
+            src="/logo.jpg"
+            alt=""
+            width={36}
+            height={36}
+            className="h-9 w-9 rounded-full object-cover"
+            priority
+          />
           <span className="hidden sm:inline">{siteConfig.serverName}</span>
         </Link>
 
