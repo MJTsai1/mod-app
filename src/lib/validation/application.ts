@@ -1,25 +1,32 @@
 import { z } from "zod";
 import { siteConfig } from "@/lib/config";
+import { containsProfanity } from "@/lib/profanity";
+
+const NO_PROFANITY_MESSAGE = "No vulgar words are allowed in your application.";
+const noProfanity = (val: string) => !containsProfanity(val);
 
 const shortText = (max: number) =>
   z
     .string()
     .trim()
     .min(1, "This field is required.")
-    .max(max, `Must be ${max} characters or fewer.`);
+    .max(max, `Must be ${max} characters or fewer.`)
+    .refine(noProfanity, NO_PROFANITY_MESSAGE);
 
 const longText = (min: number, max: number) =>
   z
     .string()
     .trim()
     .min(min, `Please provide at least ${min} characters.`)
-    .max(max, `Must be ${max} characters or fewer.`);
+    .max(max, `Must be ${max} characters or fewer.`)
+    .refine(noProfanity, NO_PROFANITY_MESSAGE);
 
 const optionalLongText = (max: number) =>
   z
     .string()
     .trim()
     .max(max, `Must be ${max} characters or fewer.`)
+    .refine(noProfanity, NO_PROFANITY_MESSAGE)
     .optional()
     .or(z.literal(""));
 
@@ -36,7 +43,8 @@ export const discordUsernameSchema = z
   .regex(
     /^[a-z0-9._]+$|^.{2,32}#\d{4}$/i,
     "Enter a valid Discord username (e.g. username or username#0000)."
-  );
+  )
+  .refine(noProfanity, NO_PROFANITY_MESSAGE);
 
 const baseAgeSchema = z
   .coerce.number({ error: "Age must be a number." })
