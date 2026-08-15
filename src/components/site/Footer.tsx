@@ -10,6 +10,18 @@ export function SiteFooter() {
           affiliated with Discord Inc.
         </p>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+          <Link href="/#requirements" className="transition hover:text-[var(--color-text)]">
+            Requirements
+          </Link>
+          <Link href="/faq" className="transition hover:text-[var(--color-text)]">
+            FAQ
+          </Link>
+          <Link href="/report" className="transition hover:text-[var(--color-text)]">
+            Report a Member
+          </Link>
+          <Link href="/appeal" className="transition hover:text-[var(--color-text)]">
+            Ban Appeal
+          </Link>
           <Link href="/privacy" className="transition hover:text-[var(--color-text)]">
             Privacy Notice
           </Link>

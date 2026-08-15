@@ -2,10 +2,11 @@ import { createBrowserClient } from "@supabase/ssr";
 import type { Database } from "@/lib/supabase/types";
 
 /**
- * Browser-side Supabase client. Only used for the staff login page to call
- * `supabase.auth.signInWithOtp`. The anon key it uses is public by design
+ * Browser-side Supabase client. Used for staff email/password sign-in and
+ * community Discord OAuth sign-in. The anon key it uses is public by design
  * (safe to ship to the client) and is subject to Row Level Security, which
- * grants it no access to `applications` — see supabase/migrations/0001_init.sql.
+ * grants it no access to `applications`, `reports`, or `ban_appeals` — see
+ * the migrations in supabase/migrations/.
  */
 export function createSupabaseBrowserClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;

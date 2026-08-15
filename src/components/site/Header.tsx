@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/lib/config";
+import { AccountNavLink } from "@/components/site/AccountNavLink";
 
 export function SiteHeader() {
   return (
@@ -21,23 +22,29 @@ export function SiteHeader() {
           <span className="hidden sm:inline">{siteConfig.serverName}</span>
         </Link>
 
-        <nav className="flex items-center gap-2 sm:gap-4">
+        <nav className="flex items-center gap-2 sm:gap-3">
           <Link
-            href="/#requirements"
-            className="hidden rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-text-muted)] transition hover:text-[var(--color-text)] sm:inline-block"
+            href="/faq"
+            className="hidden rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-text-muted)] transition hover:text-[var(--color-text)] lg:inline-block"
           >
-            Requirements
+            FAQ
           </Link>
           <Link
-            href="/privacy"
-            className="hidden rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-text-muted)] transition hover:text-[var(--color-text)] sm:inline-block"
+            href="/report"
+            className="hidden rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-text-muted)] transition hover:text-[var(--color-text)] lg:inline-block"
           >
-            Privacy
+            Report a Member
           </Link>
           <Link
-            href="/admin/login"
-            className="btn btn-secondary px-3 py-2 text-sm sm:px-4"
+            href="/appeal"
+            className="hidden rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-text-muted)] transition hover:text-[var(--color-text)] lg:inline-block"
           >
+            Ban Appeal
+          </Link>
+
+          <AccountNavLink />
+
+          <Link href="/admin/login" className="btn btn-secondary px-3 py-2 text-sm sm:px-4">
             <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden>
               <circle cx="10" cy="6.5" r="3" stroke="currentColor" strokeWidth="1.5" />
               <path

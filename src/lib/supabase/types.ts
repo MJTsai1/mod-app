@@ -88,6 +88,109 @@ export type ApplicationSubmissionAttemptRow = {
   created_at: string;
 };
 
+export type ReportStatus = "pending" | "reviewing" | "resolved" | "dismissed";
+
+export type ReportCategory =
+  | "harassment"
+  | "spam"
+  | "cheating_exploiting"
+  | "inappropriate_content"
+  | "impersonation"
+  | "other";
+
+export type ReportRow = {
+  id: string;
+  reference_code: string;
+  created_at: string;
+  updated_at: string;
+  reporter_id: string;
+  reporter_discord_username: string;
+  reported_discord_username: string;
+  reported_discord_user_id: string | null;
+  category: ReportCategory;
+  description: string;
+  evidence_links: string | null;
+  status: ReportStatus;
+  staff_notes: string | null;
+  last_updated_by: string | null;
+  submitted_ip_hash: string | null;
+};
+
+export type ReportInsert = Omit<
+  ReportRow,
+  "id" | "created_at" | "updated_at" | "status" | "staff_notes" | "last_updated_by"
+> & {
+  id?: string;
+  status?: ReportStatus;
+  staff_notes?: string | null;
+  last_updated_by?: string | null;
+};
+
+export type ReportUpdate = Partial<
+  Pick<ReportRow, "status" | "staff_notes" | "last_updated_by">
+>;
+
+export type ReportListItem = Pick<
+  ReportRow,
+  | "id"
+  | "reference_code"
+  | "created_at"
+  | "reporter_discord_username"
+  | "reported_discord_username"
+  | "category"
+  | "status"
+>;
+
+export type AppealStatus = "pending" | "reviewing" | "approved" | "denied";
+
+export type BanAppealRow = {
+  id: string;
+  reference_code: string;
+  created_at: string;
+  updated_at: string;
+  appellant_id: string;
+  discord_username: string;
+  discord_user_id: string;
+  ban_reason: string | null;
+  appeal_reason: string;
+  additional_info: string | null;
+  status: AppealStatus;
+  staff_notes: string | null;
+  last_updated_by: string | null;
+  submitted_ip_hash: string | null;
+};
+
+export type BanAppealInsert = Omit<
+  BanAppealRow,
+  "id" | "created_at" | "updated_at" | "status" | "staff_notes" | "last_updated_by"
+> & {
+  id?: string;
+  status?: AppealStatus;
+  staff_notes?: string | null;
+  last_updated_by?: string | null;
+};
+
+export type BanAppealUpdate = Partial<
+  Pick<BanAppealRow, "status" | "staff_notes" | "last_updated_by">
+>;
+
+export type BanAppealListItem = Pick<
+  BanAppealRow,
+  "id" | "reference_code" | "created_at" | "discord_username" | "discord_user_id" | "status"
+>;
+
+export type ReportSubmissionAttemptRow = {
+  id: number;
+  ip_hash: string;
+  created_at: string;
+};
+
+export type AppealSubmissionAttemptRow = {
+  id: number;
+  ip_hash: string;
+  created_at: string;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -107,6 +210,30 @@ export type Database = {
         Row: ApplicationSubmissionAttemptRow;
         Insert: Pick<ApplicationSubmissionAttemptRow, "ip_hash">;
         Update: Partial<ApplicationSubmissionAttemptRow>;
+        Relationships: [];
+      };
+      reports: {
+        Row: ReportRow;
+        Insert: ReportInsert;
+        Update: ReportUpdate;
+        Relationships: [];
+      };
+      ban_appeals: {
+        Row: BanAppealRow;
+        Insert: BanAppealInsert;
+        Update: BanAppealUpdate;
+        Relationships: [];
+      };
+      report_submission_attempts: {
+        Row: ReportSubmissionAttemptRow;
+        Insert: Pick<ReportSubmissionAttemptRow, "ip_hash">;
+        Update: Partial<ReportSubmissionAttemptRow>;
+        Relationships: [];
+      };
+      appeal_submission_attempts: {
+        Row: AppealSubmissionAttemptRow;
+        Insert: Pick<AppealSubmissionAttemptRow, "ip_hash">;
+        Update: Partial<AppealSubmissionAttemptRow>;
         Relationships: [];
       };
     };

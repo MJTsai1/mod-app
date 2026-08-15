@@ -5,6 +5,24 @@
  * nothing else in the codebase should need editing for a rebrand.
  */
 
+export const reportCategoryValues = [
+  "harassment",
+  "spam",
+  "cheating_exploiting",
+  "inappropriate_content",
+  "impersonation",
+  "other",
+] as const;
+
+export const reportCategoryLabels: Record<(typeof reportCategoryValues)[number], string> = {
+  harassment: "Harassment or bullying",
+  spam: "Spam or advertising",
+  cheating_exploiting: "Cheating or exploiting",
+  inappropriate_content: "Inappropriate content",
+  impersonation: "Impersonation",
+  other: "Other",
+};
+
 export const siteConfig = {
   serverName: "Washington D.C. ERLC Roleplay",
   tagline: "Think you've got what it takes to help our community?",
@@ -114,6 +132,44 @@ export const siteConfig = {
     contactMethod:
       "If you have questions about your data or wish to request its deletion, contact server administration.",
   },
+
+  // Rate limiting for the report and ban appeal submission endpoints.
+  reportRateLimit: {
+    windowMinutes: 60 * 24,
+    maxSubmissionsPerWindow: 5,
+  },
+  appealRateLimit: {
+    windowMinutes: 60 * 24,
+    maxSubmissionsPerWindow: 2,
+  },
+
+  faqs: [
+    {
+      question: "How long does it take to hear back about my application?",
+      answer:
+        "The staff team reviews applications as they come in. Response times vary depending on volume, but you can always check your status using the reference code you received.",
+    },
+    {
+      question: "Can I apply again if I'm rejected?",
+      answer:
+        "Yes. Take some time to be more active and engaged in the community, then feel free to apply again later.",
+    },
+    {
+      question: "How do I report a member for breaking the rules?",
+      answer:
+        "Use the Report a Member page. You'll need to sign in with Discord first so we can follow up with you if we need more information.",
+    },
+    {
+      question: "I think I was banned unfairly — what can I do?",
+      answer:
+        "Submit a ban appeal through the Ban Appeal page. Explain your situation clearly and honestly — the staff team reviews every appeal.",
+    },
+    {
+      question: "Will my report or appeal be kept confidential?",
+      answer:
+        "Reports and appeals are only visible to authorised staff. See the Privacy Notice for full details on how your information is handled.",
+    },
+  ],
 } as const;
 
 export type SiteConfig = typeof siteConfig;

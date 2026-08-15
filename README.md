@@ -1,8 +1,18 @@
 # Moderator Application Website
 
-A production-ready moderator application system for a Discord community: a public multi-step
-application form, a Postgres database (Supabase), and an authenticated staff dashboard — built
-with Next.js (App Router) + TypeScript, deployed to Vercel.
+A production-ready community portal for a Discord server: moderator applications, member
+reports, ban appeals, an FAQ page, and an authenticated staff dashboard — backed by a Postgres
+database (Supabase) and built with Next.js (App Router) + TypeScript, deployed to Vercel.
+
+Two separate identities exist in the app:
+
+- **Staff** sign in with email + an admin-assigned password (`/admin/login`) — no self-service
+  signup. This grants access to `/admin/*`.
+- **Community members** sign in with Discord OAuth (via Supabase Auth) to file a report or ban
+  appeal and check its status later (`/account`). This grants no dashboard access on its own —
+  see "Security notes" below.
+
+Applications remain fully anonymous (no login required), matching the original design.
 
 ## Stack
 
@@ -21,23 +31,30 @@ in code that ships to the browser.
 ```
 src/
   app/
-    (site)/            Public marketing site: home, /apply, /apply/success, /privacy
-    admin/              Staff dashboard (auth-gated): /admin/login, /admin/dashboard, /admin/dashboard/[id]
+    (site)/            Public site: home, /apply, /report, /appeal, /faq, /account, /privacy
+    admin/              Staff dashboard (auth-gated): /admin/dashboard, /admin/reports, /admin/appeals, /admin/staff
     api/
       applications/     POST — public application submission endpoint
-      admin/             Staff-only endpoints (list/view/update applications)
-    auth/callback/       Supabase magic-link callback
+      reports/          POST — report submission (requires Discord sign-in)
+      appeals/          POST — ban appeal submission (requires Discord sign-in)
+      account/          Community member session/logout
+      admin/             Staff-only endpoints (list/view/update applications, reports, appeals, staff)
+    auth/callback/       OAuth code exchange for community Discord sign-in
   components/           UI components (form steps, dashboard, site chrome)
   lib/
     config.ts            <-- central site configuration (start here to rebrand)
     supabase/             Supabase client factories (server / browser / admin / types)
     validation/           Zod schemas shared by client + server
-    staffAuth.ts          Server-side staff session/authorization check
-    rateLimit.ts           DB-backed rate limiting
-    turnstile.ts            Server-side CAPTCHA verification
-    discord.ts               Server-side Discord webhook integration
+    staffAuth.ts          Server-side staff session/authorization check (email+password accounts)
+    userAuth.ts            Server-side community member session (Discord OAuth accounts)
+    rateLimit.ts             DB-backed rate limiting
+    turnstile.ts               Server-side CAPTCHA verification
+    discord.ts                   Server-side Discord webhook integration
+    profanity.ts                  Whole-word profanity filter used across all free-text fields
   proxy.ts                Route protection for /admin/*
-supabase/migrations/0001_init.sql   Full database schema + RLS policies
+supabase/migrations/
+  0001_init.sql            Applications, staff, rate-limit tables + RLS
+  0002_reports_appeals.sql Reports, ban appeals, their rate-limit tables + RLS
 ```
 
 ## 1. Customise the site
@@ -53,9 +70,11 @@ window. This is the only file you should need to touch for a rebrand.
    Next.js app on Vercel's CDN will still be fast worldwide since page/API logic runs at the
    edge/region nearest each visitor and only the database round-trip is fixed-region).
 2. Open **SQL Editor** in the Supabase dashboard, paste the contents of
-   [`supabase/migrations/0001_init.sql`](supabase/migrations/0001_init.sql), and run it. This
-   creates the `applications`, `staff_members`, and `application_submission_attempts` tables,
-   the `application_status` enum, indexes, and Row Level Security policies.
+   [`supabase/migrations/0001_init.sql`](supabase/migrations/0001_init.sql), run it, then do the
+   same with
+   [`supabase/migrations/0002_reports_appeals.sql`](supabase/migrations/0002_reports_appeals.sql)
+   (must run after 0001). Together these create the `applications`, `reports`, `ban_appeals`,
+   `staff_members`, and rate-limit tables, their enums, indexes, and Row Level Security policies.
 3. Go to **Project Settings -> API** and copy:
    - **Project URL** -> `NEXT_PUBLIC_SUPABASE_URL`
    - **anon public** key -> `NEXT_PUBLIC_SUPABASE_ANON_KEY`
@@ -63,7 +82,19 @@ window. This is the only file you should need to touch for a rebrand.
      put it in `NEXT_PUBLIC_*`)
 4. Staff sign-in uses email + an admin-assigned password (no self-service signup, no magic
    link) — there's nothing to configure under Authentication for this to work.
-5. **Create your own admin account.** There's a chicken-and-egg problem the first time: the
+5. **Enable Discord sign-in for community members** (needed for the Report and Ban Appeal pages):
+   1. Go to the [Discord Developer Portal](https://discord.com/developers/applications) -> **New
+      Application** (any name, e.g. "Server Portal Login").
+   2. Under **OAuth2 -> General**, copy the **Client ID** and (click "Reset Secret" if needed)
+      the **Client Secret**.
+   3. In Supabase, go to **Authentication -> Sign In / Providers -> Discord**, toggle it on,
+      paste the Client ID and Client Secret, and save. Supabase shows a **Callback URL** on that
+      same screen (looks like `https://<project-ref>.supabase.co/auth/v1/callback`) — copy it.
+   4. Back in the Discord Developer Portal, under **OAuth2 -> General -> Redirects**, add the
+      callback URL you just copied, and save.
+   This only affects the Report/Ban Appeal/Account pages — staff login is unrelated and doesn't
+   need this.
+6. **Create your own admin account.** There's a chicken-and-egg problem the first time: the
    "Manage Staff" page requires you to already be an admin. Bootstrap yourself once via the
    Supabase **SQL Editor** and the [Admin API](https://supabase.com/docs/reference/api/introduction)
    — easiest is to ask an AI coding assistant (or the person who built this) to run it for you
@@ -99,7 +130,9 @@ npm run dev
 ```
 
 Visit `http://localhost:3000`. Submit a test application, then sign in at `/admin/login` with
-the staff email you added above to review it.
+the staff email you added above to review it. To test reports/appeals, visit `/report` or
+`/appeal`, sign in with Discord, and submit — then review it at `/admin/reports` or
+`/admin/appeals`.
 
 ## 5. Deploy to Vercel
 
@@ -129,16 +162,22 @@ the staff email you added above to review it.
 
 ## Security notes
 
-- The `applications`, `staff_members`, and `application_submission_attempts` tables have Row
-  Level Security enabled with **no** policies granting the public `anon` role access. The
-  browser never talks to these tables directly — all reads/writes go through Next.js API routes
-  using the service role key, which lives only in server-side environment variables.
+- Every data table (`applications`, `reports`, `ban_appeals`, `staff_members`, and the rate-limit
+  tables) has Row Level Security enabled with **no** policies granting the public `anon` or
+  `authenticated` role access. The browser never talks to these tables directly — all reads/writes
+  go through Next.js API routes using the service role key, which lives only in server-side
+  environment variables.
 - `/admin/*` is protected twice: `src/proxy.ts` does an optimistic redirect for signed-out
   visitors, and every admin page/API route re-verifies both the Supabase session *and* staff
   table membership server-side (`src/lib/staffAuth.ts`) before returning any data.
-- Submitted data is validated with the same Zod schema on the client (fast feedback) and again
-  on the server (`src/app/api/applications/route.ts`) before it ever reaches the database —
-  client-side validation is never trusted alone.
+- Community members signing in with Discord get a normal Supabase Auth session but **no**
+  `staff_members` row — that session only ever proves "I am this Discord user," never "I can see
+  the dashboard." Report/appeal API routes check ownership (`reporter_id`/`appellant_id` matches
+  the caller) server-side before returning anything; there is no path from a Discord login to
+  `/admin/*`.
+- Submitted data is validated with the same Zod schema on the client (fast feedback) and again on
+  the server before it ever reaches the database — client-side validation is never trusted alone.
+  Every free-text field also runs through a whole-word profanity filter (`src/lib/profanity.ts`).
 - IP addresses are never stored raw — only an HMAC-SHA256 hash (`IP_HASH_SECRET`), used solely to
   rate-limit repeat submissions.
 
@@ -146,7 +185,11 @@ the staff email you added above to review it.
 
 - Real values for every variable in `.env.example`.
 - Your Discord server's invite link and contact email in `src/lib/config.ts`.
-- At least one `staff_members` row (step 5 above) before anyone can use the dashboard.
+- Run `supabase/migrations/0002_reports_appeals.sql` (step 2 above) if you haven't already —
+  reports and ban appeals won't work without it.
+- Discord OAuth client ID/secret configured in Supabase (step 5 above) — without this, the
+  "Sign in with Discord" button on `/report`, `/appeal`, and `/account` will fail.
+- At least one `staff_members` row (step 6 above) before anyone can use the dashboard.
 - Optional: a Turnstile site/secret key pair and/or a Discord webhook URL if you want those
   features active — the app runs correctly without them, just without CAPTCHA and without
   Discord notifications.
