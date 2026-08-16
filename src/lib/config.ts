@@ -27,7 +27,7 @@ export const siteConfig = {
   serverName: "Washington D.C. ERLC Roleplay",
   tagline: "Think you've got what it takes to help our community?",
   description:
-    "Apply to join the moderation team and help us keep the community safe, welcoming, and fun for everyone.",
+    "Your hub for the community — quick links, moderator applications, member support, and the latest from our YouTube channel.",
 
   // Tailwind-friendly hex values. Used to generate CSS variables in globals.css.
   accentColor: "#8b5cf6", // purple-500
@@ -42,6 +42,43 @@ export const siteConfig = {
     website: "",
     twitter: "",
   },
+
+  // Public Atom feed, no API key needed. Find a channel ID via "view page
+  // source" on the channel page and searching for "channelId".
+  youtube: {
+    officialChannelUrl: "https://www.youtube.com/@WashingtonERLC",
+    officialChannelId: "UC8v_pO8bu5t7rv4D-lBbqyQ",
+    coOwnerChannelUrl: "https://www.youtube.com/@RandomMJT",
+    coOwnerChannelLabel: "Co-owner's personal channel",
+  },
+
+  // Homepage quick-links grid.
+  quickLinks: [
+    {
+      title: "Apply Now",
+      description: "Apply to join the moderation team.",
+      href: "/apply",
+      external: false,
+    },
+    {
+      title: "Report a Member",
+      description: "Let staff know about a rule-breaker.",
+      href: "/report",
+      external: false,
+    },
+    {
+      title: "Ban Appeal",
+      description: "Think you were banned unfairly? Tell us why.",
+      href: "/appeal",
+      external: false,
+    },
+    {
+      title: "FAQ",
+      description: "Answers to common questions.",
+      href: "/faq",
+      external: false,
+    },
+  ] as const,
 
   // Set to a number (e.g. 13) to enforce a minimum age on applications.
   // Leave as null to not enforce or display any minimum age requirement.

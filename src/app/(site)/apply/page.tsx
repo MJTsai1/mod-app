@@ -16,7 +16,8 @@ export default function ApplyPage() {
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           Moderator <span className="gradient-text">Application</span>
         </h1>
-        <p className="mt-3 text-[var(--color-text-muted)]">
+        <p className="mt-3 text-[var(--color-text-muted)]">&ldquo;{siteConfig.tagline}&rdquo;</p>
+        <p className="field-hint mt-3">
           Take your time — your answers are saved as you go, so it&apos;s safe to move between
           steps.
         </p>

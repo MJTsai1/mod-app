@@ -1,9 +1,10 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/config";
+import { getRecentYoutubeVideos } from "@/lib/youtube";
 
 export const metadata: Metadata = {
-  title: `${siteConfig.serverName} — Moderator Applications`,
+  title: `${siteConfig.serverName} — Community Hub`,
   description: siteConfig.description,
 };
 
@@ -27,7 +28,23 @@ function CheckIcon() {
   );
 }
 
-export default function HomePage() {
+function ArrowIcon() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4 shrink-0" aria-hidden>
+      <path
+        d="M4 10h12M11 5l5 5-5 5"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export default async function HomePage() {
+  const videos = await getRecentYoutubeVideos(siteConfig.youtube.officialChannelId);
+
   return (
     <>
       {/* Hero */}
@@ -45,35 +62,111 @@ export default function HomePage() {
             {siteConfig.serverName}
           </p>
           <h1 className="text-balance text-4xl font-black leading-tight tracking-tight sm:text-6xl">
-            <span className="gradient-text">Moderator Applications</span>
+            <span className="gradient-text">Welcome</span>
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-pretty text-lg text-[var(--color-text-muted)] sm:text-xl">
-            &ldquo;{siteConfig.tagline}&rdquo;
+            {siteConfig.description}
           </p>
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link href="/apply" className="btn btn-primary w-full px-8 py-4 text-base sm:w-auto">
-              Apply Now
-              <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden>
-                <path
-                  d="M4 10h12M11 5l5 5-5 5"
-                  stroke="currentColor"
-                  strokeWidth="1.75"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </Link>
-            {siteConfig.socialLinks.discord && (
+          {siteConfig.socialLinks.discord && (
+            <div className="mt-10">
               <a
                 href={siteConfig.socialLinks.discord}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-secondary w-full px-8 py-4 text-base sm:w-auto"
+                className="btn btn-primary w-full px-8 py-4 text-base sm:w-auto"
               >
                 Join our Discord
               </a>
-            )}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Quick links */}
+      <section className="px-4 pb-16 sm:px-6">
+        <div className="mx-auto max-w-5xl">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {siteConfig.quickLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="card group flex flex-col gap-2 p-5 transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
+              >
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold text-[var(--color-text)]">{link.title}</h3>
+                  <span className="text-[var(--color-accent-soft)] transition group-hover:translate-x-0.5">
+                    <ArrowIcon />
+                  </span>
+                </div>
+                <p className="text-sm text-[var(--color-text-muted)]">{link.description}</p>
+              </Link>
+            ))}
           </div>
+        </div>
+      </section>
+
+      {/* Recent YouTube uploads */}
+      <section className="px-4 py-16 sm:px-6 sm:py-24">
+        <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Latest Uploads</h2>
+            <p className="mt-4 text-[var(--color-text-muted)]">
+              Recent videos from{" "}
+              <a
+                href={siteConfig.youtube.officialChannelUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-[var(--color-accent-soft)] hover:underline"
+              >
+                our official YouTube channel
+              </a>
+              .
+            </p>
+          </div>
+
+          {videos.length > 0 ? (
+            <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {videos.map((video) => (
+                <a
+                  key={video.id}
+                  href={video.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="card group overflow-hidden p-0 transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element -- external YouTube thumbnail, not worth Next/Image's remote-pattern config for a homepage widget */}
+                  <img
+                    src={video.thumbnailUrl}
+                    alt=""
+                    className="aspect-video w-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="p-4">
+                    <p className="line-clamp-2 text-sm font-medium text-[var(--color-text)]">
+                      {video.title}
+                    </p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p className="mt-12 text-center text-sm text-[var(--color-text-subtle)]">
+              Couldn&apos;t load recent uploads right now — check out the channel directly above.
+            </p>
+          )}
+
+          <p className="mt-8 text-center text-sm text-[var(--color-text-subtle)]">
+            Also check out{" "}
+            <a
+              href={siteConfig.youtube.coOwnerChannelUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-[var(--color-accent-soft)] hover:underline"
+            >
+              {siteConfig.youtube.coOwnerChannelLabel}
+            </a>
+            .
+          </p>
         </div>
       </section>
 
