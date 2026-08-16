@@ -23,7 +23,7 @@ import { TurnstileWidget } from "@/components/apply/Turnstile";
 const TOTAL_STEPS = 5;
 
 const STEP_FIELD_NAMES: (keyof ApplicationFormValues)[][] = [
-  ["discordUsername", "discordUserId", "age", "country", "timezone", "timeInServer"],
+  ["age", "country", "timezone", "timeInServer"],
   ["activityLevel", "onlineTimes", "weeklyHours"],
   ["hasModeratedBefore", "previousExperience", "botsToolsUsed", "previousStaffPositions"],
   [
@@ -57,9 +57,15 @@ function loadDraft(): ApplicationFormValues {
 
 interface ApplicationFormProps {
   turnstileSiteKey?: string;
+  discordUsername: string;
+  discordUserId: string | null;
 }
 
-export function ApplicationForm({ turnstileSiteKey }: ApplicationFormProps) {
+export function ApplicationForm({
+  turnstileSiteKey,
+  discordUsername,
+  discordUserId,
+}: ApplicationFormProps) {
   const router = useRouter();
   const [values, setValues] = useState<ApplicationFormValues>(emptyApplicationFormValues);
   const [hydrated, setHydrated] = useState(false);
@@ -220,7 +226,14 @@ export function ApplicationForm({ turnstileSiteKey }: ApplicationFormProps) {
   }
 
   const steps = [
-    <StepOne key={0} values={values} errors={errors} setField={setField} />,
+    <StepOne
+      key={0}
+      values={values}
+      errors={errors}
+      setField={setField}
+      discordUsername={discordUsername}
+      discordUserId={discordUserId}
+    />,
     <StepTwo key={1} values={values} errors={errors} setField={setField} />,
     <StepThree key={2} values={values} errors={errors} setField={setField} />,
     <StepFour key={3} values={values} errors={errors} setField={setField} />,

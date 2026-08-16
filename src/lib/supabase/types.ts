@@ -17,6 +17,7 @@ export type ApplicationRow = {
   reference_code: string;
   created_at: string;
   updated_at: string;
+  applicant_id: string | null;
   discord_username: string;
   discord_user_id: string;
   age: number;

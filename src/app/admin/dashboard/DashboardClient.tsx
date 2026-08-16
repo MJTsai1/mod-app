@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { applicationStatusValues } from "@/lib/validation/application";
-import type { ApplicationListItem } from "@/lib/supabase/types";
-import { StatusBadge } from "@/components/admin/StatusBadge";
+import type { ApplicationListItem, ApplicationStatus } from "@/lib/supabase/types";
+import { InlineStatusSelect } from "@/components/admin/InlineStatusSelect";
+import { TableSkeletonRows } from "@/components/admin/TableSkeletonRows";
 
 const PAGE_SIZE = 20;
 
@@ -67,30 +68,42 @@ export function DashboardClient() {
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
+  const exportParams = new URLSearchParams();
+  if (status) exportParams.set("status", status);
+  if (debouncedSearch) exportParams.set("q", debouncedSearch);
+
   return (
     <div>
-      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <input
-          type="search"
-          value={search}
-          onChange={(event) => setSearch(event.target.value)}
-          placeholder="Search by username, Discord ID, or reference..."
-          className="field-input sm:max-w-xs"
-          aria-label="Search applications"
-        />
-        <select
-          value={status}
-          onChange={(event) => setStatus(event.target.value)}
-          className="field-input sm:max-w-[180px]"
-          aria-label="Filter by status"
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <input
+            type="search"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Search by username, Discord ID, or reference..."
+            className="field-input sm:max-w-xs"
+            aria-label="Search applications"
+          />
+          <select
+            value={status}
+            onChange={(event) => setStatus(event.target.value)}
+            className="field-input sm:max-w-[180px]"
+            aria-label="Filter by status"
+          >
+            <option value="">All statuses</option>
+            {applicationStatusValues.map((s) => (
+              <option key={s} value={s}>
+                {s.charAt(0).toUpperCase() + s.slice(1)}
+              </option>
+            ))}
+          </select>
+        </div>
+        <a
+          href={`/api/admin/applications/export?${exportParams.toString()}`}
+          className="btn btn-secondary px-3 py-2 text-sm"
         >
-          <option value="">All statuses</option>
-          {applicationStatusValues.map((s) => (
-            <option key={s} value={s}>
-              {s.charAt(0).toUpperCase() + s.slice(1)}
-            </option>
-          ))}
-        </select>
+          Export CSV
+        </a>
       </div>
 
       {error && (
@@ -115,13 +128,7 @@ export function DashboardClient() {
               </tr>
             </thead>
             <tbody>
-              {loading && (
-                <tr>
-                  <td colSpan={5} className="px-4 py-8 text-center text-[var(--color-text-subtle)]">
-                    Loading applications&hellip;
-                  </td>
-                </tr>
-              )}
+              {loading && <TableSkeletonRows columns={5} />}
               {!loading && applications.length === 0 && (
                 <tr>
                   <td colSpan={5} className="px-4 py-8 text-center text-[var(--color-text-subtle)]">
@@ -147,7 +154,18 @@ export function DashboardClient() {
                       {application.reference_code}
                     </td>
                     <td className="px-4 py-3">
-                      <StatusBadge status={application.status} />
+                      <InlineStatusSelect
+                        status={application.status}
+                        statusValues={applicationStatusValues}
+                        endpoint={`/api/admin/applications/${application.id}`}
+                        onUpdated={(newStatus) =>
+                          setApplications((prev) =>
+                            prev.map((a) =>
+                              a.id === application.id ? { ...a, status: newStatus as ApplicationStatus } : a
+                            )
+                          )
+                        }
+                      />
                     </td>
                     <td className="px-4 py-3 text-[var(--color-text-muted)]">
                       {new Date(application.created_at).toLocaleDateString(undefined, {

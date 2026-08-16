@@ -4,25 +4,26 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { reportStatusValues } from "@/lib/validation/report";
 import type { ReportStatus } from "@/lib/supabase/types";
+import { useToast } from "@/components/site/ToastProvider";
 
 interface Props {
   reportId: string;
   initialStatus: ReportStatus;
   initialNotes: string;
+  reviewedBy: string | null;
 }
 
-export function ReportReviewPanel({ reportId, initialStatus, initialNotes }: Props) {
+export function ReportReviewPanel({ reportId, initialStatus, initialNotes, reviewedBy }: Props) {
   const router = useRouter();
+  const { showToast } = useToast();
   const [status, setStatus] = useState<ReportStatus>(initialStatus);
   const [notes, setNotes] = useState(initialNotes);
   const [saving, setSaving] = useState(false);
-  const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   const dirty = status !== initialStatus || notes !== initialNotes;
 
   async function handleSave() {
     setSaving(true);
-    setMessage(null);
 
     try {
       const response = await fetch(`/api/admin/reports/${reportId}`, {
@@ -33,14 +34,14 @@ export function ReportReviewPanel({ reportId, initialStatus, initialNotes }: Pro
 
       if (!response.ok) {
         const body = await response.json().catch(() => null);
-        setMessage({ type: "error", text: body?.error ?? "Failed to save changes." });
+        showToast(body?.error ?? "Failed to save changes.", "error");
         return;
       }
 
-      setMessage({ type: "success", text: "Changes saved." });
+      showToast("Changes saved.");
       router.refresh();
     } catch {
-      setMessage({ type: "error", text: "Network error — please try again." });
+      showToast("Network error — please try again.", "error");
     } finally {
       setSaving(false);
     }
@@ -48,7 +49,12 @@ export function ReportReviewPanel({ reportId, initialStatus, initialNotes }: Pro
 
   return (
     <div className="card p-6">
-      <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">Staff Review</h2>
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-lg font-semibold text-[var(--color-text)]">Staff Review</h2>
+        {reviewedBy && (
+          <p className="text-xs text-[var(--color-text-subtle)]">Last reviewed by {reviewedBy}</p>
+        )}
+      </div>
 
       <label htmlFor="status" className="field-label">
         Report status
@@ -78,16 +84,6 @@ export function ReportReviewPanel({ reportId, initialStatus, initialNotes }: Pro
         placeholder="Internal notes about this report (not visible to the reporter)."
         className="field-input resize-y"
       />
-
-      {message && (
-        <p
-          className="mt-3 text-sm"
-          style={{ color: message.type === "success" ? "var(--color-success)" : "var(--color-danger)" }}
-          role="status"
-        >
-          {message.text}
-        </p>
-      )}
 
       <button
         type="button"

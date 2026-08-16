@@ -1,6 +1,4 @@
 export interface ApplicationFormValues {
-  discordUsername: string;
-  discordUserId: string;
   age: string;
   country: string;
   timezone: string;
@@ -26,8 +24,6 @@ export interface ApplicationFormValues {
 }
 
 export const emptyApplicationFormValues: ApplicationFormValues = {
-  discordUsername: "",
-  discordUserId: "",
   age: "",
   country: "",
   timezone: "",
@@ -54,4 +50,4 @@ export const emptyApplicationFormValues: ApplicationFormValues = {
 
 export type FormErrors = Partial<Record<keyof ApplicationFormValues, string>>;
 
-export const DRAFT_STORAGE_KEY = "mod-app-application-draft-v1";
+export const DRAFT_STORAGE_KEY = "mod-app-application-draft-v2";

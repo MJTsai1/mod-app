@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { requireStaffSession } from "@/lib/staffAuth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { getStaffDisplayName } from "@/lib/staffLookup";
 import { siteConfig } from "@/lib/config";
 import { reportCategoryLabels } from "@/lib/config";
 import { ReportStatusBadge } from "@/components/admin/StatusBadge";
@@ -35,6 +36,8 @@ export default async function ReportDetailPage(props: PageProps<"/admin/reports/
   const { data: report } = await supabase.from("reports").select("*").eq("id", id).maybeSingle();
 
   if (!report) notFound();
+
+  const reviewedBy = await getStaffDisplayName(report.last_updated_by);
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
@@ -72,6 +75,7 @@ export default async function ReportDetailPage(props: PageProps<"/admin/reports/
         reportId={report.id}
         initialStatus={report.status}
         initialNotes={report.staff_notes ?? ""}
+        reviewedBy={reviewedBy}
       />
     </div>
   );

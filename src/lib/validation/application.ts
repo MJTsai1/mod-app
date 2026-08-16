@@ -1,14 +1,6 @@
 import { z } from "zod";
 import { siteConfig } from "@/lib/config";
-import {
-  shortText,
-  longText,
-  optionalLongText,
-  discordUserIdSchema,
-  discordUsernameSchema,
-} from "@/lib/validation/shared";
-
-export { discordUserIdSchema, discordUsernameSchema };
+import { shortText, longText, optionalLongText } from "@/lib/validation/shared";
 
 const baseAgeSchema = z
   .coerce.number({ error: "Age must be a number." })
@@ -23,9 +15,10 @@ export const ageSchema = siteConfig.minAge
     )
   : baseAgeSchema;
 
+// discordUsername/discordUserId are intentionally not part of this schema —
+// they come from the applicant's Discord sign-in session, never from
+// client-submitted form data. See src/app/api/applications/route.ts.
 export const stepOneSchema = z.object({
-  discordUsername: discordUsernameSchema,
-  discordUserId: discordUserIdSchema,
   age: ageSchema,
   country: shortText(80),
   timezone: shortText(60),

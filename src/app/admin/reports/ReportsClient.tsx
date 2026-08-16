@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { reportStatusValues } from "@/lib/validation/report";
 import { reportCategoryLabels } from "@/lib/config";
-import type { ReportListItem } from "@/lib/supabase/types";
-import { ReportStatusBadge } from "@/components/admin/StatusBadge";
+import type { ReportListItem, ReportStatus } from "@/lib/supabase/types";
+import { InlineStatusSelect } from "@/components/admin/InlineStatusSelect";
+import { TableSkeletonRows } from "@/components/admin/TableSkeletonRows";
 
 const PAGE_SIZE = 20;
 
@@ -63,30 +64,42 @@ export function ReportsClient() {
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
+  const exportParams = new URLSearchParams();
+  if (status) exportParams.set("status", status);
+  if (debouncedSearch) exportParams.set("q", debouncedSearch);
+
   return (
     <div>
-      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <input
-          type="search"
-          value={search}
-          onChange={(event) => setSearch(event.target.value)}
-          placeholder="Search by reporter, reported member, or reference..."
-          className="field-input sm:max-w-xs"
-          aria-label="Search reports"
-        />
-        <select
-          value={status}
-          onChange={(event) => setStatus(event.target.value)}
-          className="field-input sm:max-w-[180px]"
-          aria-label="Filter by status"
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <input
+            type="search"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Search by reporter, reported member, or reference..."
+            className="field-input sm:max-w-xs"
+            aria-label="Search reports"
+          />
+          <select
+            value={status}
+            onChange={(event) => setStatus(event.target.value)}
+            className="field-input sm:max-w-[180px]"
+            aria-label="Filter by status"
+          >
+            <option value="">All statuses</option>
+            {reportStatusValues.map((s) => (
+              <option key={s} value={s}>
+                {s.charAt(0).toUpperCase() + s.slice(1)}
+              </option>
+            ))}
+          </select>
+        </div>
+        <a
+          href={`/api/admin/reports/export?${exportParams.toString()}`}
+          className="btn btn-secondary px-3 py-2 text-sm"
         >
-          <option value="">All statuses</option>
-          {reportStatusValues.map((s) => (
-            <option key={s} value={s}>
-              {s.charAt(0).toUpperCase() + s.slice(1)}
-            </option>
-          ))}
-        </select>
+          Export CSV
+        </a>
       </div>
 
       {error && (
@@ -112,13 +125,7 @@ export function ReportsClient() {
               </tr>
             </thead>
             <tbody>
-              {loading && (
-                <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-[var(--color-text-subtle)]">
-                    Loading reports&hellip;
-                  </td>
-                </tr>
-              )}
+              {loading && <TableSkeletonRows columns={6} />}
               {!loading && reports.length === 0 && (
                 <tr>
                   <td colSpan={6} className="px-4 py-8 text-center text-[var(--color-text-subtle)]">
@@ -147,7 +154,18 @@ export function ReportsClient() {
                       {report.reference_code}
                     </td>
                     <td className="px-4 py-3">
-                      <ReportStatusBadge status={report.status} />
+                      <InlineStatusSelect
+                        status={report.status}
+                        statusValues={reportStatusValues}
+                        endpoint={`/api/admin/reports/${report.id}`}
+                        onUpdated={(newStatus) =>
+                          setReports((prev) =>
+                            prev.map((r) =>
+                              r.id === report.id ? { ...r, status: newStatus as ReportStatus } : r
+                            )
+                          )
+                        }
+                      />
                     </td>
                     <td className="px-4 py-3 text-[var(--color-text-muted)]">
                       {new Date(report.created_at).toLocaleDateString(undefined, {

@@ -5,6 +5,7 @@ import { generateReferenceCode } from "@/lib/applicationId";
 import { getClientIp, hashIp, checkAndRecordSubmissionAttempt } from "@/lib/rateLimit";
 import { verifyTurnstileToken } from "@/lib/turnstile";
 import { notifyDiscordOfNewApplication } from "@/lib/discord";
+import { getUserSession } from "@/lib/userAuth";
 import type { ApplicationInsert } from "@/lib/supabase/types";
 
 export const dynamic = "force-dynamic";
@@ -27,6 +28,23 @@ export async function POST(request: Request) {
 }
 
 async function handleSubmission(request: Request): Promise<NextResponse> {
+  const session = await getUserSession();
+  if (!session) {
+    return NextResponse.json(
+      { error: "Please sign in with Discord before submitting an application." },
+      { status: 401 }
+    );
+  }
+  if (!session.discordUserId) {
+    return NextResponse.json(
+      {
+        error:
+          "We couldn't verify your Discord ID from your session. Please sign out and sign in again.",
+      },
+      { status: 400 }
+    );
+  }
+
   const contentLength = Number(request.headers.get("content-length") ?? "0");
   if (contentLength > MAX_BODY_BYTES) {
     return NextResponse.json(
@@ -88,8 +106,9 @@ async function handleSubmission(request: Request): Promise<NextResponse> {
 
   const insertPayload: ApplicationInsert = {
     reference_code: "", // set per attempt below
-    discord_username: data.discordUsername,
-    discord_user_id: data.discordUserId,
+    applicant_id: session.id,
+    discord_username: session.discordUsername,
+    discord_user_id: session.discordUserId,
     age: data.age,
     country: data.country,
     timezone: data.timezone,

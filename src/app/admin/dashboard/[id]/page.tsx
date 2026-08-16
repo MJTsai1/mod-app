@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { requireStaffSession } from "@/lib/staffAuth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { getStaffDisplayName } from "@/lib/staffLookup";
 import { siteConfig } from "@/lib/config";
 import { StatusBadge } from "@/components/admin/StatusBadge";
 import { ApplicationReviewPanel } from "./ApplicationReviewPanel";
@@ -51,6 +52,8 @@ export default async function ApplicationDetailPage(
     .maybeSingle();
 
   if (!application) notFound();
+
+  const reviewedBy = await getStaffDisplayName(application.last_updated_by);
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
@@ -126,6 +129,7 @@ export default async function ApplicationDetailPage(
         applicationId={application.id}
         initialStatus={application.status}
         initialNotes={application.staff_notes ?? ""}
+        reviewedBy={reviewedBy}
       />
     </div>
   );

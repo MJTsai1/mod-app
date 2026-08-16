@@ -3,7 +3,7 @@ import { siteConfig } from "@/lib/config";
 import { getUserSession } from "@/lib/userAuth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { DiscordSignInButton } from "@/components/site/DiscordSignInButton";
-import type { ReportListItem, BanAppealListItem } from "@/lib/supabase/types";
+import type { ReportListItem, BanAppealListItem, ApplicationListItem } from "@/lib/supabase/types";
 
 export const metadata: Metadata = {
   title: `My Account — ${siteConfig.serverName}`,
@@ -68,7 +68,13 @@ export default async function AccountPage(props: PageProps<"/account">) {
 
   const supabase = createSupabaseAdminClient();
 
-  const [{ data: reports }, { data: appeals }] = await Promise.all([
+  const [{ data: applications }, { data: reports }, { data: appeals }] = await Promise.all([
+    supabase
+      .from("applications")
+      .select("id, reference_code, created_at, updated_at, discord_username, discord_user_id, status, age, country")
+      .eq("applicant_id", session.id)
+      .order("created_at", { ascending: false })
+      .returns<ApplicationListItem[]>(),
     supabase
       .from("reports")
       .select("id, reference_code, created_at, reporter_discord_username, reported_discord_username, category, status")
@@ -97,6 +103,23 @@ export default async function AccountPage(props: PageProps<"/account">) {
             Sign out
           </button>
         </form>
+      </div>
+
+      <div className="card mb-6 p-6">
+        <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">My Applications</h2>
+        {!applications || applications.length === 0 ? (
+          <p className="text-sm text-[var(--color-text-subtle)]">You haven&apos;t submitted any applications.</p>
+        ) : (
+          applications.map((application) => (
+            <SubmissionRow
+              key={application.id}
+              reference={application.reference_code}
+              status={application.status}
+              date={application.created_at}
+              detail="Moderator application"
+            />
+          ))
+        )}
       </div>
 
       <div className="card mb-6 p-6">

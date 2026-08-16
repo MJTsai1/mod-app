@@ -8,11 +8,13 @@ Two separate identities exist in the app:
 
 - **Staff** sign in with email + an admin-assigned password (`/admin/login`) — no self-service
   signup. This grants access to `/admin/*`.
-- **Community members** sign in with Discord OAuth (via Supabase Auth) to file a report or ban
-  appeal and check its status later (`/account`). This grants no dashboard access on its own —
-  see "Security notes" below.
+- **Community members** sign in with Discord OAuth (via Supabase Auth) to apply, file a report,
+  submit a ban appeal, and check status later (`/account`). This grants no dashboard access on
+  its own — see "Security notes" below.
 
-Applications remain fully anonymous (no login required), matching the original design.
+Applications, reports, and ban appeals all require Discord sign-in — the applicant's Discord
+username/ID are taken directly from their session (not typed in), so there's no way to apply or
+report under a fake identity.
 
 ## Stack
 
@@ -53,8 +55,9 @@ src/
     profanity.ts                  Whole-word profanity filter used across all free-text fields
   proxy.ts                Route protection for /admin/*
 supabase/migrations/
-  0001_init.sql            Applications, staff, rate-limit tables + RLS
-  0002_reports_appeals.sql Reports, ban appeals, their rate-limit tables + RLS
+  0001_init.sql                     Applications, staff, rate-limit tables + RLS
+  0002_reports_appeals.sql          Reports, ban appeals, their rate-limit tables + RLS
+  0003_application_login_and_qol.sql  Ties applications to a Discord-authenticated applicant
 ```
 
 ## 1. Customise the site
@@ -69,12 +72,11 @@ window. This is the only file you should need to touch for a rebrand.
    close to your primary audience — Supabase's Postgres runs from a single region, but the
    Next.js app on Vercel's CDN will still be fast worldwide since page/API logic runs at the
    edge/region nearest each visitor and only the database round-trip is fixed-region).
-2. Open **SQL Editor** in the Supabase dashboard, paste the contents of
-   [`supabase/migrations/0001_init.sql`](supabase/migrations/0001_init.sql), run it, then do the
-   same with
-   [`supabase/migrations/0002_reports_appeals.sql`](supabase/migrations/0002_reports_appeals.sql)
-   (must run after 0001). Together these create the `applications`, `reports`, `ban_appeals`,
-   `staff_members`, and rate-limit tables, their enums, indexes, and Row Level Security policies.
+2. Open **SQL Editor** in the Supabase dashboard and run the migrations in `supabase/migrations/`
+   **in order** — `0001_init.sql`, then `0002_reports_appeals.sql`, then
+   `0003_application_login_and_qol.sql`. Together these create the `applications`, `reports`,
+   `ban_appeals`, `staff_members`, and rate-limit tables, their enums, indexes, and Row Level
+   Security policies.
 3. Go to **Project Settings -> API** and copy:
    - **Project URL** -> `NEXT_PUBLIC_SUPABASE_URL`
    - **anon public** key -> `NEXT_PUBLIC_SUPABASE_ANON_KEY`
@@ -163,6 +165,16 @@ the staff email you added above to review it. To test reports/appeals, visit `/r
   you want to extend this (e.g. a bot token for DMs instead of
   a webhook) — all Discord credential handling is isolated to that one file.
 
+## Staff dashboard features
+
+- **Pending-count badges** in the nav show how many applications/reports/appeals need attention
+  at a glance.
+- **Inline status changes** — change status directly from the list view (`InlineStatusSelect`),
+  no need to open every item individually.
+- **"Last reviewed by"** shows which staff member last touched an item.
+- **CSV export** on each list view, respecting the current search/status filter.
+- Toast notifications confirm saves/failures instead of inline banners.
+
 ## Security notes
 
 - Every data table (`applications`, `reports`, `ban_appeals`, `staff_members`, and the rate-limit
@@ -188,10 +200,12 @@ the staff email you added above to review it. To test reports/appeals, visit `/r
 
 - Real values for every variable in `.env.example`.
 - Your Discord server's invite link and contact email in `src/lib/config.ts`.
-- Run `supabase/migrations/0002_reports_appeals.sql` (step 2 above) if you haven't already —
-  reports and ban appeals won't work without it.
+- **Run `supabase/migrations/0003_application_login_and_qol.sql`** if you haven't already —
+  this is required, not optional, once this version of the code is deployed. It adds the column
+  the application submission and Account page code now expects; without it, `/apply` and
+  `/account` will error.
 - Discord OAuth client ID/secret configured in Supabase (step 5 above) — without this, the
-  "Sign in with Discord" button on `/report`, `/appeal`, and `/account` will fail.
+  "Sign in with Discord" button on `/apply`, `/report`, `/appeal`, and `/account` will fail.
 - At least one `staff_members` row (step 6 above) before anyone can use the dashboard.
 - Optional: a Turnstile site/secret key pair and/or a Discord webhook URL if you want those
   features active — the app runs correctly without them, just without CAPTCHA and without

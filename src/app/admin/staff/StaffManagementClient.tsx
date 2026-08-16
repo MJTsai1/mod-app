@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { staffRoleValues, type StaffRole } from "@/lib/validation/staff";
+import { TableSkeletonRows } from "@/components/admin/TableSkeletonRows";
 
 interface StaffRow {
   id: string;
@@ -215,13 +216,7 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
               </tr>
             </thead>
             <tbody>
-              {loading && (
-                <tr>
-                  <td colSpan={5} className="px-4 py-6 text-center text-[var(--color-text-subtle)]">
-                    Loading…
-                  </td>
-                </tr>
-              )}
+              {loading && <TableSkeletonRows columns={5} rows={3} />}
               {listError && !loading && (
                 <tr>
                   <td colSpan={5} className="px-4 py-6 text-center text-[var(--color-danger)]">

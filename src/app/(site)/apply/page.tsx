@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/config";
+import { getUserSession } from "@/lib/userAuth";
+import { DiscordSignInButton } from "@/components/site/DiscordSignInButton";
 import { ApplicationForm } from "@/components/apply/ApplicationForm";
 
 export const metadata: Metadata = {
@@ -7,7 +9,9 @@ export const metadata: Metadata = {
   description: `Apply to become a moderator on ${siteConfig.serverName}.`,
 };
 
-export default function ApplyPage() {
+export default async function ApplyPage(props: PageProps<"/apply">) {
+  const searchParams = await props.searchParams;
+  const session = await getUserSession();
   const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
   return (
@@ -22,7 +26,25 @@ export default function ApplyPage() {
           steps.
         </p>
       </div>
-      <ApplicationForm turnstileSiteKey={turnstileSiteKey} />
+
+      {!session ? (
+        <div className="card-elevated mx-auto max-w-2xl p-8 text-center">
+          {searchParams.error === "auth" && (
+            <p className="field-error mb-4">Sign-in failed or was cancelled. Please try again.</p>
+          )}
+          <p className="mb-6 text-[var(--color-text-muted)]">
+            Sign in with Discord to apply. This confirms your Discord identity for your
+            application — no separate account or password needed.
+          </p>
+          <DiscordSignInButton next="/apply" />
+        </div>
+      ) : (
+        <ApplicationForm
+          turnstileSiteKey={turnstileSiteKey}
+          discordUsername={session.discordUsername}
+          discordUserId={session.discordUserId}
+        />
+      )}
     </div>
   );
 }

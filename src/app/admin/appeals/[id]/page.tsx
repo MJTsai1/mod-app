@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { requireStaffSession } from "@/lib/staffAuth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { getStaffDisplayName } from "@/lib/staffLookup";
 import { siteConfig } from "@/lib/config";
 import { AppealStatusBadge } from "@/components/admin/StatusBadge";
 import { AppealReviewPanel } from "./AppealReviewPanel";
@@ -50,6 +51,8 @@ export default async function AppealDetailPage(props: PageProps<"/admin/appeals/
 
   if (!appeal) notFound();
 
+  const reviewedBy = await getStaffDisplayName(appeal.last_updated_by);
+
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
@@ -75,6 +78,7 @@ export default async function AppealDetailPage(props: PageProps<"/admin/appeals/
         appealId={appeal.id}
         initialStatus={appeal.status}
         initialNotes={appeal.staff_notes ?? ""}
+        reviewedBy={reviewedBy}
       />
     </div>
   );
