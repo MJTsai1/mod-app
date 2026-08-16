@@ -22,7 +22,11 @@ async function postEmbed(embed: Record<string, unknown>, label: string): Promise
     const response = await fetch(webhookUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ embeds: [embed] }),
+      body: JSON.stringify({
+        content: "@everyone",
+        allowed_mentions: { parse: ["everyone"] },
+        embeds: [embed],
+      }),
     });
 
     if (!response.ok) {

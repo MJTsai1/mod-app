@@ -156,8 +156,11 @@ the staff email you added above to review it. To test reports/appeals, visit `/r
   changes needed.
 - **Discord webhook notifications:** in Discord, go to a staff channel's Settings ->
   Integrations -> Webhooks -> New Webhook, copy the URL into `DISCORD_WEBHOOK_URL`, redeploy.
-  New applications will post an embed with the applicant's username, Discord ID, and reference
-  code. See `src/lib/discord.ts` if you want to extend this (e.g. a bot token for DMs instead of
+  New applications, reports, and ban appeals will each post an `@everyone`-mention embed with a
+  link into the staff dashboard. **Only point this at a private, staff-only channel** — the
+  `@everyone` ping is intentional so nothing gets missed, but that means anyone with access to
+  the target channel gets pinged, applicant/reporter data and all. See `src/lib/discord.ts` if
+  you want to extend this (e.g. a bot token for DMs instead of
   a webhook) — all Discord credential handling is isolated to that one file.
 
 ## Security notes
