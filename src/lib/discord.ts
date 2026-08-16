@@ -23,6 +23,7 @@ async function postEmbed(embed: Record<string, unknown>, label: string): Promise
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        username: "Website Notification",
         content: "@everyone",
         allowed_mentions: { parse: ["everyone"] },
         embeds: [embed],
