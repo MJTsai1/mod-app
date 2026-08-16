@@ -25,6 +25,9 @@ export function SiteFooter() {
           <Link href="/privacy" className="transition hover:text-[var(--color-text)]">
             Privacy Notice
           </Link>
+          <Link href="/terms" className="transition hover:text-[var(--color-text)]">
+            Terms of Service
+          </Link>
           {siteConfig.socialLinks.discord && (
             <a
               href={siteConfig.socialLinks.discord}

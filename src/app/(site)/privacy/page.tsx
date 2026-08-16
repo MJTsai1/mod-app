@@ -1,18 +1,10 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/config";
+import { LegalSection as Section } from "@/components/site/LegalSection";
 
 export const metadata: Metadata = {
   title: `Privacy Notice — ${siteConfig.serverName}`,
 };
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <section className="mt-8">
-      <h2 className="text-xl font-semibold text-[var(--color-text)]">{title}</h2>
-      <div className="mt-3 space-y-3 text-[var(--color-text-muted)]">{children}</div>
-    </section>
-  );
-}
 
 export default function PrivacyPage() {
   return (
