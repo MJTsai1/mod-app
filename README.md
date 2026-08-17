@@ -55,9 +55,10 @@ src/
     profanity.ts                  Whole-word profanity filter used across all free-text fields
   proxy.ts                Route protection for /admin/*
 supabase/migrations/
-  0001_init.sql                     Applications, staff, rate-limit tables + RLS
-  0002_reports_appeals.sql          Reports, ban appeals, their rate-limit tables + RLS
-  0003_application_login_and_qol.sql  Ties applications to a Discord-authenticated applicant
+  0001_init.sql                        Applications, staff, rate-limit tables + RLS
+  0002_reports_appeals.sql             Reports, ban appeals, their rate-limit tables + RLS
+  0003_application_login_and_qol.sql   Ties applications to a Discord-authenticated applicant
+  0004_claims_withdrawals_activity.sql Withdrawn status, staff claiming, activity_log
 ```
 
 ## 1. Customise the site
@@ -72,11 +73,10 @@ window. This is the only file you should need to touch for a rebrand.
    close to your primary audience — Supabase's Postgres runs from a single region, but the
    Next.js app on Vercel's CDN will still be fast worldwide since page/API logic runs at the
    edge/region nearest each visitor and only the database round-trip is fixed-region).
-2. Open **SQL Editor** in the Supabase dashboard and run the migrations in `supabase/migrations/`
-   **in order** — `0001_init.sql`, then `0002_reports_appeals.sql`, then
-   `0003_application_login_and_qol.sql`. Together these create the `applications`, `reports`,
-   `ban_appeals`, `staff_members`, and rate-limit tables, their enums, indexes, and Row Level
-   Security policies.
+2. Open **SQL Editor** in the Supabase dashboard and run every file in `supabase/migrations/`
+   **in numeric order** (0001, then 0002, then 0003, then 0004). Together these create the
+   `applications`, `reports`, `ban_appeals`, `staff_members`, `activity_log`, and rate-limit
+   tables, their enums, indexes, and Row Level Security policies.
 3. Go to **Project Settings -> API** and copy:
    - **Project URL** -> `NEXT_PUBLIC_SUPABASE_URL`
    - **anon public** key -> `NEXT_PUBLIC_SUPABASE_ANON_KEY`
@@ -164,6 +164,14 @@ the staff email you added above to review it. To test reports/appeals, visit `/r
   the target channel gets pinged, applicant/reporter data and all. See `src/lib/discord.ts` if
   you want to extend this (e.g. a bot token for DMs instead of
   a webhook) — all Discord credential handling is isolated to that one file.
+- **Live member count on the homepage:** in Discord, go to **Server Settings -> Widget** and
+  enable **Server Widget**. Then set `discordGuildId` in `src/lib/config.ts` to your server's ID
+  (enable Developer Mode in Discord, right-click your server icon -> Copy Server ID). No token
+  needed — this uses Discord's public widget API (`src/lib/discordWidget.ts`). Leave
+  `discordGuildId` as `null` to hide this section entirely.
+- **Installable on mobile:** `src/app/manifest.ts` already makes the site installable ("Add to
+  Home Screen") using the existing logo as the icon — nothing to configure. This is a basic
+  installable web app, not a full offline-capable PWA (no service worker/offline caching).
 
 ## Staff dashboard features
 
@@ -171,9 +179,23 @@ the staff email you added above to review it. To test reports/appeals, visit `/r
   at a glance.
 - **Inline status changes** — change status directly from the list view (`InlineStatusSelect`),
   no need to open every item individually.
-- **"Last reviewed by"** shows which staff member last touched an item.
+- **Claiming** — a staff member can claim an item (list view or detail page) so two people don't
+  duplicate work; only the claimer or an admin can unclaim it.
+- **Activity History** — every status change, note edit, claim, and self-service withdrawal is
+  logged to `activity_log`, shown per-item on each detail page and as a combined feed at
+  `/admin/activity`. This is a full history, unlike "Last reviewed by" which only shows the most
+  recent reviewer.
+- **Stats** (`/admin/stats`) — status breakdowns and acceptance/resolution/approval rates across
+  all three submission types.
 - **CSV export** on each list view, respecting the current search/status filter.
 - Toast notifications confirm saves/failures instead of inline banners.
+
+## Applicant/member self-service
+
+- Applicants, reporters, and appellants can **withdraw their own submission** from `/account`
+  (only while it's still pending/reviewing — not after it's been decided).
+- Configurable cooldowns in `src/lib/config.ts` (`applicationRules`) prevent immediately
+  reapplying after a rejection or a self-withdrawal. Set either to `null` to disable.
 
 ## Security notes
 
@@ -200,10 +222,10 @@ the staff email you added above to review it. To test reports/appeals, visit `/r
 
 - Real values for every variable in `.env.example`.
 - Your Discord server's invite link and contact email in `src/lib/config.ts`.
-- **Run `supabase/migrations/0003_application_login_and_qol.sql`** if you haven't already —
-  this is required, not optional, once this version of the code is deployed. It adds the column
-  the application submission and Account page code now expects; without it, `/apply` and
-  `/account` will error.
+- **Run every migration through `0004_claims_withdrawals_activity.sql`** if you haven't already —
+  required, not optional, once this version of the code is deployed. Without 0003, `/apply` and
+  `/account` will error; without 0004, claiming, withdrawing, and the Activity/Stats pages will
+  error.
 - Discord OAuth client ID/secret configured in Supabase (step 5 above) — without this, the
   "Sign in with Discord" button on `/apply`, `/report`, `/appeal`, and `/account` will fail.
 - At least one `staff_members` row (step 6 above) before anyone can use the dashboard.

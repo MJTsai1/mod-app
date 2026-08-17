@@ -3,8 +3,10 @@ import type { Metadata } from "next";
 import { requireStaffSession } from "@/lib/staffAuth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getStaffDisplayName } from "@/lib/staffLookup";
+import { getActivityHistory } from "@/lib/activityLog";
 import { siteConfig } from "@/lib/config";
 import { AppealStatusBadge } from "@/components/admin/StatusBadge";
+import { ActivityHistoryList } from "@/components/admin/ActivityHistoryList";
 import { AppealReviewPanel } from "./AppealReviewPanel";
 
 export const metadata: Metadata = {
@@ -37,7 +39,7 @@ function AnswerBlock({ question, answer }: { question: string; answer: string | 
 }
 
 export default async function AppealDetailPage(props: PageProps<"/admin/appeals/[id]">) {
-  await requireStaffSession();
+  const session = await requireStaffSession();
   const { id } = await props.params;
 
   if (!UUID_RE.test(id)) notFound();
@@ -51,7 +53,11 @@ export default async function AppealDetailPage(props: PageProps<"/admin/appeals/
 
   if (!appeal) notFound();
 
-  const reviewedBy = await getStaffDisplayName(appeal.last_updated_by);
+  const [reviewedBy, claimedByName, activity] = await Promise.all([
+    getStaffDisplayName(appeal.last_updated_by),
+    getStaffDisplayName(appeal.claimed_by),
+    getActivityHistory("appeal", appeal.id),
+  ]);
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
@@ -79,7 +85,15 @@ export default async function AppealDetailPage(props: PageProps<"/admin/appeals/
         initialStatus={appeal.status}
         initialNotes={appeal.staff_notes ?? ""}
         reviewedBy={reviewedBy}
+        claimedBy={appeal.claimed_by}
+        claimedByName={claimedByName}
+        currentStaffId={session.staff.id}
       />
+
+      <div className="card mt-6 p-6">
+        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">Activity History</h2>
+        <ActivityHistoryList entries={activity} />
+      </div>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { getClientIp, hashIp, checkAndRecordSubmissionAttempt } from "@/lib/rate
 import { verifyTurnstileToken } from "@/lib/turnstile";
 import { notifyDiscordOfNewApplication } from "@/lib/discord";
 import { getUserSession } from "@/lib/userAuth";
+import { checkApplicationCooldown } from "@/lib/applicationCooldown";
 import type { ApplicationInsert } from "@/lib/supabase/types";
 
 export const dynamic = "force-dynamic";
@@ -91,6 +92,11 @@ async function handleSubmission(request: Request): Promise<NextResponse> {
     );
   }
 
+  const cooldown = await checkApplicationCooldown(session.id);
+  if (cooldown.blocked) {
+    return NextResponse.json({ error: cooldown.message }, { status: 403 });
+  }
+
   const parsed = applicationSchema.safeParse(applicationInput);
   if (!parsed.success) {
     return NextResponse.json(
@@ -155,6 +161,8 @@ async function handleSubmission(request: Request): Promise<NextResponse> {
         status: "pending",
         staff_notes: null,
         last_updated_by: null,
+        claimed_by: null,
+        claimed_at: null,
       }).catch(() => {
         // notifyDiscordOfNewApplication already logs its own errors
       });

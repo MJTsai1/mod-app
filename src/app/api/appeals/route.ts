@@ -102,6 +102,8 @@ async function handleSubmission(request: Request): Promise<NextResponse> {
         status: "pending",
         staff_notes: null,
         last_updated_by: null,
+        claimed_by: null,
+        claimed_at: null,
       }).catch(() => {
         // notifyDiscordOfNewAppeal already logs its own errors
       });

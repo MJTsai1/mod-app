@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getStaffSession } from "@/lib/staffAuth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { reportStatusValues } from "@/lib/validation/report";
+import { attachClaimerNames } from "@/lib/attachClaimerNames";
 
 export const dynamic = "force-dynamic";
 
@@ -28,7 +29,7 @@ export async function GET(request: Request) {
   let query = supabase
     .from("reports")
     .select(
-      "id, reference_code, created_at, reporter_discord_username, reported_discord_username, category, status",
+      "id, reference_code, created_at, reporter_discord_username, reported_discord_username, category, status, claimed_by",
       { count: "exact" }
     )
     .order("created_at", { ascending: false })
@@ -52,5 +53,10 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Failed to load reports." }, { status: 500 });
   }
 
-  return NextResponse.json({ reports: data, page, pageSize, total: count ?? 0 });
+  return NextResponse.json({
+    reports: await attachClaimerNames(data ?? []),
+    page,
+    pageSize,
+    total: count ?? 0,
+  });
 }

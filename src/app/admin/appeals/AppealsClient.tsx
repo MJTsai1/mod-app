@@ -6,11 +6,14 @@ import { appealStatusValues } from "@/lib/validation/appeal";
 import type { BanAppealListItem, AppealStatus } from "@/lib/supabase/types";
 import { InlineStatusSelect } from "@/components/admin/InlineStatusSelect";
 import { TableSkeletonRows } from "@/components/admin/TableSkeletonRows";
+import { ClaimButton } from "@/components/admin/ClaimButton";
 
 const PAGE_SIZE = 20;
 
-export function AppealsClient() {
-  const [appeals, setAppeals] = useState<BanAppealListItem[]>([]);
+type BanAppealListRow = BanAppealListItem & { claimed_by_name: string | null };
+
+export function AppealsClient({ currentStaffId }: { currentStaffId: string }) {
+  const [appeals, setAppeals] = useState<BanAppealListRow[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState<string>("");
@@ -118,15 +121,16 @@ export function AppealsClient() {
                 <th className="px-4 py-3">Applicant</th>
                 <th className="px-4 py-3">Reference</th>
                 <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Claim</th>
                 <th className="px-4 py-3">Submitted</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
             <tbody>
-              {loading && <TableSkeletonRows columns={5} />}
+              {loading && <TableSkeletonRows columns={6} />}
               {!loading && appeals.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-4 py-8 text-center text-[var(--color-text-subtle)]">
+                  <td colSpan={6} className="px-4 py-8 text-center text-[var(--color-text-subtle)]">
                     No ban appeals found.
                   </td>
                 </tr>
@@ -157,6 +161,21 @@ export function AppealsClient() {
                           setAppeals((prev) =>
                             prev.map((a) =>
                               a.id === appeal.id ? { ...a, status: newStatus as AppealStatus } : a
+                            )
+                          )
+                        }
+                      />
+                    </td>
+                    <td className="px-4 py-3">
+                      <ClaimButton
+                        endpoint={`/api/admin/appeals/${appeal.id}`}
+                        claimedBy={appeal.claimed_by}
+                        claimedByName={appeal.claimed_by_name}
+                        currentStaffId={currentStaffId}
+                        onUpdated={(claimedBy, claimedByName) =>
+                          setAppeals((prev) =>
+                            prev.map((a) =>
+                              a.id === appeal.id ? { ...a, claimed_by: claimedBy, claimed_by_name: claimedByName } : a
                             )
                           )
                         }

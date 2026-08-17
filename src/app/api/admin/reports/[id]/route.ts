@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { getStaffSession } from "@/lib/staffAuth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { updateReportSchema } from "@/lib/validation/report";
+import { resolveClaimAction } from "@/lib/claim";
+import { logActivity } from "@/lib/activityLog";
 
 export const dynamic = "force-dynamic";
 
@@ -57,12 +59,49 @@ export async function PATCH(request: Request, { params }: RouteParams) {
   }
 
   const supabase = createSupabaseAdminClient();
+
+  const { data: current, error: fetchError } = await supabase
+    .from("reports")
+    .select("status, staff_notes, claimed_by")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (fetchError || !current) {
+    return NextResponse.json({ error: "Not found." }, { status: 404 });
+  }
+
+  const claimResult = resolveClaimAction(
+    parsed.data.claim,
+    current.claimed_by,
+    session.staff.id,
+    session.staff.role === "admin"
+  );
+  if (!claimResult.ok) {
+    return NextResponse.json({ error: claimResult.error }, { status: claimResult.status ?? 400 });
+  }
+
+  const changes: string[] = [];
+  if (parsed.data.status && parsed.data.status !== current.status) {
+    changes.push(`Status changed from ${current.status} to ${parsed.data.status}`);
+  }
+  if (
+    parsed.data.staffNotes !== undefined &&
+    parsed.data.staffNotes !== (current.staff_notes ?? "")
+  ) {
+    changes.push("Staff notes updated");
+  }
+  if (parsed.data.claim === "claim") changes.push("Claimed");
+  if (parsed.data.claim === "unclaim") changes.push("Unclaimed");
+
   const { data, error } = await supabase
     .from("reports")
     .update({
       ...(parsed.data.status ? { status: parsed.data.status } : {}),
       ...(parsed.data.staffNotes !== undefined ? { staff_notes: parsed.data.staffNotes } : {}),
-      last_updated_by: session.staff.id,
+      ...(parsed.data.status !== undefined || parsed.data.staffNotes !== undefined
+        ? { last_updated_by: session.staff.id }
+        : {}),
+      ...(claimResult.fields ?? {}),
     })
     .eq("id", id)
     .select("*")
@@ -73,6 +112,16 @@ export async function PATCH(request: Request, { params }: RouteParams) {
     return NextResponse.json({ error: "Failed to update report." }, { status: 500 });
   }
   if (!data) return NextResponse.json({ error: "Not found." }, { status: 404 });
+
+  if (changes.length > 0) {
+    logActivity({
+      entityType: "report",
+      entityId: id,
+      actorType: "staff",
+      staffId: session.staff.id,
+      detail: changes.join("; "),
+    }).catch(() => {});
+  }
 
   return NextResponse.json({ report: data });
 }

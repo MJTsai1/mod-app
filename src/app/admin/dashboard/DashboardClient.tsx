@@ -6,11 +6,14 @@ import { applicationStatusValues } from "@/lib/validation/application";
 import type { ApplicationListItem, ApplicationStatus } from "@/lib/supabase/types";
 import { InlineStatusSelect } from "@/components/admin/InlineStatusSelect";
 import { TableSkeletonRows } from "@/components/admin/TableSkeletonRows";
+import { ClaimButton } from "@/components/admin/ClaimButton";
 
 const PAGE_SIZE = 20;
 
-export function DashboardClient() {
-  const [applications, setApplications] = useState<ApplicationListItem[]>([]);
+type ApplicationListRow = ApplicationListItem & { claimed_by_name: string | null };
+
+export function DashboardClient({ currentStaffId }: { currentStaffId: string }) {
+  const [applications, setApplications] = useState<ApplicationListRow[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState<string>("");
@@ -123,15 +126,16 @@ export function DashboardClient() {
                 <th className="px-4 py-3">Applicant</th>
                 <th className="px-4 py-3">Reference</th>
                 <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Claim</th>
                 <th className="px-4 py-3">Submitted</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
             <tbody>
-              {loading && <TableSkeletonRows columns={5} />}
+              {loading && <TableSkeletonRows columns={6} />}
               {!loading && applications.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-4 py-8 text-center text-[var(--color-text-subtle)]">
+                  <td colSpan={6} className="px-4 py-8 text-center text-[var(--color-text-subtle)]">
                     No applications found.
                   </td>
                 </tr>
@@ -162,6 +166,21 @@ export function DashboardClient() {
                           setApplications((prev) =>
                             prev.map((a) =>
                               a.id === application.id ? { ...a, status: newStatus as ApplicationStatus } : a
+                            )
+                          )
+                        }
+                      />
+                    </td>
+                    <td className="px-4 py-3">
+                      <ClaimButton
+                        endpoint={`/api/admin/applications/${application.id}`}
+                        claimedBy={application.claimed_by}
+                        claimedByName={application.claimed_by_name}
+                        currentStaffId={currentStaffId}
+                        onUpdated={(claimedBy, claimedByName) =>
+                          setApplications((prev) =>
+                            prev.map((a) =>
+                              a.id === application.id ? { ...a, claimed_by: claimedBy, claimed_by_name: claimedByName } : a
                             )
                           )
                         }

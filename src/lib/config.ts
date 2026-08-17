@@ -52,6 +52,10 @@ export const siteConfig = {
     coOwnerChannelLabel: "Co-owner's personal channel",
   },
 
+  // Requires "Server Widget" enabled under Discord Server Settings -> Widget.
+  // Leave as null to hide the live member count on the homepage.
+  discordGuildId: null as string | null,
+
   // Homepage quick-links grid.
   quickLinks: [
     {
@@ -83,6 +87,12 @@ export const siteConfig = {
   // Set to a number (e.g. 13) to enforce a minimum age on applications.
   // Leave as null to not enforce or display any minimum age requirement.
   minAge: null as number | null,
+
+  // Set either to null to disable that particular cooldown.
+  applicationRules: {
+    reapplyCooldownDays: 30 as number | null,
+    withdrawCooldownHours: 72 as number | null,
+  },
 
   aboutRole: {
     heading: "About the Role",

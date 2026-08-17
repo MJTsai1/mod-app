@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getStaffSession } from "@/lib/staffAuth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { appealStatusValues } from "@/lib/validation/appeal";
+import { attachClaimerNames } from "@/lib/attachClaimerNames";
 
 export const dynamic = "force-dynamic";
 
@@ -27,7 +28,7 @@ export async function GET(request: Request) {
 
   let query = supabase
     .from("ban_appeals")
-    .select("id, reference_code, created_at, discord_username, discord_user_id, status", {
+    .select("id, reference_code, created_at, discord_username, discord_user_id, status, claimed_by", {
       count: "exact",
     })
     .order("created_at", { ascending: false })
@@ -51,5 +52,10 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Failed to load ban appeals." }, { status: 500 });
   }
 
-  return NextResponse.json({ appeals: data, page, pageSize, total: count ?? 0 });
+  return NextResponse.json({
+    appeals: await attachClaimerNames(data ?? []),
+    page,
+    pageSize,
+    total: count ?? 0,
+  });
 }

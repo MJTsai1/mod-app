@@ -9,13 +9,13 @@ export const metadata: Metadata = {
 };
 
 export default async function AppealsPage() {
-  await requireStaffSession();
+  const session = await requireStaffSession();
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
       <h1 className="text-2xl font-bold text-[var(--color-text)]">Ban Appeals</h1>
       <p className="field-hint mb-6">Search, filter, and review ban appeals.</p>
-      <AppealsClient />
+      <AppealsClient currentStaffId={session.staff.id} />
     </div>
   );
 }

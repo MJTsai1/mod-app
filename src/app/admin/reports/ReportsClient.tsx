@@ -7,11 +7,14 @@ import { reportCategoryLabels } from "@/lib/config";
 import type { ReportListItem, ReportStatus } from "@/lib/supabase/types";
 import { InlineStatusSelect } from "@/components/admin/InlineStatusSelect";
 import { TableSkeletonRows } from "@/components/admin/TableSkeletonRows";
+import { ClaimButton } from "@/components/admin/ClaimButton";
 
 const PAGE_SIZE = 20;
 
-export function ReportsClient() {
-  const [reports, setReports] = useState<ReportListItem[]>([]);
+type ReportListRow = ReportListItem & { claimed_by_name: string | null };
+
+export function ReportsClient({ currentStaffId }: { currentStaffId: string }) {
+  const [reports, setReports] = useState<ReportListRow[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState<string>("");
@@ -120,15 +123,16 @@ export function ReportsClient() {
                 <th className="px-4 py-3">Category</th>
                 <th className="px-4 py-3">Reference</th>
                 <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Claim</th>
                 <th className="px-4 py-3">Submitted</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
             <tbody>
-              {loading && <TableSkeletonRows columns={6} />}
+              {loading && <TableSkeletonRows columns={7} />}
               {!loading && reports.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-[var(--color-text-subtle)]">
+                  <td colSpan={7} className="px-4 py-8 text-center text-[var(--color-text-subtle)]">
                     No reports found.
                   </td>
                 </tr>
@@ -162,6 +166,21 @@ export function ReportsClient() {
                           setReports((prev) =>
                             prev.map((r) =>
                               r.id === report.id ? { ...r, status: newStatus as ReportStatus } : r
+                            )
+                          )
+                        }
+                      />
+                    </td>
+                    <td className="px-4 py-3">
+                      <ClaimButton
+                        endpoint={`/api/admin/reports/${report.id}`}
+                        claimedBy={report.claimed_by}
+                        claimedByName={report.claimed_by_name}
+                        currentStaffId={currentStaffId}
+                        onUpdated={(claimedBy, claimedByName) =>
+                          setReports((prev) =>
+                            prev.map((r) =>
+                              r.id === report.id ? { ...r, claimed_by: claimedBy, claimed_by_name: claimedByName } : r
                             )
                           )
                         }

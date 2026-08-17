@@ -46,11 +46,20 @@ export type ApplicationRow = {
   staff_notes: string | null;
   last_updated_by: string | null;
   submitted_ip_hash: string | null;
+  claimed_by: string | null;
+  claimed_at: string | null;
 };
 
 export type ApplicationInsert = Omit<
   ApplicationRow,
-  "id" | "created_at" | "updated_at" | "status" | "staff_notes" | "last_updated_by"
+  | "id"
+  | "created_at"
+  | "updated_at"
+  | "status"
+  | "staff_notes"
+  | "last_updated_by"
+  | "claimed_by"
+  | "claimed_at"
 > & {
   id?: string;
   status?: ApplicationStatus;
@@ -59,7 +68,7 @@ export type ApplicationInsert = Omit<
 };
 
 export type ApplicationUpdate = Partial<
-  Pick<ApplicationRow, "status" | "staff_notes" | "last_updated_by">
+  Pick<ApplicationRow, "status" | "staff_notes" | "last_updated_by" | "claimed_by" | "claimed_at">
 >;
 
 export type ApplicationListItem = Pick<
@@ -73,6 +82,7 @@ export type ApplicationListItem = Pick<
   | "status"
   | "age"
   | "country"
+  | "claimed_by"
 >;
 
 export type StaffMemberRow = {
@@ -89,7 +99,7 @@ export type ApplicationSubmissionAttemptRow = {
   created_at: string;
 };
 
-export type ReportStatus = "pending" | "reviewing" | "resolved" | "dismissed";
+export type ReportStatus = "pending" | "reviewing" | "resolved" | "dismissed" | "withdrawn";
 
 export type ReportCategory =
   | "harassment"
@@ -115,11 +125,20 @@ export type ReportRow = {
   staff_notes: string | null;
   last_updated_by: string | null;
   submitted_ip_hash: string | null;
+  claimed_by: string | null;
+  claimed_at: string | null;
 };
 
 export type ReportInsert = Omit<
   ReportRow,
-  "id" | "created_at" | "updated_at" | "status" | "staff_notes" | "last_updated_by"
+  | "id"
+  | "created_at"
+  | "updated_at"
+  | "status"
+  | "staff_notes"
+  | "last_updated_by"
+  | "claimed_by"
+  | "claimed_at"
 > & {
   id?: string;
   status?: ReportStatus;
@@ -128,7 +147,7 @@ export type ReportInsert = Omit<
 };
 
 export type ReportUpdate = Partial<
-  Pick<ReportRow, "status" | "staff_notes" | "last_updated_by">
+  Pick<ReportRow, "status" | "staff_notes" | "last_updated_by" | "claimed_by" | "claimed_at">
 >;
 
 export type ReportListItem = Pick<
@@ -140,9 +159,10 @@ export type ReportListItem = Pick<
   | "reported_discord_username"
   | "category"
   | "status"
+  | "claimed_by"
 >;
 
-export type AppealStatus = "pending" | "reviewing" | "approved" | "denied";
+export type AppealStatus = "pending" | "reviewing" | "approved" | "denied" | "withdrawn";
 
 export type BanAppealRow = {
   id: string;
@@ -159,11 +179,20 @@ export type BanAppealRow = {
   staff_notes: string | null;
   last_updated_by: string | null;
   submitted_ip_hash: string | null;
+  claimed_by: string | null;
+  claimed_at: string | null;
 };
 
 export type BanAppealInsert = Omit<
   BanAppealRow,
-  "id" | "created_at" | "updated_at" | "status" | "staff_notes" | "last_updated_by"
+  | "id"
+  | "created_at"
+  | "updated_at"
+  | "status"
+  | "staff_notes"
+  | "last_updated_by"
+  | "claimed_by"
+  | "claimed_at"
 > & {
   id?: string;
   status?: AppealStatus;
@@ -172,12 +201,18 @@ export type BanAppealInsert = Omit<
 };
 
 export type BanAppealUpdate = Partial<
-  Pick<BanAppealRow, "status" | "staff_notes" | "last_updated_by">
+  Pick<BanAppealRow, "status" | "staff_notes" | "last_updated_by" | "claimed_by" | "claimed_at">
 >;
 
 export type BanAppealListItem = Pick<
   BanAppealRow,
-  "id" | "reference_code" | "created_at" | "discord_username" | "discord_user_id" | "status"
+  | "id"
+  | "reference_code"
+  | "created_at"
+  | "discord_username"
+  | "discord_user_id"
+  | "status"
+  | "claimed_by"
 >;
 
 export type ReportSubmissionAttemptRow = {
@@ -190,6 +225,26 @@ export type AppealSubmissionAttemptRow = {
   id: number;
   ip_hash: string;
   created_at: string;
+};
+
+export type ActivityEntityType = "application" | "report" | "appeal";
+export type ActivityActorType = "staff" | "applicant";
+
+export type ActivityLogRow = {
+  id: number;
+  entity_type: ActivityEntityType;
+  entity_id: string;
+  actor_type: ActivityActorType;
+  staff_id: string | null;
+  detail: string;
+  created_at: string;
+};
+
+export type ActivityLogInsert = Pick<
+  ActivityLogRow,
+  "entity_type" | "entity_id" | "actor_type" | "detail"
+> & {
+  staff_id?: string | null;
 };
 
 export type Database = {
@@ -235,6 +290,12 @@ export type Database = {
         Row: AppealSubmissionAttemptRow;
         Insert: Pick<AppealSubmissionAttemptRow, "ip_hash">;
         Update: Partial<AppealSubmissionAttemptRow>;
+        Relationships: [];
+      };
+      activity_log: {
+        Row: ActivityLogRow;
+        Insert: ActivityLogInsert;
+        Update: Partial<ActivityLogRow>;
         Relationships: [];
       };
     };

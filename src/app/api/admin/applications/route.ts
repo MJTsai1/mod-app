@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getStaffSession } from "@/lib/staffAuth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { applicationStatusValues } from "@/lib/validation/application";
+import { attachClaimerNames } from "@/lib/attachClaimerNames";
 
 export const dynamic = "force-dynamic";
 
@@ -28,7 +29,7 @@ export async function GET(request: Request) {
   let query = supabase
     .from("applications")
     .select(
-      "id, reference_code, created_at, updated_at, discord_username, discord_user_id, status, age, country",
+      "id, reference_code, created_at, updated_at, discord_username, discord_user_id, status, age, country, claimed_by",
       { count: "exact" }
     )
     .order("created_at", { ascending: false })
@@ -56,7 +57,7 @@ export async function GET(request: Request) {
   }
 
   return NextResponse.json({
-    applications: data,
+    applications: await attachClaimerNames(data ?? []),
     page,
     pageSize,
     total: count ?? 0,

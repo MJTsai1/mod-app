@@ -5,20 +5,33 @@ import { useRouter } from "next/navigation";
 import { reportStatusValues } from "@/lib/validation/report";
 import type { ReportStatus } from "@/lib/supabase/types";
 import { useToast } from "@/components/site/ToastProvider";
+import { ClaimButton } from "@/components/admin/ClaimButton";
 
 interface Props {
   reportId: string;
   initialStatus: ReportStatus;
   initialNotes: string;
   reviewedBy: string | null;
+  claimedBy: string | null;
+  claimedByName: string | null;
+  currentStaffId: string;
 }
 
-export function ReportReviewPanel({ reportId, initialStatus, initialNotes, reviewedBy }: Props) {
+export function ReportReviewPanel({
+  reportId,
+  initialStatus,
+  initialNotes,
+  reviewedBy,
+  claimedBy,
+  claimedByName,
+  currentStaffId,
+}: Props) {
   const router = useRouter();
   const { showToast } = useToast();
   const [status, setStatus] = useState<ReportStatus>(initialStatus);
   const [notes, setNotes] = useState(initialNotes);
   const [saving, setSaving] = useState(false);
+  const [claim, setClaim] = useState({ by: claimedBy, name: claimedByName });
 
   const dirty = status !== initialStatus || notes !== initialNotes;
 
@@ -49,11 +62,23 @@ export function ReportReviewPanel({ reportId, initialStatus, initialNotes, revie
 
   return (
     <div className="card p-6">
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-lg font-semibold text-[var(--color-text)]">Staff Review</h2>
-        {reviewedBy && (
-          <p className="text-xs text-[var(--color-text-subtle)]">Last reviewed by {reviewedBy}</p>
-        )}
+        <div className="flex items-center gap-4">
+          {reviewedBy && (
+            <p className="text-xs text-[var(--color-text-subtle)]">Last reviewed by {reviewedBy}</p>
+          )}
+          <ClaimButton
+            endpoint={`/api/admin/reports/${reportId}`}
+            claimedBy={claim.by}
+            claimedByName={claim.name}
+            currentStaffId={currentStaffId}
+            onUpdated={(claimedBy, claimedByName) => {
+              setClaim({ by: claimedBy, name: claimedByName });
+              router.refresh();
+            }}
+          />
+        </div>
       </div>
 
       <label htmlFor="status" className="field-label">

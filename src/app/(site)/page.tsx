@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/config";
 import { getRecentYoutubeVideos } from "@/lib/youtube";
+import { getServerWidget } from "@/lib/discordWidget";
 
 export const metadata: Metadata = {
   title: `${siteConfig.serverName} — Community Hub`,
@@ -43,7 +44,10 @@ function ArrowIcon() {
 }
 
 export default async function HomePage() {
-  const videos = await getRecentYoutubeVideos(siteConfig.youtube.officialChannelId);
+  const [videos, serverWidget] = await Promise.all([
+    getRecentYoutubeVideos(siteConfig.youtube.officialChannelId),
+    getServerWidget(siteConfig.discordGuildId),
+  ]);
 
   return (
     <>
@@ -68,7 +72,7 @@ export default async function HomePage() {
             {siteConfig.description}
           </p>
           {siteConfig.socialLinks.discord && (
-            <div className="mt-10">
+            <div className="mt-10 flex flex-col items-center gap-4">
               <a
                 href={siteConfig.socialLinks.discord}
                 target="_blank"
@@ -77,6 +81,16 @@ export default async function HomePage() {
               >
                 Join our Discord
               </a>
+              {serverWidget && (
+                <p className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
+                  <span
+                    className="h-2 w-2 rounded-full"
+                    style={{ background: "var(--color-success)" }}
+                    aria-hidden
+                  />
+                  {serverWidget.presenceCount.toLocaleString()} online now
+                </p>
+              )}
             </div>
           )}
         </div>

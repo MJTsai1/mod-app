@@ -22,6 +22,7 @@ const REPORT_STATUS_STYLES: Record<ReportStatus, { bg: string; color: string }> 
   reviewing: { bg: "var(--color-warning-bg)", color: "var(--color-warning)" },
   resolved: { bg: "var(--color-success-bg)", color: "var(--color-success)" },
   dismissed: { bg: "rgba(138,128,171,0.15)", color: "var(--color-text-subtle)" },
+  withdrawn: { bg: "rgba(138,128,171,0.15)", color: "var(--color-text-subtle)" },
 };
 
 export function ReportStatusBadge({ status }: { status: ReportStatus }) {
@@ -38,6 +39,7 @@ const APPEAL_STATUS_STYLES: Record<AppealStatus, { bg: string; color: string }> 
   reviewing: { bg: "var(--color-warning-bg)", color: "var(--color-warning)" },
   approved: { bg: "var(--color-success-bg)", color: "var(--color-success)" },
   denied: { bg: "var(--color-danger-bg)", color: "var(--color-danger)" },
+  withdrawn: { bg: "rgba(138,128,171,0.15)", color: "var(--color-text-subtle)" },
 };
 
 export function AppealStatusBadge({ status }: { status: AppealStatus }) {

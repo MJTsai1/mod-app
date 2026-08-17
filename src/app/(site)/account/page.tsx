@@ -3,7 +3,14 @@ import { siteConfig } from "@/lib/config";
 import { getUserSession } from "@/lib/userAuth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { DiscordSignInButton } from "@/components/site/DiscordSignInButton";
+import { WithdrawButton } from "@/components/site/WithdrawButton";
 import type { ReportListItem, BanAppealListItem, ApplicationListItem } from "@/lib/supabase/types";
+
+const NON_WITHDRAWABLE: Record<"applications" | "reports" | "appeals", string[]> = {
+  applications: ["accepted", "rejected", "withdrawn"],
+  reports: ["resolved", "dismissed", "withdrawn"],
+  appeals: ["approved", "denied", "withdrawn"],
+};
 
 export const metadata: Metadata = {
   title: `My Account — ${siteConfig.serverName}`,
@@ -26,21 +33,28 @@ function SubmissionRow({
   status,
   date,
   detail,
+  withdrawEndpoint,
+  canWithdraw,
 }: {
   reference: string;
   status: string;
   date: string;
   detail: string;
+  withdrawEndpoint: string;
+  canWithdraw: boolean;
 }) {
   return (
-    <div className="flex items-center justify-between border-b border-[var(--color-border)] py-3 last:border-0">
+    <div className="flex items-center justify-between gap-3 border-b border-[var(--color-border)] py-3 last:border-0">
       <div>
         <p className="font-mono text-sm text-[var(--color-text)]">{reference}</p>
         <p className="text-xs text-[var(--color-text-subtle)]">
           {detail} · {new Date(date).toLocaleDateString()}
         </p>
       </div>
-      <Pill>{status}</Pill>
+      <div className="flex shrink-0 flex-col items-end gap-1">
+        <Pill>{status}</Pill>
+        {canWithdraw && <WithdrawButton endpoint={withdrawEndpoint} />}
+      </div>
     </div>
   );
 }
@@ -117,6 +131,8 @@ export default async function AccountPage(props: PageProps<"/account">) {
               status={application.status}
               date={application.created_at}
               detail="Moderator application"
+              withdrawEndpoint={`/api/applications/${application.id}/withdraw`}
+              canWithdraw={!NON_WITHDRAWABLE.applications.includes(application.status)}
             />
           ))
         )}
@@ -134,6 +150,8 @@ export default async function AccountPage(props: PageProps<"/account">) {
               status={report.status}
               date={report.created_at}
               detail={`Reported ${report.reported_discord_username}`}
+              withdrawEndpoint={`/api/reports/${report.id}/withdraw`}
+              canWithdraw={!NON_WITHDRAWABLE.reports.includes(report.status)}
             />
           ))
         )}
@@ -151,6 +169,8 @@ export default async function AccountPage(props: PageProps<"/account">) {
               status={appeal.status}
               date={appeal.created_at}
               detail={appeal.discord_username}
+              withdrawEndpoint={`/api/appeals/${appeal.id}/withdraw`}
+              canWithdraw={!NON_WITHDRAWABLE.appeals.includes(appeal.status)}
             />
           ))
         )}
