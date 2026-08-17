@@ -34,11 +34,11 @@ export const siteConfig = {
   accentColorHover: "#7c3aed", // purple-600
   accentColorSoft: "#a78bfa", // purple-400
 
-  discordInviteUrl: "https://discord.gg/fn4pCJqGSv",
+  discordInviteUrl: "https://discord.gg/PRTdGazzZP",
   contactEmail: "coolmarcusjtsai1@gmail.com",
 
   socialLinks: {
-    discord: "https://discord.gg/fn4pCJqGSv",
+    discord: "https://discord.gg/PRTdGazzZP",
     website: "",
     twitter: "",
   },
