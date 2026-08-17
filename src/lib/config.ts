@@ -54,7 +54,7 @@ export const siteConfig = {
 
   // Requires "Server Widget" enabled under Discord Server Settings -> Widget.
   // Leave as null to hide the live member count on the homepage.
-  discordGuildId: null as string | null,
+  discordGuildId: "1500149847158821026" as string | null,
 
   // Homepage quick-links grid.
   quickLinks: [
