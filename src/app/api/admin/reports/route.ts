@@ -3,11 +3,13 @@ import { getStaffSession } from "@/lib/staffAuth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { reportStatusValues } from "@/lib/validation/report";
 import { attachClaimerNames } from "@/lib/attachClaimerNames";
+import { parseSortParams } from "@/lib/sortParams";
 
 export const dynamic = "force-dynamic";
 
 const PAGE_SIZE_DEFAULT = 20;
 const PAGE_SIZE_MAX = 100;
+const SORTABLE_COLUMNS = ["created_at", "status", "category"] as const;
 
 export async function GET(request: Request) {
   const session = await getStaffSession();
@@ -24,6 +26,12 @@ export async function GET(request: Request) {
     Math.max(1, Number(url.searchParams.get("pageSize") ?? String(PAGE_SIZE_DEFAULT)) || PAGE_SIZE_DEFAULT)
   );
 
+  const { column: sortColumn, ascending: sortAscending } = parseSortParams(
+    url,
+    SORTABLE_COLUMNS,
+    "created_at"
+  );
+
   const supabase = createSupabaseAdminClient();
 
   let query = supabase
@@ -32,7 +40,7 @@ export async function GET(request: Request) {
       "id, reference_code, created_at, reporter_discord_username, reported_discord_username, category, status, claimed_by",
       { count: "exact" }
     )
-    .order("created_at", { ascending: false })
+    .order(sortColumn, { ascending: sortAscending })
     .range((page - 1) * pageSize, page * pageSize - 1);
 
   if (status && (reportStatusValues as readonly string[]).includes(status)) {

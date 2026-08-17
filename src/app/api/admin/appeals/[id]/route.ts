@@ -66,7 +66,7 @@ export async function PATCH(request: Request, { params }: RouteParams) {
 
   const { data: current, error: fetchError } = await supabase
     .from("ban_appeals")
-    .select("status, staff_notes, claimed_by")
+    .select("status, claimed_by")
     .eq("id", id)
     .maybeSingle();
 
@@ -88,12 +88,6 @@ export async function PATCH(request: Request, { params }: RouteParams) {
   if (parsed.data.status && parsed.data.status !== current.status) {
     changes.push(`Status changed from ${current.status} to ${parsed.data.status}`);
   }
-  if (
-    parsed.data.staffNotes !== undefined &&
-    parsed.data.staffNotes !== (current.staff_notes ?? "")
-  ) {
-    changes.push("Staff notes updated");
-  }
   if (parsed.data.claim === "claim") changes.push("Claimed");
   if (parsed.data.claim === "unclaim") changes.push("Unclaimed");
 
@@ -101,10 +95,7 @@ export async function PATCH(request: Request, { params }: RouteParams) {
     .from("ban_appeals")
     .update({
       ...(parsed.data.status ? { status: parsed.data.status } : {}),
-      ...(parsed.data.staffNotes !== undefined ? { staff_notes: parsed.data.staffNotes } : {}),
-      ...(parsed.data.status !== undefined || parsed.data.staffNotes !== undefined
-        ? { last_updated_by: session.staff.id }
-        : {}),
+      ...(parsed.data.status !== undefined ? { last_updated_by: session.staff.id } : {}),
       ...(claimResult.fields ?? {}),
     })
     .eq("id", id)

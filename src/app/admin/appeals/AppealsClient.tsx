@@ -7,20 +7,28 @@ import type { BanAppealListItem, AppealStatus } from "@/lib/supabase/types";
 import { InlineStatusSelect } from "@/components/admin/InlineStatusSelect";
 import { TableSkeletonRows } from "@/components/admin/TableSkeletonRows";
 import { ClaimButton } from "@/components/admin/ClaimButton";
+import { SortableHeader } from "@/components/admin/SortableHeader";
+import { BulkActionsBar } from "@/components/admin/BulkActionsBar";
+import { useToast } from "@/components/site/ToastProvider";
 
 const PAGE_SIZE = 20;
 
 type BanAppealListRow = BanAppealListItem & { claimed_by_name: string | null };
 
 export function AppealsClient({ currentStaffId }: { currentStaffId: string }) {
+  const { showToast } = useToast();
   const [appeals, setAppeals] = useState<BanAppealListRow[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState<string>("");
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [sortColumn, setSortColumn] = useState("created_at");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [bulkApplying, setBulkApplying] = useState(false);
 
   const [appliedFilters, setAppliedFilters] = useState({ status, debouncedSearch });
   if (appliedFilters.status !== status || appliedFilters.debouncedSearch !== debouncedSearch) {
@@ -45,6 +53,8 @@ export function AppealsClient({ currentStaffId }: { currentStaffId: string }) {
     params.set("pageSize", String(PAGE_SIZE));
     if (status) params.set("status", status);
     if (debouncedSearch) params.set("q", debouncedSearch);
+    params.set("sort", sortColumn);
+    params.set("order", sortOrder);
 
     fetch(`/api/admin/appeals?${params.toString()}`, { signal: controller.signal })
       .then(async (res) => {
@@ -54,6 +64,7 @@ export function AppealsClient({ currentStaffId }: { currentStaffId: string }) {
       .then((data) => {
         setAppeals(data.appeals ?? []);
         setTotal(data.total ?? 0);
+        setSelected(new Set());
       })
       .catch((err) => {
         if (err.name === "AbortError") return;
@@ -62,13 +73,58 @@ export function AppealsClient({ currentStaffId }: { currentStaffId: string }) {
       .finally(() => setLoading(false));
 
     return () => controller.abort();
-  }, [page, status, debouncedSearch]);
+  }, [page, status, debouncedSearch, sortColumn, sortOrder]);
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
   const exportParams = new URLSearchParams();
   if (status) exportParams.set("status", status);
   if (debouncedSearch) exportParams.set("q", debouncedSearch);
+
+  function handleSort(column: string) {
+    if (column === sortColumn) {
+      setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setSortColumn(column);
+      setSortOrder("desc");
+    }
+  }
+
+  function toggleSelected(id: string) {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
+  function toggleSelectAll() {
+    setSelected((prev) => (prev.size === appeals.length ? new Set() : new Set(appeals.map((a) => a.id))));
+  }
+
+  async function handleBulkApply(newStatus: AppealStatus) {
+    setBulkApplying(true);
+    try {
+      const response = await fetch("/api/admin/appeals/bulk-status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids: Array.from(selected), status: newStatus }),
+      });
+      const body = await response.json().catch(() => null);
+      if (!response.ok) {
+        showToast(body?.error ?? "Bulk update failed.", "error");
+        return;
+      }
+      setAppeals((prev) => prev.map((a) => (selected.has(a.id) ? { ...a, status: newStatus } : a)));
+      showToast(`Updated ${body.updated} appeal${body.updated === 1 ? "" : "s"}.`);
+      setSelected(new Set());
+    } catch {
+      showToast("Network error — please try again.", "error");
+    } finally {
+      setBulkApplying(false);
+    }
+  }
 
   return (
     <div>
@@ -113,24 +169,40 @@ export function AppealsClient({ currentStaffId }: { currentStaffId: string }) {
         </div>
       )}
 
+      <BulkActionsBar
+        count={selected.size}
+        statusValues={appealStatusValues}
+        onApply={handleBulkApply}
+        onClear={() => setSelected(new Set())}
+        applying={bulkApplying}
+      />
+
       <div className="card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead className="border-b border-[var(--color-border)] text-xs uppercase tracking-wide text-[var(--color-text-subtle)]">
               <tr>
-                <th className="px-4 py-3">Applicant</th>
+                <th className="px-4 py-3">
+                  <input
+                    type="checkbox"
+                    checked={appeals.length > 0 && selected.size === appeals.length}
+                    onChange={toggleSelectAll}
+                    aria-label="Select all on this page"
+                  />
+                </th>
+                <SortableHeader label="Applicant" column="discord_username" currentSort={sortColumn} currentOrder={sortOrder} onSort={handleSort} />
                 <th className="px-4 py-3">Reference</th>
-                <th className="px-4 py-3">Status</th>
+                <SortableHeader label="Status" column="status" currentSort={sortColumn} currentOrder={sortOrder} onSort={handleSort} />
                 <th className="px-4 py-3">Claim</th>
-                <th className="px-4 py-3">Submitted</th>
+                <SortableHeader label="Submitted" column="created_at" currentSort={sortColumn} currentOrder={sortOrder} onSort={handleSort} />
                 <th className="px-4 py-3" />
               </tr>
             </thead>
             <tbody>
-              {loading && <TableSkeletonRows columns={6} />}
+              {loading && <TableSkeletonRows columns={7} />}
               {!loading && appeals.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-[var(--color-text-subtle)]">
+                  <td colSpan={7} className="px-4 py-8 text-center text-[var(--color-text-subtle)]">
                     No ban appeals found.
                   </td>
                 </tr>
@@ -141,6 +213,14 @@ export function AppealsClient({ currentStaffId }: { currentStaffId: string }) {
                     key={appeal.id}
                     className="border-b border-[var(--color-border)] last:border-0 hover:bg-[var(--color-surface-hover)]"
                   >
+                    <td className="px-4 py-3">
+                      <input
+                        type="checkbox"
+                        checked={selected.has(appeal.id)}
+                        onChange={() => toggleSelected(appeal.id)}
+                        aria-label={`Select ${appeal.discord_username}`}
+                      />
+                    </td>
                     <td className="px-4 py-3">
                       <div className="font-medium text-[var(--color-text)]">
                         {appeal.discord_username}

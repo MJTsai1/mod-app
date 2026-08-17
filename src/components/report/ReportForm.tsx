@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { reportSchema } from "@/lib/validation/report";
 import { reportCategoryValues, reportCategoryLabels } from "@/lib/config";
@@ -22,14 +22,47 @@ const EMPTY: FormValues = {
   evidenceLinks: "",
 };
 
+const DRAFT_STORAGE_KEY = "mod-app-report-draft-v1";
+
+function loadDraft(): FormValues {
+  if (typeof window === "undefined") return EMPTY;
+  try {
+    const raw = window.sessionStorage.getItem(DRAFT_STORAGE_KEY);
+    if (!raw) return EMPTY;
+    return { ...EMPTY, ...JSON.parse(raw) };
+  } catch {
+    return EMPTY;
+  }
+}
+
 export function ReportForm() {
   const router = useRouter();
   const [values, setValues] = useState<FormValues>(EMPTY);
+  const [hydrated, setHydrated] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const submittingRef = useRef(false);
   const categoryId = useId();
+
+  useEffect(() => {
+    // Reading sessionStorage must happen post-mount to avoid an SSR
+    // hydration mismatch (the server has no access to browser storage).
+    /* eslint-disable react-hooks/set-state-in-effect */
+    setValues(loadDraft());
+    setHydrated(true);
+    /* eslint-enable react-hooks/set-state-in-effect */
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      window.sessionStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(values));
+    } catch {
+      // sessionStorage unavailable (e.g. private browsing) — draft resilience
+      // is a nice-to-have, not required for correct submission.
+    }
+  }, [values, hydrated]);
 
   function setField<K extends keyof FormValues>(key: K, value: FormValues[K]) {
     setValues((prev) => ({ ...prev, [key]: value }));
@@ -85,12 +118,26 @@ export function ReportForm() {
         return;
       }
 
+      try {
+        window.sessionStorage.removeItem(DRAFT_STORAGE_KEY);
+      } catch {
+        // ignore
+      }
+
       router.push(`/report/success?ref=${encodeURIComponent(body.referenceCode)}`);
     } catch {
       setSubmitError("We couldn't reach the server. Check your connection and try again — your answers are still here.");
       setSubmitting(false);
       submittingRef.current = false;
     }
+  }
+
+  if (!hydrated) {
+    return (
+      <div className="card-elevated p-8 text-center text-[var(--color-text-muted)]">
+        Loading form&hellip;
+      </div>
+    );
   }
 
   return (

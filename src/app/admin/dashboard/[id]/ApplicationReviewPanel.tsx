@@ -10,7 +10,6 @@ import { ClaimButton } from "@/components/admin/ClaimButton";
 interface Props {
   applicationId: string;
   initialStatus: ApplicationStatus;
-  initialNotes: string;
   reviewedBy: string | null;
   claimedBy: string | null;
   claimedByName: string | null;
@@ -20,7 +19,6 @@ interface Props {
 export function ApplicationReviewPanel({
   applicationId,
   initialStatus,
-  initialNotes,
   reviewedBy,
   claimedBy,
   claimedByName,
@@ -29,11 +27,10 @@ export function ApplicationReviewPanel({
   const router = useRouter();
   const { showToast } = useToast();
   const [status, setStatus] = useState<ApplicationStatus>(initialStatus);
-  const [notes, setNotes] = useState(initialNotes);
   const [saving, setSaving] = useState(false);
   const [claim, setClaim] = useState({ by: claimedBy, name: claimedByName });
 
-  const dirty = status !== initialStatus || notes !== initialNotes;
+  const dirty = status !== initialStatus;
 
   async function handleSave() {
     setSaving(true);
@@ -42,7 +39,7 @@ export function ApplicationReviewPanel({
       const response = await fetch(`/api/admin/applications/${applicationId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status, staffNotes: notes }),
+        body: JSON.stringify({ status }),
       });
 
       if (!response.ok) {
@@ -97,24 +94,11 @@ export function ApplicationReviewPanel({
         ))}
       </select>
 
-      <label htmlFor="notes" className="field-label">
-        Staff notes
-      </label>
-      <textarea
-        id="notes"
-        value={notes}
-        onChange={(event) => setNotes(event.target.value)}
-        rows={5}
-        maxLength={5000}
-        placeholder="Internal notes about this applicant (not visible to the applicant)."
-        className="field-input resize-y"
-      />
-
       <button
         type="button"
         onClick={handleSave}
         disabled={saving || !dirty}
-        className="btn btn-primary mt-4"
+        className="btn btn-primary"
       >
         {saving ? "Saving…" : "Save changes"}
       </button>

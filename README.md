@@ -59,6 +59,7 @@ supabase/migrations/
   0002_reports_appeals.sql             Reports, ban appeals, their rate-limit tables + RLS
   0003_application_login_and_qol.sql   Ties applications to a Discord-authenticated applicant
   0004_claims_withdrawals_activity.sql Withdrawn status, staff claiming, activity_log
+  0005_case_notes.sql                  Threaded staff notes (case_notes table)
 ```
 
 ## 1. Customise the site
@@ -74,9 +75,9 @@ window. This is the only file you should need to touch for a rebrand.
    Next.js app on Vercel's CDN will still be fast worldwide since page/API logic runs at the
    edge/region nearest each visitor and only the database round-trip is fixed-region).
 2. Open **SQL Editor** in the Supabase dashboard and run every file in `supabase/migrations/`
-   **in numeric order** (0001, then 0002, then 0003, then 0004). Together these create the
-   `applications`, `reports`, `ban_appeals`, `staff_members`, `activity_log`, and rate-limit
-   tables, their enums, indexes, and Row Level Security policies.
+   **in numeric order** (0001 through 0005). Together these create the `applications`, `reports`,
+   `ban_appeals`, `staff_members`, `activity_log`, `case_notes`, and rate-limit tables, their
+   enums, indexes, and Row Level Security policies.
 3. Go to **Project Settings -> API** and copy:
    - **Project URL** -> `NEXT_PUBLIC_SUPABASE_URL`
    - **anon public** key -> `NEXT_PUBLIC_SUPABASE_ANON_KEY`
@@ -180,11 +181,20 @@ the staff email you added above to review it. To test reports/appeals, visit `/r
 - **Inline status changes** — change status directly from the list view (`InlineStatusSelect`),
   no need to open every item individually.
 - **Claiming** — a staff member can claim an item (list view or detail page) so two people don't
-  duplicate work; only the claimer or an admin can unclaim it.
-- **Activity History** — every status change, note edit, claim, and self-service withdrawal is
-  logged to `activity_log`, shown per-item on each detail page and as a combined feed at
+  duplicate work; only the claimer or an admin can unclaim it. `/admin/my-claims` shows everything
+  you personally have claimed.
+- **Threaded staff notes** (`case_notes` table) — every note is its own timestamped, attributed
+  entry instead of one text box that silently overwrites whenever someone else saves. The old
+  single `staff_notes` column is preserved (unused) with existing notes carried forward as the
+  first thread entry.
+- **Activity History** — every status change, note, claim, and self-service withdrawal is logged
+  to `activity_log`, shown per-item on each detail page and as a combined feed at
   `/admin/activity`. This is a full history, unlike "Last reviewed by" which only shows the most
   recent reviewer.
+- **Bulk actions** — select multiple rows in a list view and change their status all at once
+  (`/api/admin/*/bulk-status`).
+- **Sortable columns** — click Applicant/Status/Submitted (etc.) column headers to sort; click
+  again to reverse.
 - **Stats** (`/admin/stats`) — status breakdowns and acceptance/resolution/approval rates across
   all three submission types.
 - **CSV export** on each list view, respecting the current search/status filter.
@@ -196,6 +206,15 @@ the staff email you added above to review it. To test reports/appeals, visit `/r
   (only while it's still pending/reviewing — not after it's been decided).
 - Configurable cooldowns in `src/lib/config.ts` (`applicationRules`) prevent immediately
   reapplying after a rejection or a self-withdrawal. Set either to `null` to disable.
+
+## Site polish
+
+- Themed 404 (`src/app/not-found.tsx`) and error boundary (`src/app/error.tsx`) pages instead of
+  Next.js's generic defaults.
+- A branded Open Graph image (`src/app/opengraph-image.tsx`, generated at build time) so links
+  shared in Discord show a proper preview card.
+- Report and Ban Appeal forms auto-save answers to sessionStorage as you type, same as the
+  moderator application form — accidentally navigating away doesn't lose progress.
 
 ## Security notes
 
@@ -222,10 +241,10 @@ the staff email you added above to review it. To test reports/appeals, visit `/r
 
 - Real values for every variable in `.env.example`.
 - Your Discord server's invite link and contact email in `src/lib/config.ts`.
-- **Run every migration through `0004_claims_withdrawals_activity.sql`** if you haven't already —
-  required, not optional, once this version of the code is deployed. Without 0003, `/apply` and
-  `/account` will error; without 0004, claiming, withdrawing, and the Activity/Stats pages will
-  error.
+- **Run every migration through `0005_case_notes.sql`** if you haven't already — required, not
+  optional, once this version of the code is deployed. Without 0003, `/apply` and `/account` will
+  error; without 0004, claiming/withdrawing/Activity/Stats will error; without 0005, adding staff
+  notes will error.
 - Discord OAuth client ID/secret configured in Supabase (step 5 above) — without this, the
   "Sign in with Discord" button on `/apply`, `/report`, `/appeal`, and `/account` will fail.
 - At least one `staff_members` row (step 6 above) before anyone can use the dashboard.

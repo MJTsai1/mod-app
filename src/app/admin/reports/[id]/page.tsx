@@ -4,10 +4,12 @@ import { requireStaffSession } from "@/lib/staffAuth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getStaffDisplayName } from "@/lib/staffLookup";
 import { getActivityHistory } from "@/lib/activityLog";
+import { getCaseNotes } from "@/lib/caseNotes";
 import { siteConfig } from "@/lib/config";
 import { reportCategoryLabels } from "@/lib/config";
 import { ReportStatusBadge } from "@/components/admin/StatusBadge";
 import { ActivityHistoryList } from "@/components/admin/ActivityHistoryList";
+import { NotesThread } from "@/components/admin/NotesThread";
 import { ReportReviewPanel } from "./ReportReviewPanel";
 
 export const metadata: Metadata = {
@@ -39,10 +41,11 @@ export default async function ReportDetailPage(props: PageProps<"/admin/reports/
 
   if (!report) notFound();
 
-  const [reviewedBy, claimedByName, activity] = await Promise.all([
+  const [reviewedBy, claimedByName, activity, notes] = await Promise.all([
     getStaffDisplayName(report.last_updated_by),
     getStaffDisplayName(report.claimed_by),
     getActivityHistory("report", report.id),
+    getCaseNotes("report", report.id),
   ]);
 
   return (
@@ -80,12 +83,16 @@ export default async function ReportDetailPage(props: PageProps<"/admin/reports/
       <ReportReviewPanel
         reportId={report.id}
         initialStatus={report.status}
-        initialNotes={report.staff_notes ?? ""}
         reviewedBy={reviewedBy}
         claimedBy={report.claimed_by}
         claimedByName={claimedByName}
         currentStaffId={session.staff.id}
       />
+
+      <div className="card mt-6 p-6">
+        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">Staff Notes</h2>
+        <NotesThread endpoint={`/api/admin/reports/${report.id}/notes`} initialNotes={notes} />
+      </div>
 
       <div className="card mt-6 p-6">
         <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">Activity History</h2>

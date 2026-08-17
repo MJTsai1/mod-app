@@ -31,6 +31,5 @@ export type ReportStatusValue = (typeof reportStatusValues)[number];
 
 export const updateReportSchema = z.object({
   status: z.enum(reportStatusValues).optional(),
-  staffNotes: z.string().max(5000).optional(),
   claim: z.enum(["claim", "unclaim"]).optional(),
 });

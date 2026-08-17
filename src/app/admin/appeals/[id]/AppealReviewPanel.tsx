@@ -10,7 +10,6 @@ import { ClaimButton } from "@/components/admin/ClaimButton";
 interface Props {
   appealId: string;
   initialStatus: AppealStatus;
-  initialNotes: string;
   reviewedBy: string | null;
   claimedBy: string | null;
   claimedByName: string | null;
@@ -20,7 +19,6 @@ interface Props {
 export function AppealReviewPanel({
   appealId,
   initialStatus,
-  initialNotes,
   reviewedBy,
   claimedBy,
   claimedByName,
@@ -29,11 +27,10 @@ export function AppealReviewPanel({
   const router = useRouter();
   const { showToast } = useToast();
   const [status, setStatus] = useState<AppealStatus>(initialStatus);
-  const [notes, setNotes] = useState(initialNotes);
   const [saving, setSaving] = useState(false);
   const [claim, setClaim] = useState({ by: claimedBy, name: claimedByName });
 
-  const dirty = status !== initialStatus || notes !== initialNotes;
+  const dirty = status !== initialStatus;
 
   async function handleSave() {
     setSaving(true);
@@ -42,7 +39,7 @@ export function AppealReviewPanel({
       const response = await fetch(`/api/admin/appeals/${appealId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status, staffNotes: notes }),
+        body: JSON.stringify({ status }),
       });
 
       if (!response.ok) {
@@ -97,24 +94,11 @@ export function AppealReviewPanel({
         ))}
       </select>
 
-      <label htmlFor="notes" className="field-label">
-        Staff notes
-      </label>
-      <textarea
-        id="notes"
-        value={notes}
-        onChange={(event) => setNotes(event.target.value)}
-        rows={5}
-        maxLength={5000}
-        placeholder="Internal notes about this appeal (not visible to the appellant)."
-        className="field-input resize-y"
-      />
-
       <button
         type="button"
         onClick={handleSave}
         disabled={saving || !dirty}
-        className="btn btn-primary mt-4"
+        className="btn btn-primary"
       >
         {saving ? "Saving…" : "Save changes"}
       </button>

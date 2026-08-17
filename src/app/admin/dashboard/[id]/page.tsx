@@ -4,9 +4,11 @@ import { requireStaffSession } from "@/lib/staffAuth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getStaffDisplayName } from "@/lib/staffLookup";
 import { getActivityHistory } from "@/lib/activityLog";
+import { getCaseNotes } from "@/lib/caseNotes";
 import { siteConfig } from "@/lib/config";
 import { StatusBadge } from "@/components/admin/StatusBadge";
 import { ActivityHistoryList } from "@/components/admin/ActivityHistoryList";
+import { NotesThread } from "@/components/admin/NotesThread";
 import { ApplicationReviewPanel } from "./ApplicationReviewPanel";
 
 export const metadata: Metadata = {
@@ -55,10 +57,11 @@ export default async function ApplicationDetailPage(
 
   if (!application) notFound();
 
-  const [reviewedBy, claimedByName, activity] = await Promise.all([
+  const [reviewedBy, claimedByName, activity, notes] = await Promise.all([
     getStaffDisplayName(application.last_updated_by),
     getStaffDisplayName(application.claimed_by),
     getActivityHistory("application", application.id),
+    getCaseNotes("application", application.id),
   ]);
 
   return (
@@ -134,12 +137,16 @@ export default async function ApplicationDetailPage(
       <ApplicationReviewPanel
         applicationId={application.id}
         initialStatus={application.status}
-        initialNotes={application.staff_notes ?? ""}
         reviewedBy={reviewedBy}
         claimedBy={application.claimed_by}
         claimedByName={claimedByName}
         currentStaffId={session.staff.id}
       />
+
+      <div className="card mt-6 p-6">
+        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">Staff Notes</h2>
+        <NotesThread endpoint={`/api/admin/applications/${application.id}/notes`} initialNotes={notes} />
+      </div>
 
       <div className="card mt-6 p-6">
         <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">Activity History</h2>

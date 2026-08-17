@@ -247,6 +247,19 @@ export type ActivityLogInsert = Pick<
   staff_id?: string | null;
 };
 
+export type CaseNoteRow = {
+  id: number;
+  entity_type: ActivityEntityType;
+  entity_id: string;
+  staff_id: string | null;
+  note: string;
+  created_at: string;
+};
+
+export type CaseNoteInsert = Pick<CaseNoteRow, "entity_type" | "entity_id" | "note"> & {
+  staff_id?: string | null;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -296,6 +309,12 @@ export type Database = {
         Row: ActivityLogRow;
         Insert: ActivityLogInsert;
         Update: Partial<ActivityLogRow>;
+        Relationships: [];
+      };
+      case_notes: {
+        Row: CaseNoteRow;
+        Insert: CaseNoteInsert;
+        Update: Partial<CaseNoteRow>;
         Relationships: [];
       };
     };
