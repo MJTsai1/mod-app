@@ -260,25 +260,6 @@ export type CaseNoteInsert = Pick<CaseNoteRow, "entity_type" | "entity_id" | "no
   staff_id?: string | null;
 };
 
-export type AiReportRow = {
-  id: number;
-  entity_type: "application";
-  entity_id: string;
-  requested_by: string | null;
-  model: string;
-  summary: string;
-  answer_quality: string;
-  strengths: string[];
-  concerns: string[];
-  consistency_notes: string;
-  history_notes: string;
-  created_at: string;
-};
-
-export type AiReportInsert = Omit<AiReportRow, "id" | "created_at" | "entity_type"> & {
-  entity_type?: "application";
-};
-
 export type Database = {
   public: {
     Tables: {
@@ -334,12 +315,6 @@ export type Database = {
         Row: CaseNoteRow;
         Insert: CaseNoteInsert;
         Update: Partial<CaseNoteRow>;
-        Relationships: [];
-      };
-      ai_reports: {
-        Row: AiReportRow;
-        Insert: AiReportInsert;
-        Update: Partial<AiReportRow>;
         Relationships: [];
       };
     };
