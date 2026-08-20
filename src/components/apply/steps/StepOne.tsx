@@ -1,7 +1,26 @@
 "use client";
 
-import { TextInput } from "@/components/apply/fields";
+import { useMemo } from "react";
+import { TextInput, SelectInput } from "@/components/apply/fields";
 import type { ApplicationFormValues, FormErrors } from "@/components/apply/formTypes";
+
+function useTimezoneOptions(): string[] {
+  return useMemo(() => {
+    try {
+      // Every IANA timezone identifier the runtime knows about, sorted
+      // west-to-east so the list reads in a predictable order.
+      return Intl.supportedValuesOf("timeZone").sort();
+    } catch {
+      // Intl.supportedValuesOf isn't available in this browser; fall back
+      // to just the applicant's own detected zone so the field still works.
+      try {
+        return [Intl.DateTimeFormat().resolvedOptions().timeZone];
+      } catch {
+        return [];
+      }
+    }
+  }, []);
+}
 
 interface StepProps {
   values: ApplicationFormValues;
@@ -12,6 +31,8 @@ interface StepProps {
 }
 
 export function StepOne({ values, errors, setField, discordUsername, discordUserId }: StepProps) {
+  const timezoneOptions = useTimezoneOptions();
+
   return (
     <div>
       <div className="mb-5 rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-bg-elevated)] px-4 py-3">
@@ -49,14 +70,17 @@ export function StepOne({ values, errors, setField, discordUsername, discordUser
           required
           placeholder="e.g. Singapore"
           autoComplete="country-name"
+          hint="Auto-detected from your location — change it if it's wrong."
           error={errors.country}
         />
-        <TextInput
+        <SelectInput
           label="Timezone"
           value={values.timezone}
           onChange={(v) => setField("timezone", v)}
+          options={timezoneOptions}
           required
-          placeholder="e.g. GMT+8 / Australia/Sydney"
+          placeholder="Select your timezone"
+          hint="Auto-detected from your browser — change it if it's wrong."
           error={errors.timezone}
         />
         <TextInput

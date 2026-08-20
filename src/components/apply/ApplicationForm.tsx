@@ -57,12 +57,14 @@ function loadDraft(): ApplicationFormValues {
 
 interface ApplicationFormProps {
   turnstileSiteKey?: string;
+  detectedCountry?: string;
   discordUsername: string;
   discordUserId: string | null;
 }
 
 export function ApplicationForm({
   turnstileSiteKey,
+  detectedCountry,
   discordUsername,
   discordUserId,
 }: ApplicationFormProps) {
@@ -81,10 +83,25 @@ export function ApplicationForm({
     // Reading sessionStorage must happen post-mount to avoid an SSR
     // hydration mismatch (the server has no access to browser storage).
     /* eslint-disable react-hooks/set-state-in-effect */
-    setValues(loadDraft());
+    const draft = loadDraft();
+    // Only fill in country/timezone when the applicant hasn't already
+    // entered (or previously saved a draft with) a value — never overwrite
+    // a real answer with a guess.
+    if (!draft.country && detectedCountry) {
+      draft.country = detectedCountry;
+    }
+    if (!draft.timezone) {
+      try {
+        draft.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      } catch {
+        // Intl.DateTimeFormat() timezone resolution isn't available; leave
+        // blank for the applicant to pick from the dropdown themselves.
+      }
+    }
+    setValues(draft);
     setHydrated(true);
     /* eslint-enable react-hooks/set-state-in-effect */
-  }, []);
+  }, [detectedCountry]);
 
   useEffect(() => {
     if (!hydrated) return;

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { siteConfig } from "@/lib/config";
 import { getUserSession } from "@/lib/userAuth";
+import { countryNameFromCode } from "@/lib/geo";
 import { DiscordSignInButton } from "@/components/site/DiscordSignInButton";
 import { ApplicationForm } from "@/components/apply/ApplicationForm";
 
@@ -13,6 +15,10 @@ export default async function ApplyPage(props: PageProps<"/apply">) {
   const searchParams = await props.searchParams;
   const session = await getUserSession();
   const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  // Vercel's edge network sets this header automatically on production
+  // deployments; it's absent locally, so detection just no-ops in dev.
+  const requestHeaders = await headers();
+  const detectedCountry = countryNameFromCode(requestHeaders.get("x-vercel-ip-country"));
 
   return (
     <div className="px-4 py-12 sm:px-6 sm:py-16">
@@ -41,6 +47,7 @@ export default async function ApplyPage(props: PageProps<"/apply">) {
       ) : (
         <ApplicationForm
           turnstileSiteKey={turnstileSiteKey}
+          detectedCountry={detectedCountry}
           discordUsername={session.discordUsername}
           discordUserId={session.discordUserId}
         />
