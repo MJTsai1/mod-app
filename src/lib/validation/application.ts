@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { siteConfig } from "@/lib/config";
 import { shortText, longText, optionalLongText } from "@/lib/validation/shared";
+import { UNINHABITED_TIMEZONE } from "@/components/apply/formTypes";
 
 const baseAgeSchema = z
   .coerce.number({ error: "Age must be a number." })
@@ -21,7 +22,9 @@ export const ageSchema = siteConfig.minAge
 export const stepOneSchema = z.object({
   age: ageSchema,
   country: shortText(80),
-  timezone: shortText(60),
+  timezone: shortText(60).refine((value) => value !== UNINHABITED_TIMEZONE, {
+    message: "Please select a real timezone.",
+  }),
   timeInServer: shortText(120),
 });
 

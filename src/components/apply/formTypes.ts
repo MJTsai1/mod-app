@@ -51,3 +51,6 @@ export const emptyApplicationFormValues: ApplicationFormValues = {
 export type FormErrors = Partial<Record<keyof ApplicationFormValues, string>>;
 
 export const DRAFT_STORAGE_KEY = "mod-app-application-draft-v2";
+
+/** The joke "nobody lives here" UTC-12 entry in the timezone dropdown — not a selectable answer. */
+export const UNINHABITED_TIMEZONE = "Etc/GMT+12";

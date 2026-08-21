@@ -2,7 +2,11 @@
 
 import { useMemo } from "react";
 import { TextInput, SelectInput } from "@/components/apply/fields";
-import type { ApplicationFormValues, FormErrors } from "@/components/apply/formTypes";
+import {
+  UNINHABITED_TIMEZONE,
+  type ApplicationFormValues,
+  type FormErrors,
+} from "@/components/apply/formTypes";
 
 /** "GMT+1" / "GMT+0" / "GMT-5" (as returned by Intl's shortOffset) -> "UTC+1" / "UTC" / "UTC-5". */
 function gmtToUtcLabel(gmtOffset: string): string {
@@ -57,8 +61,8 @@ function useTimezoneOptions(): TimezoneOption[] {
     // identifier for it (Etc/GMT sign convention is inverted) — include it
     // for completeness of the -12..+14 range, with a label that's honest
     // about why it's there.
-    if (zones.length > 0 && !zones.includes("Etc/GMT+12")) {
-      zones = ["Etc/GMT+12", ...zones];
+    if (zones.length > 0 && !zones.includes(UNINHABITED_TIMEZONE)) {
+      zones = [UNINHABITED_TIMEZONE, ...zones];
     }
 
     const year = new Date().getFullYear();
@@ -74,7 +78,7 @@ function useTimezoneOptions(): TimezoneOption[] {
         let sortMinutes = 0;
         try {
           sortMinutes = offsetMinutesFor(zone, januaryOffsetDate);
-          if (zone === "Etc/GMT+12") {
+          if (zone === UNINHABITED_TIMEZONE) {
             label = "No one lives here (UTC-12)";
           } else {
             const januaryOffset = offsetLabelFor(zone, januaryOffsetDate);
