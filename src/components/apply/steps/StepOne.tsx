@@ -52,6 +52,15 @@ function useTimezoneOptions(): TimezoneOption[] {
       }
     }
 
+    // UTC-12 (the "nautical" zone) has no permanent population, so it's
+    // absent from Intl's zone list entirely. Etc/GMT+12 is the real IANA
+    // identifier for it (Etc/GMT sign convention is inverted) — include it
+    // for completeness of the -12..+14 range, with a label that's honest
+    // about why it's there.
+    if (zones.length > 0 && !zones.includes("Etc/GMT+12")) {
+      zones = ["Etc/GMT+12", ...zones];
+    }
+
     const year = new Date().getFullYear();
     // Jan 15 / Jul 15 land safely away from any DST transition in either
     // hemisphere, so each reliably captures one of the two offsets a zone
@@ -65,11 +74,15 @@ function useTimezoneOptions(): TimezoneOption[] {
         let sortMinutes = 0;
         try {
           sortMinutes = offsetMinutesFor(zone, januaryOffsetDate);
-          const januaryOffset = offsetLabelFor(zone, januaryOffsetDate);
-          const julyOffset = offsetLabelFor(zone, julyOffsetDate);
-          const offsetLabel =
-            januaryOffset === julyOffset ? januaryOffset : `${januaryOffset}/${julyOffset}`;
-          label = `${zone} (${offsetLabel})`;
+          if (zone === "Etc/GMT+12") {
+            label = "No one lives here (UTC-12)";
+          } else {
+            const januaryOffset = offsetLabelFor(zone, januaryOffsetDate);
+            const julyOffset = offsetLabelFor(zone, julyOffsetDate);
+            const offsetLabel =
+              januaryOffset === julyOffset ? januaryOffset : `${januaryOffset}/${julyOffset}`;
+            label = `${zone} (${offsetLabel})`;
+          }
         } catch {
           // Keep the plain zone name if offset lookup fails for some reason.
         }
