@@ -180,11 +180,13 @@ export function YesNoToggle({ label, value, onChange, hint, error }: YesNoToggle
   );
 }
 
+type SelectOption = string | { value: string; label: string };
+
 interface SelectInputProps {
   label: string;
   value: string;
   onChange: (value: string) => void;
-  options: string[];
+  options: SelectOption[];
   required?: boolean;
   hint?: string;
   error?: string;
@@ -216,11 +218,15 @@ export function SelectInput({
         <option value="" disabled>
           {placeholder}
         </option>
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
+        {options.map((option) => {
+          const optionValue = typeof option === "string" ? option : option.value;
+          const optionLabel = typeof option === "string" ? option : option.label;
+          return (
+            <option key={optionValue} value={optionValue}>
+              {optionLabel}
+            </option>
+          );
+        })}
       </select>
     </FieldWrapper>
   );

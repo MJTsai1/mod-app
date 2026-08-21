@@ -4,21 +4,62 @@ import { useMemo } from "react";
 import { TextInput, SelectInput } from "@/components/apply/fields";
 import type { ApplicationFormValues, FormErrors } from "@/components/apply/formTypes";
 
-function useTimezoneOptions(): string[] {
+/** "GMT+1" / "GMT+0" / "GMT-5" (as returned by Intl's shortOffset) -> "UTC+1" / "UTC" / "UTC-5". */
+function gmtToUtcLabel(gmtOffset: string): string {
+  return gmtOffset.replace(/^GMT\+0$/, "UTC").replace(/^GMT/, "UTC");
+}
+
+function offsetLabelFor(timeZone: string, date: Date): string {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    timeZoneName: "shortOffset",
+  }).formatToParts(date);
+  const offsetPart = parts.find((part) => part.type === "timeZoneName");
+  return gmtToUtcLabel(offsetPart?.value ?? "UTC");
+}
+
+interface TimezoneOption {
+  value: string;
+  label: string;
+}
+
+function useTimezoneOptions(): TimezoneOption[] {
   return useMemo(() => {
+    let zones: string[];
     try {
-      // Every IANA timezone identifier the runtime knows about, sorted
-      // west-to-east so the list reads in a predictable order.
-      return Intl.supportedValuesOf("timeZone").sort();
+      zones = Intl.supportedValuesOf("timeZone");
     } catch {
       // Intl.supportedValuesOf isn't available in this browser; fall back
       // to just the applicant's own detected zone so the field still works.
       try {
-        return [Intl.DateTimeFormat().resolvedOptions().timeZone];
+        zones = [Intl.DateTimeFormat().resolvedOptions().timeZone];
       } catch {
-        return [];
+        zones = [];
       }
     }
+
+    const year = new Date().getFullYear();
+    // Jan 15 / Jul 15 land safely away from any DST transition in either
+    // hemisphere, so each reliably captures one of the two offsets a zone
+    // observes over the year (and both come out equal for non-DST zones).
+    const januaryOffsetDate = new Date(Date.UTC(year, 0, 15));
+    const julyOffsetDate = new Date(Date.UTC(year, 6, 15));
+
+    return zones
+      .sort()
+      .map((zone) => {
+        let label = zone;
+        try {
+          const januaryOffset = offsetLabelFor(zone, januaryOffsetDate);
+          const julyOffset = offsetLabelFor(zone, julyOffsetDate);
+          const offsetLabel =
+            januaryOffset === julyOffset ? januaryOffset : `${januaryOffset}/${julyOffset}`;
+          label = `${zone} (${offsetLabel})`;
+        } catch {
+          // Keep the plain zone name if offset lookup fails for some reason.
+        }
+        return { value: zone, label };
+      });
   }, []);
 }
 
