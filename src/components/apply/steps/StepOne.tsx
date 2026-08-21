@@ -18,6 +18,20 @@ function offsetLabelFor(timeZone: string, date: Date): string {
   return gmtToUtcLabel(offsetPart?.value ?? "UTC");
 }
 
+/** Minutes east of UTC, e.g. "GMT+05:30" -> 330, "GMT-04:00" -> -240. Used for sorting only. */
+function offsetMinutesFor(timeZone: string, date: Date): number {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    timeZoneName: "longOffset",
+  }).formatToParts(date);
+  const offsetPart = parts.find((part) => part.type === "timeZoneName")?.value ?? "GMT";
+  const match = /^GMT([+-])(\d{2}):(\d{2})$/.exec(offsetPart);
+  if (!match) return 0;
+  const [, sign, hours, minutes] = match;
+  const total = Number(hours) * 60 + Number(minutes);
+  return sign === "-" ? -total : total;
+}
+
 interface TimezoneOption {
   value: string;
   label: string;
@@ -46,10 +60,11 @@ function useTimezoneOptions(): TimezoneOption[] {
     const julyOffsetDate = new Date(Date.UTC(year, 6, 15));
 
     return zones
-      .sort()
       .map((zone) => {
         let label = zone;
+        let sortMinutes = 0;
         try {
+          sortMinutes = offsetMinutesFor(zone, januaryOffsetDate);
           const januaryOffset = offsetLabelFor(zone, januaryOffsetDate);
           const julyOffset = offsetLabelFor(zone, julyOffsetDate);
           const offsetLabel =
@@ -58,8 +73,11 @@ function useTimezoneOptions(): TimezoneOption[] {
         } catch {
           // Keep the plain zone name if offset lookup fails for some reason.
         }
-        return { value: zone, label };
-      });
+        return { value: zone, label, sortMinutes };
+      })
+      // UTC-12 first, UTC+14 last; alphabetical within the same offset.
+      .sort((a, b) => a.sortMinutes - b.sortMinutes || a.value.localeCompare(b.value))
+      .map(({ value, label }) => ({ value, label }));
   }, []);
 }
 
