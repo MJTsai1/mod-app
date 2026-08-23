@@ -5,10 +5,12 @@ import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getStaffDisplayName } from "@/lib/staffLookup";
 import { getActivityHistory } from "@/lib/activityLog";
 import { getCaseNotes } from "@/lib/caseNotes";
+import { getFollowups } from "@/lib/followups";
 import { siteConfig } from "@/lib/config";
 import { StatusBadge } from "@/components/admin/StatusBadge";
 import { ActivityHistoryList } from "@/components/admin/ActivityHistoryList";
 import { NotesThread } from "@/components/admin/NotesThread";
+import { FollowupThread } from "@/components/site/FollowupThread";
 import { ApplicationReviewPanel } from "./ApplicationReviewPanel";
 
 export const metadata: Metadata = {
@@ -57,11 +59,12 @@ export default async function ApplicationDetailPage(
 
   if (!application) notFound();
 
-  const [reviewedBy, claimedByName, activity, notes] = await Promise.all([
+  const [reviewedBy, claimedByName, activity, notes, followups] = await Promise.all([
     getStaffDisplayName(application.last_updated_by),
     getStaffDisplayName(application.claimed_by),
     getActivityHistory("application", application.id),
     getCaseNotes("application", application.id),
+    getFollowups(application.id, { viewerRole: "staff" }),
   ]);
 
   return (
@@ -142,6 +145,17 @@ export default async function ApplicationDetailPage(
         claimedByName={claimedByName}
         currentStaffId={session.staff.id}
       />
+
+      <div className="card mt-6 p-6">
+        <h2 className="mb-1 text-lg font-semibold text-[var(--color-text)]">Message to Applicant</h2>
+        <p className="field-hint mb-4">Visible to the applicant on their account page.</p>
+        <FollowupThread
+          endpoint={`/api/admin/applications/${application.id}/followups`}
+          initialMessages={followups}
+          placeholder="Ask the applicant a question… (visible to them)"
+          submitLabel="Send message"
+        />
+      </div>
 
       <div className="card mt-6 p-6">
         <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">Staff Notes</h2>

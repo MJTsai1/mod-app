@@ -37,6 +37,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local Claude Code agent config — machine-specific, not part of the app
+.claude/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

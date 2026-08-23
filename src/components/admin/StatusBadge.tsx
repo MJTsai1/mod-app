@@ -3,6 +3,7 @@ import type { ApplicationStatus, ReportStatus, AppealStatus } from "@/lib/supaba
 const STATUS_STYLES: Record<ApplicationStatus, { bg: string; color: string }> = {
   pending: { bg: "var(--color-info-bg)", color: "var(--color-info)" },
   reviewing: { bg: "var(--color-warning-bg)", color: "var(--color-warning)" },
+  needs_info: { bg: "rgba(139,92,246,0.15)", color: "var(--color-accent)" },
   accepted: { bg: "var(--color-success-bg)", color: "var(--color-success)" },
   rejected: { bg: "var(--color-danger-bg)", color: "var(--color-danger)" },
   withdrawn: { bg: "rgba(138,128,171,0.15)", color: "var(--color-text-subtle)" },

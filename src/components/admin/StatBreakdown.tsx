@@ -1,4 +1,5 @@
 import type { StatusCounts } from "@/lib/stats";
+import { formatStatusLabel } from "@/lib/formatStatus";
 
 const BAR_COLOR = "var(--color-accent)";
 
@@ -19,7 +20,7 @@ export function StatBreakdown({ title, counts }: { title: string; counts: Status
             return (
               <div key={status}>
                 <div className="mb-1 flex items-center justify-between text-xs">
-                  <span className="capitalize text-[var(--color-text-muted)]">{status}</span>
+                  <span className="text-[var(--color-text-muted)]">{formatStatusLabel(status)}</span>
                   <span className="text-[var(--color-text-subtle)]">
                     {count} ({percent}%)
                   </span>

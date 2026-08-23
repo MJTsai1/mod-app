@@ -8,6 +8,7 @@
 export type ApplicationStatus =
   | "pending"
   | "reviewing"
+  | "needs_info"
   | "accepted"
   | "rejected"
   | "withdrawn";
@@ -155,6 +156,7 @@ export type ReportListItem = Pick<
   | "id"
   | "reference_code"
   | "created_at"
+  | "updated_at"
   | "reporter_discord_username"
   | "reported_discord_username"
   | "category"
@@ -209,6 +211,7 @@ export type BanAppealListItem = Pick<
   | "id"
   | "reference_code"
   | "created_at"
+  | "updated_at"
   | "discord_username"
   | "discord_user_id"
   | "status"
@@ -257,6 +260,24 @@ export type CaseNoteRow = {
 };
 
 export type CaseNoteInsert = Pick<CaseNoteRow, "entity_type" | "entity_id" | "note"> & {
+  staff_id?: string | null;
+};
+
+export type FollowupAuthorType = "staff" | "applicant";
+
+export type ApplicationFollowupRow = {
+  id: number;
+  application_id: string;
+  author_type: FollowupAuthorType;
+  staff_id: string | null;
+  message: string;
+  created_at: string;
+};
+
+export type ApplicationFollowupInsert = Pick<
+  ApplicationFollowupRow,
+  "application_id" | "author_type" | "message"
+> & {
   staff_id?: string | null;
 };
 
@@ -315,6 +336,12 @@ export type Database = {
         Row: CaseNoteRow;
         Insert: CaseNoteInsert;
         Update: Partial<CaseNoteRow>;
+        Relationships: [];
+      };
+      application_followups: {
+        Row: ApplicationFollowupRow;
+        Insert: ApplicationFollowupInsert;
+        Update: Partial<ApplicationFollowupRow>;
         Relationships: [];
       };
     };

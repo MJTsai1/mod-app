@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useToast } from "@/components/site/ToastProvider";
+import { formatStatusLabel } from "@/lib/formatStatus";
 
 interface Props<T extends string> {
   status: T;
@@ -60,7 +61,7 @@ export function InlineStatusSelect<T extends string>({
     >
       {statusValues.map((s) => (
         <option key={s} value={s}>
-          {s.charAt(0).toUpperCase() + s.slice(1)}
+          {formatStatusLabel(s)}
         </option>
       ))}
     </select>

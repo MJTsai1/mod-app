@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { applicationStatusValues } from "@/lib/validation/application";
+import { formatStatusLabel } from "@/lib/formatStatus";
 import type { ApplicationListItem, ApplicationStatus } from "@/lib/supabase/types";
 import { InlineStatusSelect } from "@/components/admin/InlineStatusSelect";
 import { TableSkeletonRows } from "@/components/admin/TableSkeletonRows";
@@ -156,7 +157,7 @@ export function DashboardClient({ currentStaffId }: { currentStaffId: string }) 
             <option value="">All statuses</option>
             {applicationStatusValues.map((s) => (
               <option key={s} value={s}>
-                {s.charAt(0).toUpperCase() + s.slice(1)}
+                {formatStatusLabel(s)}
               </option>
             ))}
           </select>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { applicationStatusValues } from "@/lib/validation/application";
+import { formatStatusLabel } from "@/lib/formatStatus";
 import type { ApplicationStatus } from "@/lib/supabase/types";
 import { useToast } from "@/components/site/ToastProvider";
 import { ClaimButton } from "@/components/admin/ClaimButton";
@@ -89,7 +90,7 @@ export function ApplicationReviewPanel({
       >
         {applicationStatusValues.map((s) => (
           <option key={s} value={s}>
-            {s.charAt(0).toUpperCase() + s.slice(1)}
+            {formatStatusLabel(s)}
           </option>
         ))}
       </select>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { formatStatusLabel } from "@/lib/formatStatus";
 
 interface Props<T extends string> {
   count: number;
@@ -32,7 +33,7 @@ export function BulkActionsBar<T extends string>({
       >
         {statusValues.map((s) => (
           <option key={s} value={s}>
-            Set status: {s.charAt(0).toUpperCase() + s.slice(1)}
+            Set status: {formatStatusLabel(s)}
           </option>
         ))}
       </select>

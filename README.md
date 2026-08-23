@@ -60,6 +60,7 @@ supabase/migrations/
   0003_application_login_and_qol.sql   Ties applications to a Discord-authenticated applicant
   0004_claims_withdrawals_activity.sql Withdrawn status, staff claiming, activity_log
   0005_case_notes.sql                  Threaded staff notes (case_notes table)
+  0008_application_followups.sql       "Needs info" status + applicant-visible message thread
 ```
 
 ## 1. Customise the site
@@ -75,9 +76,11 @@ window. This is the only file you should need to touch for a rebrand.
    Next.js app on Vercel's CDN will still be fast worldwide since page/API logic runs at the
    edge/region nearest each visitor and only the database round-trip is fixed-region).
 2. Open **SQL Editor** in the Supabase dashboard and run every file in `supabase/migrations/`
-   **in numeric order** (0001 through 0005). Together these create the `applications`, `reports`,
-   `ban_appeals`, `staff_members`, `activity_log`, `case_notes`, and rate-limit tables, their
-   enums, indexes, and Row Level Security policies.
+   **in numeric order** (0001, 0002, 0003, 0004, 0005, then 0008 — 0006 doesn't exist and 0007
+   only drops a since-reverted feature, so there's nothing to run for those two numbers).
+   Together these create the `applications`, `reports`, `ban_appeals`, `staff_members`,
+   `activity_log`, `case_notes`, `application_followups`, and rate-limit tables, their enums,
+   indexes, and Row Level Security policies.
 3. Go to **Project Settings -> API** and copy:
    - **Project URL** -> `NEXT_PUBLIC_SUPABASE_URL`
    - **anon public** key -> `NEXT_PUBLIC_SUPABASE_ANON_KEY`
@@ -241,10 +244,11 @@ the staff email you added above to review it. To test reports/appeals, visit `/r
 
 - Real values for every variable in `.env.example`.
 - Your Discord server's invite link and contact email in `src/lib/config.ts`.
-- **Run every migration through `0005_case_notes.sql`** if you haven't already — required, not
-  optional, once this version of the code is deployed. Without 0003, `/apply` and `/account` will
-  error; without 0004, claiming/withdrawing/Activity/Stats will error; without 0005, adding staff
-  notes will error.
+- **Run every migration through `0008_application_followups.sql`** if you haven't already —
+  required, not optional, once this version of the code is deployed. Without 0003, `/apply` and
+  `/account` will error; without 0004, claiming/withdrawing/Activity/Stats will error; without
+  0005, adding staff notes will error; without 0008, setting an application to "Needs info" or
+  viewing/replying to the applicant message thread will error.
 - Discord OAuth client ID/secret configured in Supabase (step 5 above) — without this, the
   "Sign in with Discord" button on `/apply`, `/report`, `/appeal`, and `/account` will fail.
 - At least one `staff_members` row (step 6 above) before anyone can use the dashboard.

@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/lib/config";
 import { getUserSession } from "@/lib/userAuth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { getFollowups } from "@/lib/followups";
 import { DiscordSignInButton } from "@/components/site/DiscordSignInButton";
-import { WithdrawButton } from "@/components/site/WithdrawButton";
+import { SubmissionRow } from "@/components/site/SubmissionRow";
+import { StatusBadge, ReportStatusBadge, AppealStatusBadge } from "@/components/admin/StatusBadge";
 import type { ReportListItem, BanAppealListItem, ApplicationListItem } from "@/lib/supabase/types";
 
 const NON_WITHDRAWABLE: Record<"applications" | "reports" | "appeals", string[]> = {
@@ -16,48 +18,6 @@ export const metadata: Metadata = {
   title: `My Account — ${siteConfig.serverName}`,
   robots: { index: false },
 };
-
-function Pill({ children }: { children: React.ReactNode }) {
-  return (
-    <span
-      className="badge"
-      style={{ background: "var(--color-info-bg)", color: "var(--color-info)" }}
-    >
-      {children}
-    </span>
-  );
-}
-
-function SubmissionRow({
-  reference,
-  status,
-  date,
-  detail,
-  withdrawEndpoint,
-  canWithdraw,
-}: {
-  reference: string;
-  status: string;
-  date: string;
-  detail: string;
-  withdrawEndpoint: string;
-  canWithdraw: boolean;
-}) {
-  return (
-    <div className="flex items-center justify-between gap-3 border-b border-[var(--color-border)] py-3 last:border-0">
-      <div>
-        <p className="font-mono text-sm text-[var(--color-text)]">{reference}</p>
-        <p className="text-xs text-[var(--color-text-subtle)]">
-          {detail} · {new Date(date).toLocaleDateString()}
-        </p>
-      </div>
-      <div className="flex shrink-0 flex-col items-end gap-1">
-        <Pill>{status}</Pill>
-        {canWithdraw && <WithdrawButton endpoint={withdrawEndpoint} />}
-      </div>
-    </div>
-  );
-}
 
 export default async function AccountPage(props: PageProps<"/account">) {
   const searchParams = await props.searchParams;
@@ -91,17 +51,27 @@ export default async function AccountPage(props: PageProps<"/account">) {
       .returns<ApplicationListItem[]>(),
     supabase
       .from("reports")
-      .select("id, reference_code, created_at, reporter_discord_username, reported_discord_username, category, status")
+      .select("id, reference_code, created_at, updated_at, reporter_discord_username, reported_discord_username, category, status")
       .eq("reporter_id", session.id)
       .order("created_at", { ascending: false })
       .returns<ReportListItem[]>(),
     supabase
       .from("ban_appeals")
-      .select("id, reference_code, created_at, discord_username, discord_user_id, status")
+      .select("id, reference_code, created_at, updated_at, discord_username, discord_user_id, status")
       .eq("appellant_id", session.id)
       .order("created_at", { ascending: false })
       .returns<BanAppealListItem[]>(),
   ]);
+
+  // Only applications currently awaiting a reply need their thread fetched.
+  const needsInfoApplications = (applications ?? []).filter((a) => a.status === "needs_info");
+  const followupsByApplication = new Map(
+    await Promise.all(
+      needsInfoApplications.map(
+        async (a) => [a.id, await getFollowups(a.id, { viewerRole: "applicant" })] as const
+      )
+    )
+  );
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-16">
@@ -127,12 +97,22 @@ export default async function AccountPage(props: PageProps<"/account">) {
           applications.map((application) => (
             <SubmissionRow
               key={application.id}
+              id={application.id}
               reference={application.reference_code}
-              status={application.status}
+              statusBadge={<StatusBadge status={application.status} />}
+              updatedAt={application.updated_at}
               date={application.created_at}
               detail="Moderator application"
               withdrawEndpoint={`/api/applications/${application.id}/withdraw`}
               canWithdraw={!NON_WITHDRAWABLE.applications.includes(application.status)}
+              followup={
+                application.status === "needs_info"
+                  ? {
+                      endpoint: `/api/applications/${application.id}/followups`,
+                      initialMessages: followupsByApplication.get(application.id) ?? [],
+                    }
+                  : undefined
+              }
             />
           ))
         )}
@@ -146,8 +126,10 @@ export default async function AccountPage(props: PageProps<"/account">) {
           reports.map((report) => (
             <SubmissionRow
               key={report.id}
+              id={report.id}
               reference={report.reference_code}
-              status={report.status}
+              statusBadge={<ReportStatusBadge status={report.status} />}
+              updatedAt={report.updated_at}
               date={report.created_at}
               detail={`Reported ${report.reported_discord_username}`}
               withdrawEndpoint={`/api/reports/${report.id}/withdraw`}
@@ -165,8 +147,10 @@ export default async function AccountPage(props: PageProps<"/account">) {
           appeals.map((appeal) => (
             <SubmissionRow
               key={appeal.id}
+              id={appeal.id}
               reference={appeal.reference_code}
-              status={appeal.status}
+              statusBadge={<AppealStatusBadge status={appeal.status} />}
+              updatedAt={appeal.updated_at}
               date={appeal.created_at}
               detail={appeal.discord_username}
               withdrawEndpoint={`/api/appeals/${appeal.id}/withdraw`}

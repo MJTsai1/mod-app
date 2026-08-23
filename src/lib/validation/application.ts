@@ -96,6 +96,7 @@ export const applicationStepSchemas = [
 export const applicationStatusValues = [
   "pending",
   "reviewing",
+  "needs_info",
   "accepted",
   "rejected",
   "withdrawn",
