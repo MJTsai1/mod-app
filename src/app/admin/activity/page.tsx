@@ -21,11 +21,18 @@ export default async function ActivityPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
-      <h1 className="text-2xl font-bold text-[var(--color-text)]">Activity</h1>
-      <p className="field-hint mb-6">
-        Recent status changes, claims, and self-service withdrawals across applications, reports,
-        and ban appeals.
-      </p>
+      <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold text-[var(--color-text)]">Activity</h1>
+          <p className="field-hint">
+            Recent status changes, claims, and self-service withdrawals across applications,
+            reports, and ban appeals.
+          </p>
+        </div>
+        <a href="/api/admin/activity/export" className="btn btn-secondary px-3 py-2 text-sm">
+          Export CSV
+        </a>
+      </div>
 
       <div className="card overflow-hidden">
         {entries.length === 0 ? (

@@ -4,6 +4,7 @@ import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { updateAppealSchema } from "@/lib/validation/appeal";
 import { resolveClaimAction } from "@/lib/claim";
 import { logActivity } from "@/lib/activityLog";
+import { notifyDiscordOfAppealStatusChange } from "@/lib/discord";
 
 export const dynamic = "force-dynamic";
 
@@ -116,6 +117,10 @@ export async function PATCH(request: Request, { params }: RouteParams) {
       staffId: session.staff.id,
       detail: changes.join("; "),
     }).catch(() => {});
+  }
+
+  if (parsed.data.status && parsed.data.status !== current.status) {
+    notifyDiscordOfAppealStatusChange(data, current.status).catch(() => {});
   }
 
   return NextResponse.json({ appeal: data });

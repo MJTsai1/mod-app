@@ -1,6 +1,7 @@
 import "server-only";
 import type { ApplicationRow, ReportRow, BanAppealRow } from "@/lib/supabase/types";
 import { reportCategoryLabels } from "@/lib/config";
+import { formatStatusLabel } from "@/lib/formatStatus";
 
 /**
  * Server-side Discord integration. Disabled until DISCORD_WEBHOOK_URL is set
@@ -88,6 +89,106 @@ export async function notifyDiscordOfNewReport(report: ReportRow): Promise<void>
         : {}),
     },
     "report"
+  );
+}
+
+const STATUS_COLORS: Record<string, number> = {
+  pending: 0x60a5fa,
+  reviewing: 0xfbbf24,
+  needs_info: 0x8b5cf6,
+  accepted: 0x34d399,
+  approved: 0x34d399,
+  resolved: 0x34d399,
+  rejected: 0xf87171,
+  denied: 0xf87171,
+  dismissed: 0x8a80ab,
+  withdrawn: 0x8a80ab,
+};
+
+export async function notifyDiscordOfApplicationStatusChange(
+  application: ApplicationRow,
+  oldStatus: string
+): Promise<void> {
+  const dashboardBaseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+  await postEmbed(
+    {
+      title: "Application Status Updated",
+      color: STATUS_COLORS[application.status] ?? 0x8b5cf6,
+      fields: [
+        { name: "Applicant", value: application.discord_username, inline: true },
+        {
+          name: "Status",
+          value: `${formatStatusLabel(oldStatus)} → ${formatStatusLabel(application.status)}`,
+          inline: true,
+        },
+        { name: "Reference", value: application.reference_code, inline: true },
+      ],
+      ...(dashboardBaseUrl
+        ? {
+            description: `[Open in staff dashboard](${dashboardBaseUrl}/admin/dashboard/${application.id})`,
+          }
+        : {}),
+    },
+    "application status change"
+  );
+}
+
+export async function notifyDiscordOfReportStatusChange(
+  report: ReportRow,
+  oldStatus: string
+): Promise<void> {
+  const dashboardBaseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+  await postEmbed(
+    {
+      title: "Report Status Updated",
+      color: STATUS_COLORS[report.status] ?? 0x8b5cf6,
+      fields: [
+        { name: "Reported member", value: report.reported_discord_username, inline: true },
+        {
+          name: "Status",
+          value: `${formatStatusLabel(oldStatus)} → ${formatStatusLabel(report.status)}`,
+          inline: true,
+        },
+        { name: "Reference", value: report.reference_code, inline: true },
+      ],
+      ...(dashboardBaseUrl
+        ? {
+            description: `[Open in staff dashboard](${dashboardBaseUrl}/admin/reports/${report.id})`,
+          }
+        : {}),
+    },
+    "report status change"
+  );
+}
+
+export async function notifyDiscordOfAppealStatusChange(
+  appeal: BanAppealRow,
+  oldStatus: string
+): Promise<void> {
+  const dashboardBaseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+  await postEmbed(
+    {
+      title: "Ban Appeal Status Updated",
+      color: STATUS_COLORS[appeal.status] ?? 0x8b5cf6,
+      fields: [
+        { name: "Appellant", value: appeal.discord_username, inline: true },
+        {
+          name: "Status",
+          value: `${formatStatusLabel(oldStatus)} → ${formatStatusLabel(appeal.status)}`,
+          inline: true,
+        },
+        { name: "Reference", value: appeal.reference_code, inline: true },
+      ],
+      ...(dashboardBaseUrl
+        ? {
+            description: `[Open in staff dashboard](${dashboardBaseUrl}/admin/appeals/${appeal.id})`,
+          }
+        : {}),
+    },
+    "appeal status change"
   );
 }
 

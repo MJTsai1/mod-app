@@ -4,6 +4,7 @@ import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { updateReportSchema } from "@/lib/validation/report";
 import { resolveClaimAction } from "@/lib/claim";
 import { logActivity } from "@/lib/activityLog";
+import { notifyDiscordOfReportStatusChange } from "@/lib/discord";
 
 export const dynamic = "force-dynamic";
 
@@ -112,6 +113,10 @@ export async function PATCH(request: Request, { params }: RouteParams) {
       staffId: session.staff.id,
       detail: changes.join("; "),
     }).catch(() => {});
+  }
+
+  if (parsed.data.status && parsed.data.status !== current.status) {
+    notifyDiscordOfReportStatusChange(data, current.status).catch(() => {});
   }
 
   return NextResponse.json({ report: data });
