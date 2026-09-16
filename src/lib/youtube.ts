@@ -1,4 +1,5 @@
 import "server-only";
+export { formatViewCount } from "@/lib/formatViewCount";
 
 export interface YoutubeVideo {
   id: string;
@@ -26,13 +27,6 @@ function decodeXmlEntities(text: string): string {
 
 function extract(pattern: RegExp, source: string): string | null {
   return pattern.exec(source)?.[1] ?? null;
-}
-
-/** Formats a view count compactly, e.g. 8, 1.2K, 3.4M. */
-export function formatViewCount(count: number): string {
-  if (count < 1000) return `${count}`;
-  if (count < 1_000_000) return `${(count / 1000).toFixed(count < 10_000 ? 1 : 0)}K`;
-  return `${(count / 1_000_000).toFixed(1)}M`;
 }
 
 /**

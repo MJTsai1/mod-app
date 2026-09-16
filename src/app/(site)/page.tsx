@@ -1,8 +1,9 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/config";
-import { getRecentYoutubeVideos, formatViewCount } from "@/lib/youtube";
+import { getRecentYoutubeVideos } from "@/lib/youtube";
 import { getServerWidget } from "@/lib/discordWidget";
+import { YoutubeVideoGrid } from "@/components/site/YoutubeVideoGrid";
 
 export const metadata: Metadata = {
   title: `${siteConfig.serverName} — Community Hub`,
@@ -45,7 +46,7 @@ function ArrowIcon() {
 
 export default async function HomePage() {
   const [videos, serverWidget] = await Promise.all([
-    getRecentYoutubeVideos(siteConfig.youtube.officialChannelId),
+    getRecentYoutubeVideos(siteConfig.youtube.officialChannelId, 12),
     getServerWidget(siteConfig.discordGuildId),
   ]);
 
@@ -139,35 +140,7 @@ export default async function HomePage() {
           </div>
 
           {videos.length > 0 ? (
-            <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {videos.map((video) => (
-                <a
-                  key={video.id}
-                  href={video.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="card group overflow-hidden p-0 transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element -- external YouTube thumbnail, not worth Next/Image's remote-pattern config for a homepage widget */}
-                  <img
-                    src={video.thumbnailUrl}
-                    alt=""
-                    className="aspect-video w-full object-cover"
-                    loading="lazy"
-                  />
-                  <div className="p-4">
-                    <p className="line-clamp-2 text-sm font-medium text-[var(--color-text)]">
-                      {video.title}
-                    </p>
-                    {video.viewCount !== null && (
-                      <p className="mt-1 text-xs text-[var(--color-text-subtle)]">
-                        {formatViewCount(video.viewCount)} views
-                      </p>
-                    )}
-                  </div>
-                </a>
-              ))}
-            </div>
+            <YoutubeVideoGrid videos={videos} />
           ) : (
             <p className="mt-12 text-center text-sm text-[var(--color-text-subtle)]">
               Couldn&apos;t load recent uploads right now — check out the channel directly above.
