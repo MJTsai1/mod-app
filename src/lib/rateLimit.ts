@@ -30,7 +30,8 @@ export interface RateLimitResult {
 type AttemptTable =
   | "application_submission_attempts"
   | "report_submission_attempts"
-  | "appeal_submission_attempts";
+  | "appeal_submission_attempts"
+  | "support_request_submission_attempts";
 
 /**
  * Database-backed sliding-window rate limit, safe across multiple serverless
@@ -90,5 +91,14 @@ export function checkAndRecordAppealAttempt(ipHash: string): Promise<RateLimitRe
     "appeal_submission_attempts",
     siteConfig.appealRateLimit.windowMinutes,
     siteConfig.appealRateLimit.maxSubmissionsPerWindow
+  );
+}
+
+export function checkAndRecordSupportAttempt(ipHash: string): Promise<RateLimitResult> {
+  return checkAndRecordAttempt(
+    ipHash,
+    "support_request_submission_attempts",
+    siteConfig.supportRateLimit.windowMinutes,
+    siteConfig.supportRateLimit.maxSubmissionsPerWindow
   );
 }

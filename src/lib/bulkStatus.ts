@@ -4,7 +4,7 @@ import { logActivity } from "@/lib/activityLog";
 import type { ActivityEntityType } from "@/lib/supabase/types";
 
 interface BulkStatusConfig {
-  table: "applications" | "reports" | "ban_appeals";
+  table: "applications" | "reports" | "ban_appeals" | "support_requests";
   entityType: ActivityEntityType;
 }
 

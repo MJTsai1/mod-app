@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { siteConfig } from "@/lib/config";
 
 export const metadata: Metadata = {
@@ -20,6 +21,14 @@ export default function FaqPage() {
           <div key={faq.question} className="card p-6">
             <h2 className="text-base font-semibold text-[var(--color-text)]">{faq.question}</h2>
             <p className="mt-2 text-sm text-[var(--color-text-muted)]">{faq.answer}</p>
+            {"link" in faq && faq.link && (
+              <Link
+                href={faq.link.href}
+                className="mt-3 inline-block text-sm font-medium text-[var(--color-accent-soft)] hover:underline"
+              >
+                {faq.link.label} →
+              </Link>
+            )}
           </div>
         ))}
       </div>

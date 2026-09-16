@@ -11,6 +11,8 @@ const SEEN_STORAGE_PREFIX = "mod-app-seen-";
 interface FollowupProps {
   endpoint: string;
   initialMessages: FollowupMessage[];
+  /** Defaults to the "staff have a question" framing used for applications. */
+  label?: string;
 }
 
 interface Props {
@@ -85,7 +87,7 @@ export function SubmissionRow({
       {followup && (
         <div className="mt-3 rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-bg-elevated)] p-4">
           <p className="mb-3 text-sm font-medium text-[var(--color-text)]">
-            Staff have a question for you — please reply below.
+            {followup.label ?? "Staff have a question for you — please reply below."}
           </p>
           <FollowupThread
             endpoint={followup.endpoint}

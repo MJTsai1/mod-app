@@ -4,9 +4,9 @@ import { logActivity } from "@/lib/activityLog";
 import type { ActivityEntityType } from "@/lib/supabase/types";
 
 interface WithdrawConfig {
-  table: "applications" | "reports" | "ban_appeals";
+  table: "applications" | "reports" | "ban_appeals" | "support_requests";
   entityType: ActivityEntityType;
-  ownerColumn: "applicant_id" | "reporter_id" | "appellant_id";
+  ownerColumn: "applicant_id" | "reporter_id" | "appellant_id" | "requester_id";
   /** Terminal statuses (besides "withdrawn" itself) that can no longer be withdrawn. */
   nonWithdrawableStatuses: string[];
 }

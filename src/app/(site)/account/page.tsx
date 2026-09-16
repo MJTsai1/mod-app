@@ -3,15 +3,22 @@ import { siteConfig } from "@/lib/config";
 import { getUserSession } from "@/lib/userAuth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getFollowups } from "@/lib/followups";
+import { getSupportMessages } from "@/lib/supportMessages";
 import { DiscordSignInButton } from "@/components/site/DiscordSignInButton";
 import { SubmissionRow } from "@/components/site/SubmissionRow";
-import { StatusBadge, ReportStatusBadge, AppealStatusBadge } from "@/components/admin/StatusBadge";
-import type { ReportListItem, BanAppealListItem, ApplicationListItem } from "@/lib/supabase/types";
+import { StatusBadge, ReportStatusBadge, AppealStatusBadge, SupportStatusBadge } from "@/components/admin/StatusBadge";
+import type {
+  ReportListItem,
+  BanAppealListItem,
+  ApplicationListItem,
+  SupportRequestListItem,
+} from "@/lib/supabase/types";
 
-const NON_WITHDRAWABLE: Record<"applications" | "reports" | "appeals", string[]> = {
+const NON_WITHDRAWABLE: Record<"applications" | "reports" | "appeals" | "support", string[]> = {
   applications: ["accepted", "rejected", "withdrawn"],
   reports: ["resolved", "dismissed", "withdrawn"],
   appeals: ["approved", "denied", "withdrawn"],
+  support: ["resolved", "withdrawn"],
 };
 
 export const metadata: Metadata = {
@@ -42,26 +49,33 @@ export default async function AccountPage(props: PageProps<"/account">) {
 
   const supabase = createSupabaseAdminClient();
 
-  const [{ data: applications }, { data: reports }, { data: appeals }] = await Promise.all([
-    supabase
-      .from("applications")
-      .select("id, reference_code, created_at, updated_at, discord_username, discord_user_id, status, age, country")
-      .eq("applicant_id", session.id)
-      .order("created_at", { ascending: false })
-      .returns<ApplicationListItem[]>(),
-    supabase
-      .from("reports")
-      .select("id, reference_code, created_at, updated_at, reporter_discord_username, reported_discord_username, category, status")
-      .eq("reporter_id", session.id)
-      .order("created_at", { ascending: false })
-      .returns<ReportListItem[]>(),
-    supabase
-      .from("ban_appeals")
-      .select("id, reference_code, created_at, updated_at, discord_username, discord_user_id, status")
-      .eq("appellant_id", session.id)
-      .order("created_at", { ascending: false })
-      .returns<BanAppealListItem[]>(),
-  ]);
+  const [{ data: applications }, { data: reports }, { data: appeals }, { data: supportRequests }] =
+    await Promise.all([
+      supabase
+        .from("applications")
+        .select("id, reference_code, created_at, updated_at, discord_username, discord_user_id, status, age, country")
+        .eq("applicant_id", session.id)
+        .order("created_at", { ascending: false })
+        .returns<ApplicationListItem[]>(),
+      supabase
+        .from("reports")
+        .select("id, reference_code, created_at, updated_at, reporter_discord_username, reported_discord_username, category, status")
+        .eq("reporter_id", session.id)
+        .order("created_at", { ascending: false })
+        .returns<ReportListItem[]>(),
+      supabase
+        .from("ban_appeals")
+        .select("id, reference_code, created_at, updated_at, discord_username, discord_user_id, status")
+        .eq("appellant_id", session.id)
+        .order("created_at", { ascending: false })
+        .returns<BanAppealListItem[]>(),
+      supabase
+        .from("support_requests")
+        .select("id, reference_code, created_at, updated_at, discord_username, subject, status, claimed_by")
+        .eq("requester_id", session.id)
+        .order("created_at", { ascending: false })
+        .returns<SupportRequestListItem[]>(),
+    ]);
 
   // Only applications currently awaiting a reply need their thread fetched.
   const needsInfoApplications = (applications ?? []).filter((a) => a.status === "needs_info");
@@ -69,6 +83,17 @@ export default async function AccountPage(props: PageProps<"/account">) {
     await Promise.all(
       needsInfoApplications.map(
         async (a) => [a.id, await getFollowups(a.id, { viewerRole: "applicant" })] as const
+      )
+    )
+  );
+
+  // Every non-withdrawn support request shows its conversation thread —
+  // unlike applications, this isn't gated to a specific status.
+  const activeSupportRequests = (supportRequests ?? []).filter((s) => s.status !== "withdrawn");
+  const messagesBySupportRequest = new Map(
+    await Promise.all(
+      activeSupportRequests.map(
+        async (s) => [s.id, await getSupportMessages(s.id, { viewerRole: "member" })] as const
       )
     )
   );
@@ -139,7 +164,7 @@ export default async function AccountPage(props: PageProps<"/account">) {
         )}
       </div>
 
-      <div className="card p-6">
+      <div className="card mb-6 p-6">
         <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">My Ban Appeals</h2>
         {!appeals || appeals.length === 0 ? (
           <p className="text-sm text-[var(--color-text-subtle)]">You haven&apos;t submitted any ban appeals.</p>
@@ -155,6 +180,36 @@ export default async function AccountPage(props: PageProps<"/account">) {
               detail={appeal.discord_username}
               withdrawEndpoint={`/api/appeals/${appeal.id}/withdraw`}
               canWithdraw={!NON_WITHDRAWABLE.appeals.includes(appeal.status)}
+            />
+          ))
+        )}
+      </div>
+
+      <div className="card p-6">
+        <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">My Support Requests</h2>
+        {!supportRequests || supportRequests.length === 0 ? (
+          <p className="text-sm text-[var(--color-text-subtle)]">You haven&apos;t submitted any support requests.</p>
+        ) : (
+          supportRequests.map((request) => (
+            <SubmissionRow
+              key={request.id}
+              id={request.id}
+              reference={request.reference_code}
+              statusBadge={<SupportStatusBadge status={request.status} />}
+              updatedAt={request.updated_at}
+              date={request.created_at}
+              detail={request.subject}
+              withdrawEndpoint={`/api/support-requests/${request.id}/withdraw`}
+              canWithdraw={!NON_WITHDRAWABLE.support.includes(request.status)}
+              followup={
+                request.status !== "withdrawn"
+                  ? {
+                      endpoint: `/api/support-requests/${request.id}/messages`,
+                      initialMessages: messagesBySupportRequest.get(request.id) ?? [],
+                      label: "Your conversation with staff:",
+                    }
+                  : undefined
+              }
             />
           ))
         )}

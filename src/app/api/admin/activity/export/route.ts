@@ -9,6 +9,7 @@ const ENTITY_LABELS = {
   application: "Application",
   report: "Report",
   appeal: "Ban Appeal",
+  support: "Support Request",
 } as const;
 
 export async function GET() {

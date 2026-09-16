@@ -6,6 +6,7 @@ export interface YoutubeVideo {
   url: string;
   thumbnailUrl: string;
   publishedAt: string;
+  viewCount: number | null;
 }
 
 const ENTITY_MAP: Record<string, string> = {
@@ -25,6 +26,13 @@ function decodeXmlEntities(text: string): string {
 
 function extract(pattern: RegExp, source: string): string | null {
   return pattern.exec(source)?.[1] ?? null;
+}
+
+/** Formats a view count compactly, e.g. 8, 1.2K, 3.4M. */
+export function formatViewCount(count: number): string {
+  if (count < 1000) return `${count}`;
+  if (count < 1_000_000) return `${(count / 1000).toFixed(count < 10_000 ? 1 : 0)}K`;
+  return `${(count / 1_000_000).toFixed(1)}M`;
 }
 
 /**
@@ -54,6 +62,7 @@ export async function getRecentYoutubeVideos(
       const thumbnailUrl =
         extract(/<media:thumbnail url="(.*?)"/, entry) ??
         `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+      const rawViewCount = extract(/<media:statistics views="(\d+)"/, entry);
 
       return {
         id,
@@ -61,6 +70,7 @@ export async function getRecentYoutubeVideos(
         url: `https://www.youtube.com/watch?v=${id}`,
         thumbnailUrl,
         publishedAt,
+        viewCount: rawViewCount ? Number(rawViewCount) : null,
       };
     });
   } catch (error) {

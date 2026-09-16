@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/config";
-import { getRecentYoutubeVideos } from "@/lib/youtube";
+import { getRecentYoutubeVideos, formatViewCount } from "@/lib/youtube";
 import { getServerWidget } from "@/lib/discordWidget";
 
 export const metadata: Metadata = {
@@ -159,6 +159,11 @@ export default async function HomePage() {
                     <p className="line-clamp-2 text-sm font-medium text-[var(--color-text)]">
                       {video.title}
                     </p>
+                    {video.viewCount !== null && (
+                      <p className="mt-1 text-xs text-[var(--color-text-subtle)]">
+                        {formatViewCount(video.viewCount)} views
+                      </p>
+                    )}
                   </div>
                 </a>
               ))}

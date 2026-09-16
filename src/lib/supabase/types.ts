@@ -230,7 +230,7 @@ export type AppealSubmissionAttemptRow = {
   created_at: string;
 };
 
-export type ActivityEntityType = "application" | "report" | "appeal";
+export type ActivityEntityType = "application" | "report" | "appeal" | "support";
 export type ActivityActorType = "staff" | "applicant";
 
 export type ActivityLogRow = {
@@ -277,6 +277,77 @@ export type ApplicationFollowupRow = {
 export type ApplicationFollowupInsert = Pick<
   ApplicationFollowupRow,
   "application_id" | "author_type" | "message"
+> & {
+  staff_id?: string | null;
+};
+
+export type SupportStatus = "open" | "answered" | "resolved" | "withdrawn";
+
+export type SupportRequestRow = {
+  id: string;
+  reference_code: string;
+  created_at: string;
+  updated_at: string;
+  requester_id: string;
+  discord_username: string;
+  subject: string;
+  message: string;
+  status: SupportStatus;
+  last_updated_by: string | null;
+  claimed_by: string | null;
+  claimed_at: string | null;
+  submitted_ip_hash: string | null;
+};
+
+export type SupportRequestInsert = Omit<
+  SupportRequestRow,
+  | "id"
+  | "created_at"
+  | "updated_at"
+  | "status"
+  | "last_updated_by"
+  | "claimed_by"
+  | "claimed_at"
+> & {
+  id?: string;
+  status?: SupportStatus;
+  last_updated_by?: string | null;
+};
+
+export type SupportRequestUpdate = Partial<
+  Pick<SupportRequestRow, "status" | "last_updated_by" | "claimed_by" | "claimed_at">
+>;
+
+export type SupportRequestListItem = Pick<
+  SupportRequestRow,
+  | "id"
+  | "reference_code"
+  | "created_at"
+  | "updated_at"
+  | "discord_username"
+  | "subject"
+  | "status"
+  | "claimed_by"
+>;
+
+export type SupportRequestSubmissionAttemptRow = {
+  id: number;
+  ip_hash: string;
+  created_at: string;
+};
+
+export type SupportMessageRow = {
+  id: number;
+  support_request_id: string;
+  author_type: FollowupAuthorType;
+  staff_id: string | null;
+  message: string;
+  created_at: string;
+};
+
+export type SupportMessageInsert = Pick<
+  SupportMessageRow,
+  "support_request_id" | "author_type" | "message"
 > & {
   staff_id?: string | null;
 };
@@ -342,6 +413,24 @@ export type Database = {
         Row: ApplicationFollowupRow;
         Insert: ApplicationFollowupInsert;
         Update: Partial<ApplicationFollowupRow>;
+        Relationships: [];
+      };
+      support_requests: {
+        Row: SupportRequestRow;
+        Insert: SupportRequestInsert;
+        Update: SupportRequestUpdate;
+        Relationships: [];
+      };
+      support_request_submission_attempts: {
+        Row: SupportRequestSubmissionAttemptRow;
+        Insert: Pick<SupportRequestSubmissionAttemptRow, "ip_hash">;
+        Update: Partial<SupportRequestSubmissionAttemptRow>;
+        Relationships: [];
+      };
+      support_messages: {
+        Row: SupportMessageRow;
+        Insert: SupportMessageInsert;
+        Update: Partial<SupportMessageRow>;
         Relationships: [];
       };
     };

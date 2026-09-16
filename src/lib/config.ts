@@ -189,6 +189,10 @@ export const siteConfig = {
     windowMinutes: 60 * 24,
     maxSubmissionsPerWindow: 2,
   },
+  supportRateLimit: {
+    windowMinutes: 60 * 24,
+    maxSubmissionsPerWindow: 5,
+  },
 
   faqs: [
     {
@@ -215,6 +219,12 @@ export const siteConfig = {
       question: "Will my report or appeal be kept confidential?",
       answer:
         "Reports and appeals are only visible to authorised staff. See the Privacy Notice for full details on how your information is handled.",
+    },
+    {
+      question: "Still need support?",
+      answer:
+        "Contact a moderator by filling in the Support Request form with your question or issue. A staff member will reply directly to your request, and you can reply back — you'll find the conversation on your Account page.",
+      link: { href: "/support", label: "Submit a Support Request" },
     },
   ],
 } as const;

@@ -112,6 +112,7 @@ const ENTITY_LINKS: Record<ActivityEntityType, string> = {
   application: "/admin/dashboard",
   report: "/admin/reports",
   appeal: "/admin/appeals",
+  support: "/admin/support",
 };
 
 export function activityEntityHref(entry: { entityType: ActivityEntityType; entityId: string }): string {

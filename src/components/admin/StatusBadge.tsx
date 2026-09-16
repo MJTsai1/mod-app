@@ -1,4 +1,4 @@
-import type { ApplicationStatus, ReportStatus, AppealStatus } from "@/lib/supabase/types";
+import type { ApplicationStatus, ReportStatus, AppealStatus, SupportStatus } from "@/lib/supabase/types";
 
 const STATUS_STYLES: Record<ApplicationStatus, { bg: string; color: string }> = {
   pending: { bg: "var(--color-info-bg)", color: "var(--color-info)" },
@@ -45,6 +45,22 @@ const APPEAL_STATUS_STYLES: Record<AppealStatus, { bg: string; color: string }> 
 
 export function AppealStatusBadge({ status }: { status: AppealStatus }) {
   const style = APPEAL_STATUS_STYLES[status];
+  return (
+    <span className="badge" style={{ background: style.bg, color: style.color }}>
+      {status}
+    </span>
+  );
+}
+
+const SUPPORT_STATUS_STYLES: Record<SupportStatus, { bg: string; color: string }> = {
+  open: { bg: "var(--color-info-bg)", color: "var(--color-info)" },
+  answered: { bg: "var(--color-warning-bg)", color: "var(--color-warning)" },
+  resolved: { bg: "var(--color-success-bg)", color: "var(--color-success)" },
+  withdrawn: { bg: "rgba(138,128,171,0.15)", color: "var(--color-text-subtle)" },
+};
+
+export function SupportStatusBadge({ status }: { status: SupportStatus }) {
+  const style = SUPPORT_STATUS_STYLES[status];
   return (
     <span className="badge" style={{ background: style.bg, color: style.color }}>
       {status}

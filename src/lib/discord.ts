@@ -1,5 +1,5 @@
 import "server-only";
-import type { ApplicationRow, ReportRow, BanAppealRow } from "@/lib/supabase/types";
+import type { ApplicationRow, ReportRow, BanAppealRow, SupportRequestRow } from "@/lib/supabase/types";
 import { reportCategoryLabels } from "@/lib/config";
 import { formatStatusLabel } from "@/lib/formatStatus";
 
@@ -189,6 +189,60 @@ export async function notifyDiscordOfAppealStatusChange(
         : {}),
     },
     "appeal status change"
+  );
+}
+
+export async function notifyDiscordOfNewSupportRequest(
+  supportRequest: SupportRequestRow
+): Promise<void> {
+  const dashboardBaseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+  await postEmbed(
+    {
+      title: "New Support Request",
+      color: 0x60a5fa,
+      fields: [
+        { name: "From", value: supportRequest.discord_username, inline: true },
+        { name: "Subject", value: supportRequest.subject, inline: true },
+        { name: "Reference", value: supportRequest.reference_code, inline: true },
+      ],
+      timestamp: supportRequest.created_at,
+      ...(dashboardBaseUrl
+        ? {
+            description: `[Open in staff dashboard](${dashboardBaseUrl}/admin/support/${supportRequest.id})`,
+          }
+        : {}),
+    },
+    "support request"
+  );
+}
+
+export async function notifyDiscordOfSupportStatusChange(
+  supportRequest: SupportRequestRow,
+  oldStatus: string
+): Promise<void> {
+  const dashboardBaseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+  await postEmbed(
+    {
+      title: "Support Request Status Updated",
+      color: STATUS_COLORS[supportRequest.status] ?? 0x8b5cf6,
+      fields: [
+        { name: "From", value: supportRequest.discord_username, inline: true },
+        {
+          name: "Status",
+          value: `${formatStatusLabel(oldStatus)} → ${formatStatusLabel(supportRequest.status)}`,
+          inline: true,
+        },
+        { name: "Reference", value: supportRequest.reference_code, inline: true },
+      ],
+      ...(dashboardBaseUrl
+        ? {
+            description: `[Open in staff dashboard](${dashboardBaseUrl}/admin/support/${supportRequest.id})`,
+          }
+        : {}),
+    },
+    "support status change"
   );
 }
 
