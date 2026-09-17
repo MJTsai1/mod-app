@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 import { supportRequestSchema } from "@/lib/validation/support";
 import { TextInput, TextArea } from "@/components/apply/fields";
 
@@ -30,6 +31,8 @@ function loadDraft(): FormValues {
 
 export function SupportRequestForm() {
   const router = useRouter();
+  const t = useTranslations("support");
+  const tCommon = useTranslations("common");
   const [values, setValues] = useState<FormValues>(EMPTY);
   const [hydrated, setHydrated] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -78,7 +81,7 @@ export function SupportRequestForm() {
           Object.entries(fieldErrors).map(([key, messages]) => [key, messages?.[0] ?? ""])
         )
       );
-      setSubmitError("Please fix the highlighted fields before submitting.");
+      setSubmitError(tCommon("fixHighlighted"));
       return;
     }
 
@@ -104,7 +107,7 @@ export function SupportRequestForm() {
             )
           );
         }
-        setSubmitError(body?.error ?? "Something went wrong submitting your request. Please try again.");
+        setSubmitError(body?.error ?? t("submitError"));
         setSubmitting(false);
         submittingRef.current = false;
         return;
@@ -118,7 +121,7 @@ export function SupportRequestForm() {
 
       router.push(`/support/success?ref=${encodeURIComponent(body.referenceCode)}`);
     } catch {
-      setSubmitError("We couldn't reach the server. Check your connection and try again — your answers are still here.");
+      setSubmitError(tCommon("networkError"));
       setSubmitting(false);
       submittingRef.current = false;
     }
@@ -127,7 +130,7 @@ export function SupportRequestForm() {
   if (!hydrated) {
     return (
       <div className="card-elevated p-8 text-center text-[var(--color-text-muted)]">
-        Loading form&hellip;
+        {tCommon("loading")}
       </div>
     );
   }
@@ -135,23 +138,23 @@ export function SupportRequestForm() {
   return (
     <form onSubmit={handleSubmit} noValidate className="card-elevated space-y-5 p-6 sm:p-8">
       <TextInput
-        label="Subject"
+        label={t("fields.subject")}
         value={values.subject}
         onChange={(v) => setField("subject", v)}
         required
         error={errors.subject}
-        placeholder="A short summary of what you need help with"
+        placeholder={t("fields.subjectPlaceholder")}
         maxLength={150}
       />
       <TextArea
-        label="What do you need help with?"
+        label={t("fields.message")}
         value={values.message}
         onChange={(v) => setField("message", v)}
         required
         error={errors.message}
         rows={6}
         maxLength={3000}
-        placeholder="Describe your question or issue — a staff member will reply here."
+        placeholder={t("fields.messagePlaceholder")}
       />
 
       {submitError && (
@@ -165,7 +168,7 @@ export function SupportRequestForm() {
       )}
 
       <button type="submit" disabled={submitting} className="btn btn-primary w-full sm:w-auto">
-        {submitting ? "Submitting…" : "Submit Support Request"}
+        {submitting ? t("submitting") : t("submit")}
       </button>
     </form>
   );

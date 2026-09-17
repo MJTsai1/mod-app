@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 import {
   applicationSchema,
   applicationStepSchemas,
@@ -69,6 +70,8 @@ export function ApplicationForm({
   discordUserId,
 }: ApplicationFormProps) {
   const router = useRouter();
+  const t = useTranslations("apply");
+  const tCommon = useTranslations("common");
   const [values, setValues] = useState<ApplicationFormValues>(emptyApplicationFormValues);
   const [hydrated, setHydrated] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -175,14 +178,14 @@ export function ApplicationForm({
 
     if (firstInvalidStep !== null) {
       setCurrentStep(firstInvalidStep);
-      setSubmitError("Please fix the highlighted fields before submitting.");
+      setSubmitError(tCommon("fixHighlighted"));
       scrollToTop();
       return;
     }
 
     const parsed = applicationSchema.safeParse(values);
     if (!parsed.success) {
-      setSubmitError("Please fix the highlighted fields before submitting.");
+      setSubmitError(tCommon("fixHighlighted"));
       return;
     }
 
@@ -210,9 +213,7 @@ export function ApplicationForm({
             ),
           }));
         }
-        setSubmitError(
-          body?.error ?? "Something went wrong submitting your application. Please try again."
-        );
+        setSubmitError(body?.error ?? t("submitError"));
         setSubmitting(false);
         submittingRef.current = false;
         return;
@@ -226,9 +227,7 @@ export function ApplicationForm({
 
       router.push(`/apply/success?ref=${encodeURIComponent(body.referenceCode)}`);
     } catch {
-      setSubmitError(
-        "We couldn't reach the server. Check your connection and try again — your answers are still here."
-      );
+      setSubmitError(tCommon("networkError"));
       setSubmitting(false);
       submittingRef.current = false;
     }
@@ -237,7 +236,7 @@ export function ApplicationForm({
   if (!hydrated) {
     return (
       <div className="card-elevated mx-auto max-w-2xl p-8 text-center text-[var(--color-text-muted)]">
-        Loading application form&hellip;
+        {tCommon("loading")}
       </div>
     );
   }
@@ -304,16 +303,16 @@ export function ApplicationForm({
               disabled={currentStep === 0 || submitting}
               className="btn btn-ghost"
             >
-              Previous
+              {t("previous")}
             </button>
 
             {isLastStep ? (
               <button type="submit" disabled={submitting} className="btn btn-primary">
-                {submitting ? "Submitting…" : "Submit Application"}
+                {submitting ? t("submitting") : t("submit")}
               </button>
             ) : (
               <button type="submit" className="btn btn-primary">
-                Next
+                {t("next")}
               </button>
             )}
           </div>

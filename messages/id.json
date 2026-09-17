@@ -1,0 +1,363 @@
+{
+  "common": {
+    "siteDescription": "Pusat informasi komunitas kami — tautan cepat, pendaftaran moderator, dukungan anggota, dan video terbaru dari kanal YouTube kami.",
+    "optional": "(opsional)",
+    "selectOption": "Pilih salah satu opsi",
+    "yes": "Ya",
+    "no": "Tidak",
+    "loading": "Memuat…",
+    "fixHighlighted": "Silakan perbaiki kolom yang ditandai sebelum mengirim.",
+    "networkError": "Kami tidak dapat menghubungi server. Periksa koneksi Anda dan coba lagi — jawaban Anda masih tersimpan.",
+    "returnHome": "Kembali ke Beranda",
+    "signInWithDiscord": "Masuk dengan Discord"
+  },
+  "languageSwitcher": {
+    "label": "Bahasa"
+  },
+  "nav": {
+    "faq": "FAQ",
+    "report": "Laporkan Anggota",
+    "appeal": "Banding Ban",
+    "staffLogin": "Masuk Staf",
+    "applyNow": "Daftar Sekarang",
+    "signIn": "Masuk"
+  },
+  "footer": {
+    "copyright": "© {year} {serverName}. Tidak berafiliasi dengan Discord Inc.",
+    "requirements": "Persyaratan",
+    "faq": "FAQ",
+    "report": "Laporkan Anggota",
+    "appeal": "Banding Ban",
+    "privacy": "Kebijakan Privasi",
+    "terms": "Syarat Layanan",
+    "discord": "Discord",
+    "contact": "Kontak"
+  },
+  "home": {
+    "welcome": "Selamat Datang",
+    "joinDiscord": "Gabung Discord Kami",
+    "onlineNow": "{count} sedang online",
+    "quickLinks": [
+      { "title": "Daftar Sekarang", "description": "Daftar untuk bergabung dengan tim moderasi." },
+      { "title": "Laporkan Anggota", "description": "Beri tahu staf tentang pelanggar aturan." },
+      { "title": "Banding Ban", "description": "Merasa dibanned secara tidak adil? Ceritakan alasannya kepada kami." },
+      { "title": "FAQ", "description": "Jawaban atas pertanyaan umum." }
+    ],
+    "latestUploads": "Video Terbaru",
+    "recentVideosFrom": "Video terbaru dari",
+    "ourOfficialChannel": "kanal YouTube resmi kami",
+    "coOwnerChannelLabel": "Kanal pribadi co-owner",
+    "mostRecent": "Terbaru",
+    "mostViewed": "Terpopuler",
+    "views": "kali ditonton",
+    "couldntLoadUploads": "Tidak dapat memuat video terbaru saat ini — kunjungi langsung kanal di atas.",
+    "alsoCheckOut": "Lihat juga",
+    "aboutRoleHeading": "Tentang Peran Ini",
+    "aboutRoleIntro": "Moderator adalah anggota komunitas terpercaya yang membantu tim staf menjaga kelancaran server.",
+    "responsibilities": [
+      "Menegakkan aturan server secara adil dan konsisten",
+      "Membantu anggota dengan pertanyaan dan masalah",
+      "Menangani laporan dengan cepat dan rahasia",
+      "Meredakan konflik antar anggota",
+      "Menjaga komunitas tetap ramah dan inklusif",
+      "Bekerja sama erat dengan tim staf lainnya"
+    ],
+    "requirementsHeading": "Persyaratan",
+    "requirementsIntro": "Kami mencari anggota yang memenuhi kriteria berikut, sebelum hal lainnya.",
+    "requirements": [
+      "Anggota aktif server",
+      "Memahami dan mematuhi aturan",
+      "Dewasa dan bertanggung jawab",
+      "Menghormati sesama anggota",
+      "Dapat bekerja sama dengan baik dengan staf",
+      "Riwayat moderasi yang baik",
+      "Bersedia belajar"
+    ],
+    "minAge": "Usia minimum untuk mendaftar: {age}+",
+    "ctaHeading": "Siap bergabung dengan tim?",
+    "ctaBody": "Pendaftaran memakan waktu sekitar 10–15 menit. Luangkan waktu Anda dan jawab dengan jujur.",
+    "applyNow": "Daftar Sekarang"
+  },
+  "faq": {
+    "title": "Pertanyaan yang Sering Diajukan",
+    "items": {
+      "responseTime": {
+        "question": "Berapa lama waktu yang dibutuhkan untuk mendapatkan kabar tentang pendaftaran saya?",
+        "answer": "Tim staf meninjau pendaftaran sesuai urutan masuk. Waktu respons bervariasi tergantung volume, tetapi Anda selalu dapat memeriksa status menggunakan kode referensi yang Anda terima."
+      },
+      "reapply": {
+        "question": "Bisakah saya mendaftar lagi jika ditolak?",
+        "answer": "Bisa. Luangkan waktu untuk lebih aktif dan terlibat dalam komunitas, lalu jangan ragu untuk mendaftar lagi nanti."
+      },
+      "howToReport": {
+        "question": "Bagaimana cara melaporkan anggota yang melanggar aturan?",
+        "answer": "Gunakan halaman Laporkan Anggota. Anda perlu masuk dengan Discord terlebih dahulu agar kami dapat menghubungi Anda jika memerlukan informasi lebih lanjut."
+      },
+      "banUnfair": {
+        "question": "Saya merasa dibanned secara tidak adil — apa yang bisa saya lakukan?",
+        "answer": "Ajukan banding melalui halaman Banding Ban. Jelaskan situasi Anda dengan jelas dan jujur — tim staf akan meninjau setiap banding."
+      },
+      "confidentiality": {
+        "question": "Apakah laporan atau banding saya akan dirahasiakan?",
+        "answer": "Laporan dan banding hanya dapat dilihat oleh staf yang berwenang. Lihat Kebijakan Privasi untuk detail lengkap tentang bagaimana informasi Anda ditangani."
+      },
+      "stillNeedSupport": {
+        "question": "Masih butuh bantuan?",
+        "answer": "Hubungi moderator dengan mengisi formulir Permintaan Dukungan sesuai pertanyaan atau masalah Anda. Staf akan membalas langsung permintaan Anda, dan Anda dapat membalasnya kembali — Anda akan menemukan percakapan tersebut di halaman Akun Anda.",
+        "linkLabel": "Kirim Permintaan Dukungan"
+      }
+    }
+  },
+  "apply": {
+    "heading": "Pendaftaran Moderator",
+    "taglineQuoted": "“Menurut Anda, apakah Anda punya kemampuan untuk membantu komunitas kami?”",
+    "saveHint": "Luangkan waktu Anda — jawaban Anda disimpan secara otomatis, jadi aman untuk berpindah antar langkah.",
+    "signInPrompt": "Masuk dengan Discord untuk mendaftar. Ini mengonfirmasi identitas Discord Anda untuk pendaftaran — tidak perlu akun atau kata sandi terpisah.",
+    "signInFailed": "Proses masuk gagal atau dibatalkan. Silakan coba lagi.",
+    "loadingForm": "Memuat formulir pendaftaran…",
+    "applyingAs": "Mendaftar sebagai",
+    "fromDiscordSignIn": "Diambil dari akun Discord Anda saat masuk — tidak dapat diedit di sini.",
+    "steps": {
+      "labels": ["Dasar", "Aktivitas", "Pengalaman", "Skenario", "Motivasi"],
+      "stepOf": "Langkah {current} dari {total}: {label}"
+    },
+    "fields": {
+      "age": "Usia",
+      "agePlaceholder": "contoh: 19",
+      "country": "Negara",
+      "countryPlaceholder": "contoh: Singapura",
+      "countryHint": "Terdeteksi otomatis dari lokasi Anda — ubah jika salah.",
+      "timezone": "Zona Waktu",
+      "timezonePlaceholder": "Pilih zona waktu Anda",
+      "timezoneHint": "Terdeteksi otomatis dari peramban Anda — ubah jika salah.",
+      "noOneLivesHere": "Tidak ada yang tinggal di sini (UTC-12)",
+      "timeInServer": "Sudah berapa lama Anda berada di server ini?",
+      "timeInServerPlaceholder": "contoh: 8 bulan",
+      "activityLevel": "Seberapa aktif Anda di Discord?",
+      "activityLevels": [
+        "Sangat aktif (setiap hari)",
+        "Aktif (hampir setiap hari)",
+        "Sedang (beberapa kali seminggu)",
+        "Jarang (jarang online)"
+      ],
+      "onlineTimes": "Biasanya jam berapa Anda online?",
+      "onlineTimesPlaceholder": "contoh: Hari kerja pukul 18.00-23.00, sebagian besar akhir pekan (sesuai zona waktu Anda)",
+      "weeklyHours": "Berapa jam per minggu yang bisa Anda luangkan untuk moderasi?",
+      "weeklyHoursPlaceholder": "contoh: 10",
+      "hasModeratedBefore": "Apakah Anda pernah menjadi moderator server Discord sebelumnya?",
+      "previousExperience": "Jelaskan pengalaman moderasi Anda sebelumnya",
+      "previousExperiencePlaceholder": "Server mana saja, seberapa besar, apa yang Anda lakukan sehari-hari?",
+      "botsToolsUsed": "Bot/alat moderasi apa saja yang pernah Anda gunakan?",
+      "botsToolsUsedPlaceholder": "contoh: Dyno, MEE6, Carl-bot, AutoMod...",
+      "previousStaffPositions": "Apakah Anda pernah menjadi staf di tempat lain sebelumnya?",
+      "previousStaffPositionsPlaceholder": "Sebutkan komunitas lain dan peran Anda di sana.",
+      "additionalInfo": "Ada hal lain yang ingin Anda sampaikan kepada tim staf?"
+    },
+    "scenarios": {
+      "scenario_unaware_rules": "Seorang anggota berulang kali melanggar aturan tetapi mengaku tidak tahu aturannya. Apa yang akan Anda lakukan?",
+      "scenario_toxic_conflict": "Dua anggota sedang bertengkar dan situasinya mulai menjadi toxic. Bagaimana Anda akan menanganinya?",
+      "scenario_friend_breaks_rule": "Teman Anda melanggar aturan server. Apa yang akan Anda lakukan?",
+      "scenario_staff_abuse": "Anda menemukan moderator lain menyalahgunakan wewenangnya. Apa yang akan Anda lakukan?",
+      "scenario_biased_report": "Seseorang mengajukan laporan terhadap anggota yang secara pribadi tidak Anda sukai. Bagaimana Anda memastikan Anda menangani situasi ini secara adil?"
+    },
+    "motivations": {
+      "motivation_why": "Mengapa Anda ingin menjadi moderator?",
+      "motivation_suitable": "Apa yang membuat Anda cocok untuk peran ini?",
+      "motivation_good_moderator": "Menurut Anda, apa yang membuat seorang moderator itu baik?",
+      "motivation_improve_server": "Apa yang menurut Anda bisa diperbaiki dari server ini?"
+    },
+    "confirmationStatement": "Saya menyatakan bahwa informasi yang diberikan adalah benar dan memahami bahwa pengiriman pendaftaran ini tidak menjamin penerimaan.",
+    "previous": "Sebelumnya",
+    "next": "Berikutnya",
+    "submit": "Kirim Pendaftaran",
+    "submitting": "Mengirim…",
+    "submitError": "Terjadi kesalahan saat mengirim pendaftaran Anda. Silakan coba lagi.",
+    "success": {
+      "heading": "Pendaftaran Terkirim",
+      "message": "Terima kasih telah mendaftar! Pendaftaran Anda telah berhasil diterima.",
+      "followUp": "Simpan referensi ini untuk catatan Anda. Tim staf akan meninjau pendaftaran Anda dan menghubungi Anda melalui Discord jika diperlukan — tidak ada tindakan lain yang diperlukan dari Anda saat ini."
+    }
+  },
+  "report": {
+    "heading": "Laporkan Anggota",
+    "intro": "Ada yang melanggar aturan? Beri tahu tim staf agar kami dapat menindaklanjutinya.",
+    "signInPrompt": "Masuk dengan Discord untuk mengajukan laporan. Ini memungkinkan tim staf kami menghubungi Anda jika mereka memerlukan informasi lebih lanjut.",
+    "signInFailed": "Proses masuk gagal atau dibatalkan. Silakan coba lagi.",
+    "categories": {
+      "harassment": "Pelecehan atau perundungan",
+      "spam": "Spam atau iklan",
+      "cheating_exploiting": "Kecurangan atau eksploitasi bug",
+      "inappropriate_content": "Konten tidak pantas",
+      "impersonation": "Peniruan identitas",
+      "other": "Lainnya"
+    },
+    "fields": {
+      "reportedDiscordUsername": "Nama pengguna Discord anggota yang dilaporkan",
+      "reportedDiscordUsernamePlaceholder": "namapengguna atau namapengguna#0000",
+      "reportedDiscordUserId": "ID Discord anggota yang dilaporkan",
+      "reportedDiscordUserIdHint": "Opsional, tetapi membantu kami menemukan orang yang tepat lebih cepat. Klik kanan pada namanya di Discord lalu salin ID Pengguna (Mode Pengembang harus diaktifkan).",
+      "category": "Kategori",
+      "selectCategory": "Pilih kategori",
+      "description": "Apa yang terjadi?",
+      "descriptionPlaceholder": "Jelaskan apa yang terjadi, termasuk perkiraan waktu dan tempat (kanal/panggilan suara mana).",
+      "evidenceLinks": "Tautan bukti",
+      "evidenceLinksPlaceholder": "Tautan ke tangkapan layar, klip, atau pesan (opsional tetapi membantu)."
+    },
+    "submit": "Kirim Laporan",
+    "submitting": "Mengirim…",
+    "submitError": "Terjadi kesalahan saat mengirim laporan Anda. Silakan coba lagi.",
+    "success": {
+      "heading": "Laporan Terkirim",
+      "message": "Terima kasih telah memberi tahu kami. Laporan Anda telah dikirim ke tim staf.",
+      "followUp": "Simpan referensi ini untuk catatan Anda. Anda dapat memeriksa statusnya kapan saja dari halaman Akun Anda. Mohon jangan mengambil tindakan sendiri selama laporan ditinjau."
+    }
+  },
+  "appeal": {
+    "heading": "Banding Ban",
+    "intro": "Merasa dibanned secara tidak adil? Jelaskan situasi Anda dan kami akan meninjaunya.",
+    "signInPrompt": "Masuk dengan Discord untuk mengajukan banding ban. Ini mengonfirmasi identitas Anda agar staf dapat meninjau kasus Anda.",
+    "signInFailed": "Proses masuk gagal atau dibatalkan. Silakan coba lagi.",
+    "fields": {
+      "discordUsername": "Nama pengguna Discord Anda",
+      "discordUsernamePlaceholder": "namapengguna atau namapengguna#0000",
+      "discordUserId": "ID Discord Anda",
+      "discordUserIdHint": "Klik kanan pada nama Anda di Discord lalu salin ID Pengguna (Mode Pengembang harus diaktifkan).",
+      "banReason": "Menurut Anda, mengapa Anda dibanned?",
+      "banReasonPlaceholder": "Apa yang diberitahukan kepada Anda, jika ada, saat Anda dibanned?",
+      "appealReason": "Mengapa ban Anda harus dicabut?",
+      "appealReasonPlaceholder": "Jujur dan spesifik — jelaskan apa yang terjadi dan mengapa Anda pantas diberi kesempatan lagi.",
+      "additionalInfo": "Ada hal lain yang ingin Anda sampaikan kepada kami?"
+    },
+    "submit": "Kirim Banding",
+    "submitting": "Mengirim…",
+    "submitError": "Terjadi kesalahan saat mengirim banding Anda. Silakan coba lagi.",
+    "success": {
+      "heading": "Banding Terkirim",
+      "message": "Terima kasih telah mengajukan banding Anda. Tim staf akan meninjaunya.",
+      "followUp": "Simpan referensi ini untuk catatan Anda. Anda dapat memeriksa statusnya kapan saja dari halaman Akun Anda."
+    }
+  },
+  "support": {
+    "heading": "Hubungi Dukungan",
+    "intro": "Butuh bantuan untuk hal yang bukan laporan atau banding ban? Kirim pesan langsung ke tim staf.",
+    "signInPrompt": "Masuk dengan Discord untuk mengirim permintaan dukungan. Staf akan membalas langsung, dan Anda akan melihat percakapan di halaman Akun Anda.",
+    "signInFailed": "Proses masuk gagal atau dibatalkan. Silakan coba lagi.",
+    "fields": {
+      "subject": "Subjek",
+      "subjectPlaceholder": "Ringkasan singkat tentang bantuan yang Anda butuhkan",
+      "message": "Apa yang Anda butuhkan bantuannya?",
+      "messagePlaceholder": "Jelaskan pertanyaan atau masalah Anda — staf akan membalas di sini."
+    },
+    "submit": "Kirim Permintaan Dukungan",
+    "submitting": "Mengirim…",
+    "submitError": "Terjadi kesalahan saat mengirim permintaan Anda. Silakan coba lagi.",
+    "success": {
+      "heading": "Permintaan Dukungan Terkirim",
+      "message": "Terima kasih telah menghubungi kami. Staf akan membalas permintaan Anda.",
+      "followUp": "Simpan referensi ini untuk catatan Anda. Anda akan melihat balasan staf — dan dapat membalasnya kembali — dari halaman Akun Anda."
+    }
+  },
+  "account": {
+    "title": "Akun Saya",
+    "signedInAs": "Masuk sebagai {username}",
+    "signOut": "Keluar",
+    "signInPrompt": "Masuk dengan Discord untuk melihat status laporan dan banding ban Anda.",
+    "signInFailed": "Proses masuk gagal atau dibatalkan. Silakan coba lagi.",
+    "myApplications": "Pendaftaran Saya",
+    "noApplications": "Anda belum mengirim pendaftaran apa pun.",
+    "myReports": "Laporan Saya",
+    "noReports": "Anda belum mengajukan laporan apa pun.",
+    "myAppeals": "Banding Ban Saya",
+    "noAppeals": "Anda belum mengirim banding ban apa pun.",
+    "mySupportRequests": "Permintaan Dukungan Saya",
+    "noSupportRequests": "Anda belum mengirim permintaan dukungan apa pun.",
+    "reportedUser": "Melaporkan {username}",
+    "conversationWithStaff": "Percakapan Anda dengan staf:",
+    "staffQuestion": "Staf memiliki pertanyaan untuk Anda — silakan balas di bawah ini.",
+    "typeReply": "Ketik balasan Anda…",
+    "sendReply": "Kirim Balasan",
+    "moderatorApplication": "Pendaftaran moderator",
+    "updated": "Diperbarui",
+    "noMessagesYet": "Belum ada pesan.",
+    "sending": "Mengirim…",
+    "sendMessageFailed": "Gagal mengirim pesan."
+  },
+  "terms": {
+    "title": "Syarat Layanan",
+    "intro": "Syarat ini mencakup penggunaan Anda atas situs web ini — pendaftaran moderator, laporan anggota, banding ban, dan halaman terkait — untuk {serverName}. Dengan menggunakan situs ini, Anda menyetujui syarat tersebut.",
+    "sections": [
+      {
+        "title": "Apa itu situs ini",
+        "body": "Ini adalah alat yang dikelola oleh komunitas untuk {serverName}, sebuah server Discord. Situs ini tidak berafiliasi dengan, disahkan oleh, atau dioperasikan oleh Discord Inc. atau Roblox Corporation. “Discord” dan “Roblox” adalah merek dagang milik pemiliknya masing-masing."
+      },
+      {
+        "title": "Masuk (Sign In)",
+        "body": "Beberapa halaman memerlukan masuk dengan akun Discord Anda (melalui layar masuk Discord itu sendiri — kami tidak pernah melihat atau menyimpan kata sandi Discord Anda). Halaman staf memerlukan akun terpisah yang dibuat langsung oleh administrator. Anda bertanggung jawab menjaga keamanan akses ke akun Discord Anda sendiri."
+      },
+      {
+        "title": "Hal yang Anda setujui saat mengirimkan sesuatu",
+        "list": [
+          "Informasi yang Anda kirimkan akurat dan benar sepengetahuan Anda.",
+          "Anda tidak akan mengirim laporan palsu, banding ban palsu, atau informasi yang secara sengaja menyesatkan.",
+          "Anda tidak akan menggunakan sistem laporan atau banding untuk melecehkan, mengirim spam, atau menargetkan anggota lain dengan niat buruk.",
+          "Anda tidak akan mencoba mengganggu, membebani secara berlebihan, atau mendapatkan akses tidak sah ke situs atau sistemnya."
+        ],
+        "body": "Kiriman yang melanggar syarat ini dapat ditolak tanpa peninjauan, dan penyalahgunaan berulang dapat mengakibatkan pencabutan akses Anda ke sistem ini."
+      },
+      {
+        "title": "Tidak ada jaminan hasil",
+        "body": "Mengirim pendaftaran moderator, laporan, atau banding ban tidak menjamin hasil tertentu. Keputusan — penerimaan, penolakan, penyelesaian, atau penolakan banding — dibuat sepenuhnya atas kebijaksanaan staf {serverName}."
+      },
+      {
+        "title": "Konten pihak ketiga",
+        "body": "Halaman beranda menampilkan video dari kanal YouTube yang operasionalnya tidak kami kendalikan. Konten yang ditautkan atau disematkan adalah milik pembuatnya masing-masing dan tunduk pada syarat YouTube itu sendiri, bukan syarat ini."
+      },
+      {
+        "title": "Tanpa jaminan",
+        "body": "Situs ini disediakan “apa adanya”, dijalankan secara sukarela oleh sukarelawan komunitas dengan upaya terbaik. Kami tidak menjamin situs ini akan selalu tersedia, bebas dari kesalahan, atau tidak terganggu."
+      },
+      {
+        "title": "Perubahan pada syarat ini",
+        "body": "Syarat ini dapat diperbarui dari waktu ke waktu seiring perkembangan situs. Dengan terus menggunakan situs setelah pembaruan berarti Anda menerima syarat yang telah direvisi."
+      }
+    ],
+    "contact": {
+      "title": "Kontak",
+      "body": "Pertanyaan tentang syarat ini dapat dikirimkan kepada administrasi server di"
+    }
+  },
+  "privacy": {
+    "title": "Kebijakan Privasi",
+    "intro": "Kebijakan ini menjelaskan informasi apa yang dikumpulkan {serverName} di situs ini — pendaftaran moderator, laporan anggota, banding ban, dan masuk dengan Discord — serta bagaimana informasi tersebut digunakan.",
+    "whatIsCollected": {
+      "title": "Informasi apa yang dikumpulkan",
+      "applications": "nama pengguna Discord, ID Pengguna Discord, usia, negara, zona waktu, detail aktivitas, pengalaman moderasi, dan jawaban tertulis Anda atas pertanyaan pendaftaran. Pendaftaran tidak memerlukan proses masuk.",
+      "applicationsLabel": "Pendaftaran moderator:",
+      "signingIn": "untuk mengajukan laporan, mengirim banding ban, atau memeriksa statusnya di halaman Akun, Anda masuk dengan akun Discord Anda. Discord membagikan nama pengguna Discord, ID pengguna, dan avatar Anda kepada kami — tidak pernah kata sandi Discord Anda, yang tidak pernah kami lihat.",
+      "signingInLabel": "Masuk dengan Discord:",
+      "reports": "nama pengguna Discord Anda (sebagai pelapor), nama pengguna/ID Discord anggota yang dilaporkan, kategori dan deskripsi kejadian, serta tautan bukti apa pun yang Anda berikan.",
+      "reportsLabel": "Laporan:",
+      "appeals": "nama pengguna Discord dan ID Pengguna Anda, alasan Anda merasa dibanned, alasan banding Anda, dan informasi tambahan apa pun yang Anda berikan.",
+      "appealsLabel": "Banding ban:",
+      "ipHash": "Di semua hal di atas, kami juga mencatat hash kriptografi satu arah dari alamat IP yang digunakan untuk mengirim (bukan IP mentah) semata-mata untuk mencegah spam dan penyalahgunaan."
+    },
+    "why": {
+      "title": "Mengapa informasi ini dikumpulkan",
+      "body": "Informasi ini hanya digunakan untuk mengevaluasi pendaftaran moderator, menyelidiki laporan, meninjau banding ban, dan — bagi anggota yang telah masuk — memungkinkan Anda melihat status kiriman Anda sendiri. Kami tidak mengumpulkan lebih dari yang diperlukan untuk tujuan ini, dan kami tidak menggunakannya untuk iklan atau membagikannya kepada pihak ketiga."
+    },
+    "howStored": {
+      "title": "Bagaimana data disimpan",
+      "body": "Pendaftaran, laporan, dan banding ban disimpan dalam basis data yang aman dan terkontrol aksesnya. Data ini tidak pernah dapat diakses secara publik, dan pengirim tidak dapat melihat kiriman orang lain. Sesi masuk Discord Anda dikelola oleh penyedia autentikasi kami (Supabase) dan terpisah dari sistem Discord itu sendiri."
+    },
+    "whoCanAccess": {
+      "title": "Siapa yang dapat mengakses data ini",
+      "body": "Hanya anggota staf {serverName} yang berwenang, yang masuk melalui dasbor staf, yang dapat melihat pendaftaran, laporan, dan banding yang dikirimkan. Akses dibatasi hanya pada apa yang diperlukan untuk meninjau kiriman. Jika Anda masuk dengan Discord, Anda dapat melihat status laporan dan banding Anda sendiri di halaman Akun — tidak pernah milik orang lain."
+    },
+    "yourRights": {
+      "title": "Data Anda, hak Anda",
+      "contactMethod": "Jika Anda memiliki pertanyaan tentang data Anda atau ingin meminta penghapusannya, hubungi administrasi server.",
+      "body": "untuk menanyakan data apa yang kami simpan tentang Anda atau untuk meminta penghapusannya. Anda juga dapat mencabut akses situs ini ke akun Discord Anda kapan saja melalui pengaturan Aplikasi Terotorisasi Discord.",
+      "reachAt": "Anda dapat menghubungi administrasi server di"
+    }
+  }
+}

@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 import { appealSchema } from "@/lib/validation/appeal";
 import { TextInput, TextArea } from "@/components/apply/fields";
 
@@ -36,6 +37,8 @@ function loadDraft(): FormValues {
 
 export function AppealForm() {
   const router = useRouter();
+  const t = useTranslations("appeal");
+  const tCommon = useTranslations("common");
   const [values, setValues] = useState<FormValues>(EMPTY);
   const [hydrated, setHydrated] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -84,7 +87,7 @@ export function AppealForm() {
           Object.entries(fieldErrors).map(([key, messages]) => [key, messages?.[0] ?? ""])
         )
       );
-      setSubmitError("Please fix the highlighted fields before submitting.");
+      setSubmitError(tCommon("fixHighlighted"));
       return;
     }
 
@@ -110,7 +113,7 @@ export function AppealForm() {
             )
           );
         }
-        setSubmitError(body?.error ?? "Something went wrong submitting your appeal. Please try again.");
+        setSubmitError(body?.error ?? t("submitError"));
         setSubmitting(false);
         submittingRef.current = false;
         return;
@@ -124,7 +127,7 @@ export function AppealForm() {
 
       router.push(`/appeal/success?ref=${encodeURIComponent(body.referenceCode)}`);
     } catch {
-      setSubmitError("We couldn't reach the server. Check your connection and try again — your answers are still here.");
+      setSubmitError(tCommon("networkError"));
       setSubmitting(false);
       submittingRef.current = false;
     }
@@ -133,7 +136,7 @@ export function AppealForm() {
   if (!hydrated) {
     return (
       <div className="card-elevated p-8 text-center text-[var(--color-text-muted)]">
-        Loading form&hellip;
+        {tCommon("loading")}
       </div>
     );
   }
@@ -141,43 +144,43 @@ export function AppealForm() {
   return (
     <form onSubmit={handleSubmit} noValidate className="card-elevated space-y-5 p-6 sm:p-8">
       <TextInput
-        label="Your Discord username"
+        label={t("fields.discordUsername")}
         value={values.discordUsername}
         onChange={(v) => setField("discordUsername", v)}
         required
         error={errors.discordUsername}
-        placeholder="username or username#0000"
+        placeholder={t("fields.discordUsernamePlaceholder")}
       />
       <TextInput
-        label="Your Discord User ID"
+        label={t("fields.discordUserId")}
         value={values.discordUserId}
         onChange={(v) => setField("discordUserId", v)}
         required
         error={errors.discordUserId}
-        hint="Right-click your name in Discord and Copy User ID (Developer Mode must be enabled)."
+        hint={t("fields.discordUserIdHint")}
         inputMode="numeric"
       />
       <TextArea
-        label="Why do you believe you were banned?"
+        label={t("fields.banReason")}
         value={values.banReason}
         onChange={(v) => setField("banReason", v)}
         error={errors.banReason}
         rows={3}
         maxLength={1000}
-        placeholder="What were you told, if anything, when you were banned?"
+        placeholder={t("fields.banReasonPlaceholder")}
       />
       <TextArea
-        label="Why should your ban be lifted?"
+        label={t("fields.appealReason")}
         value={values.appealReason}
         onChange={(v) => setField("appealReason", v)}
         required
         error={errors.appealReason}
         rows={6}
         maxLength={3000}
-        placeholder="Be honest and specific — explain what happened and why you should be given another chance."
+        placeholder={t("fields.appealReasonPlaceholder")}
       />
       <TextArea
-        label="Anything else you'd like us to know?"
+        label={t("fields.additionalInfo")}
         value={values.additionalInfo}
         onChange={(v) => setField("additionalInfo", v)}
         error={errors.additionalInfo}
@@ -196,7 +199,7 @@ export function AppealForm() {
       )}
 
       <button type="submit" disabled={submitting} className="btn btn-primary w-full sm:w-auto">
-        {submitting ? "Submitting…" : "Submit Appeal"}
+        {submitting ? t("submitting") : t("submit")}
       </button>
     </form>
   );

@@ -1,0 +1,363 @@
+{
+  "common": {
+    "siteDescription": "Tu espacio para la comunidad — enlaces rápidos, solicitudes de moderador, soporte para miembros y lo último de nuestro canal de YouTube.",
+    "optional": "(opcional)",
+    "selectOption": "Selecciona una opción",
+    "yes": "Sí",
+    "no": "No",
+    "loading": "Cargando…",
+    "fixHighlighted": "Corrige los campos resaltados antes de enviar.",
+    "networkError": "No pudimos contactar con el servidor. Comprueba tu conexión e inténtalo de nuevo — tus respuestas siguen aquí.",
+    "returnHome": "Volver al inicio",
+    "signInWithDiscord": "Iniciar sesión con Discord"
+  },
+  "languageSwitcher": {
+    "label": "Idioma"
+  },
+  "nav": {
+    "faq": "Preguntas frecuentes",
+    "report": "Reportar a un miembro",
+    "appeal": "Apelar baneo",
+    "staffLogin": "Acceso del staff",
+    "applyNow": "Postularme",
+    "signIn": "Iniciar sesión"
+  },
+  "footer": {
+    "copyright": "© {year} {serverName}. No afiliado con Discord Inc.",
+    "requirements": "Requisitos",
+    "faq": "Preguntas frecuentes",
+    "report": "Reportar a un miembro",
+    "appeal": "Apelar baneo",
+    "privacy": "Aviso de privacidad",
+    "terms": "Términos de servicio",
+    "discord": "Discord",
+    "contact": "Contacto"
+  },
+  "home": {
+    "welcome": "Bienvenido",
+    "joinDiscord": "Únete a nuestro Discord",
+    "onlineNow": "{count} en línea ahora",
+    "quickLinks": [
+      { "title": "Postularme", "description": "Postúlate para unirte al equipo de moderación." },
+      { "title": "Reportar a un miembro", "description": "Avisa al staff sobre alguien que infringe las reglas." },
+      { "title": "Apelar baneo", "description": "¿Crees que te banearon injustamente? Cuéntanos por qué." },
+      { "title": "Preguntas frecuentes", "description": "Respuestas a preguntas comunes." }
+    ],
+    "latestUploads": "Últimos videos",
+    "recentVideosFrom": "Videos recientes de",
+    "ourOfficialChannel": "nuestro canal oficial de YouTube",
+    "coOwnerChannelLabel": "Canal personal del copropietario",
+    "mostRecent": "Más recientes",
+    "mostViewed": "Más vistos",
+    "views": "vistas",
+    "couldntLoadUploads": "No se pudieron cargar los videos recientes por ahora — visita el canal directamente arriba.",
+    "alsoCheckOut": "Echa un vistazo también a",
+    "aboutRoleHeading": "Sobre el rol",
+    "aboutRoleIntro": "Los moderadores son miembros de confianza de la comunidad que ayudan al equipo del staff a mantener todo funcionando sin problemas.",
+    "responsibilities": [
+      "Hacer cumplir las reglas del servidor de forma justa y consistente",
+      "Ayudar a los miembros con preguntas y problemas",
+      "Atender los reportes con prontitud y discreción",
+      "Calmar conflictos entre miembros",
+      "Mantener una comunidad acogedora e inclusiva",
+      "Trabajar estrechamente con el resto del staff"
+    ],
+    "requirementsHeading": "Requisitos",
+    "requirementsIntro": "Buscamos miembros que cumplan con lo siguiente, antes que nada.",
+    "requirements": [
+      "Miembro activo del servidor",
+      "Comprende y sigue las reglas",
+      "Maduro y responsable",
+      "Respetuoso con los demás miembros",
+      "Trabaja bien con el staff",
+      "Buen historial de moderación",
+      "Dispuesto a aprender"
+    ],
+    "minAge": "Edad mínima para postular: {age}+",
+    "ctaHeading": "¿Listo para unirte al equipo?",
+    "ctaBody": "La solicitud toma entre 10 y 15 minutos. Tómate tu tiempo y responde con honestidad.",
+    "applyNow": "Postularme"
+  },
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "items": {
+      "responseTime": {
+        "question": "¿Cuánto tiempo tarda en llegar una respuesta a mi solicitud?",
+        "answer": "El equipo del staff revisa las solicitudes a medida que llegan. Los tiempos de respuesta varían según el volumen, pero siempre puedes consultar el estado con el código de referencia que recibiste."
+      },
+      "reapply": {
+        "question": "¿Puedo volver a postularme si me rechazan?",
+        "answer": "Sí. Tómate un tiempo para participar más activamente en la comunidad y luego siéntete libre de volver a postularte más adelante."
+      },
+      "howToReport": {
+        "question": "¿Cómo reporto a un miembro por infringir las reglas?",
+        "answer": "Usa la página Reportar a un miembro. Deberás iniciar sesión con Discord primero para que podamos contactarte si necesitamos más información."
+      },
+      "banUnfair": {
+        "question": "Creo que me banearon injustamente — ¿qué puedo hacer?",
+        "answer": "Envía una apelación a través de la página Apelar baneo. Explica tu situación de forma clara y honesta — el equipo del staff revisa cada apelación."
+      },
+      "confidentiality": {
+        "question": "¿Mi reporte o apelación se mantendrán confidenciales?",
+        "answer": "Los reportes y apelaciones solo son visibles para el staff autorizado. Consulta el Aviso de privacidad para más detalles sobre cómo se maneja tu información."
+      },
+      "stillNeedSupport": {
+        "question": "¿Aún necesitas ayuda?",
+        "answer": "Contacta a un moderador completando el formulario de solicitud de soporte con tu pregunta o problema. Un miembro del staff responderá directamente a tu solicitud, y podrás responderle — encontrarás la conversación en tu página de Cuenta.",
+        "linkLabel": "Enviar una solicitud de soporte"
+      }
+    }
+  },
+  "apply": {
+    "heading": "Solicitud de moderador",
+    "taglineQuoted": "«¿Crees que tienes lo necesario para ayudar a nuestra comunidad?»",
+    "saveHint": "Tómate tu tiempo — tus respuestas se guardan a medida que avanzas, así que puedes moverte entre los pasos sin problema.",
+    "signInPrompt": "Inicia sesión con Discord para postularte. Esto confirma tu identidad de Discord para tu solicitud — no necesitas una cuenta ni contraseña aparte.",
+    "signInFailed": "El inicio de sesión falló o fue cancelado. Inténtalo de nuevo.",
+    "loadingForm": "Cargando formulario de solicitud…",
+    "applyingAs": "Postulando como",
+    "fromDiscordSignIn": "Tomado de tu inicio de sesión con Discord — no editable aquí.",
+    "steps": {
+      "labels": ["Datos básicos", "Actividad", "Experiencia", "Escenarios", "Motivación"],
+      "stepOf": "Paso {current} de {total}: {label}"
+    },
+    "fields": {
+      "age": "Edad",
+      "agePlaceholder": "ej. 19",
+      "country": "País",
+      "countryPlaceholder": "ej. Singapur",
+      "countryHint": "Detectado automáticamente según tu ubicación — cámbialo si es incorrecto.",
+      "timezone": "Zona horaria",
+      "timezonePlaceholder": "Selecciona tu zona horaria",
+      "timezoneHint": "Detectada automáticamente desde tu navegador — cámbiala si es incorrecta.",
+      "noOneLivesHere": "Aquí no vive nadie (UTC-12)",
+      "timeInServer": "¿Cuánto tiempo llevas en el servidor?",
+      "timeInServerPlaceholder": "ej. 8 meses",
+      "activityLevel": "¿Qué tan activo eres en Discord?",
+      "activityLevels": [
+        "Muy activo (a diario)",
+        "Activo (la mayoría de los días)",
+        "Moderado (algunas veces por semana)",
+        "Ocasional (rara vez en línea)"
+      ],
+      "onlineTimes": "¿En qué horarios sueles estar en línea?",
+      "onlineTimesPlaceholder": "ej. Entre semana 18h-23h, la mayor parte del fin de semana (en tu zona horaria)",
+      "weeklyHours": "¿Cuántas horas a la semana puedes dedicar a la moderación?",
+      "weeklyHoursPlaceholder": "ej. 10",
+      "hasModeratedBefore": "¿Has moderado un servidor de Discord antes?",
+      "previousExperience": "Describe tu experiencia de moderación previa",
+      "previousExperiencePlaceholder": "¿Qué servidores, de qué tamaño, qué hacías en el día a día?",
+      "botsToolsUsed": "¿Qué bots/herramientas de moderación has usado?",
+      "botsToolsUsedPlaceholder": "ej. Dyno, MEE6, Carl-bot, AutoMod...",
+      "previousStaffPositions": "¿Has sido staff en algún otro lugar antes?",
+      "previousStaffPositionsPlaceholder": "Enumera otras comunidades y tu rol allí.",
+      "additionalInfo": "¿Hay algo más que te gustaría que el equipo del staff supiera?"
+    },
+    "scenarios": {
+      "scenario_unaware_rules": "Un miembro infringe las reglas repetidamente pero afirma no conocerlas. ¿Qué harías?",
+      "scenario_toxic_conflict": "Dos miembros están discutiendo y la situación se está volviendo tóxica. ¿Cómo lo manejarías?",
+      "scenario_friend_breaks_rule": "Un amigo tuyo infringe una regla del servidor. ¿Qué harías?",
+      "scenario_staff_abuse": "Descubres que otro moderador está abusando de sus permisos. ¿Qué harías?",
+      "scenario_biased_report": "Alguien envía un reporte contra un miembro que no te agrada personalmente. ¿Cómo te asegurarías de manejar la situación con imparcialidad?"
+    },
+    "motivations": {
+      "motivation_why": "¿Por qué quieres convertirte en moderador?",
+      "motivation_suitable": "¿Qué te hace adecuado para el rol?",
+      "motivation_good_moderator": "¿Qué hace a un buen moderador?",
+      "motivation_improve_server": "¿Qué podrías mejorar del servidor?"
+    },
+    "confirmationStatement": "Confirmo que la información proporcionada es precisa y entiendo que enviar una solicitud no garantiza su aceptación.",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "submit": "Enviar solicitud",
+    "submitting": "Enviando…",
+    "submitError": "Ocurrió un problema al enviar tu solicitud. Inténtalo de nuevo.",
+    "success": {
+      "heading": "Solicitud enviada",
+      "message": "¡Gracias por postularte! Tu solicitud se ha recibido correctamente.",
+      "followUp": "Guarda esta referencia para tus registros. El equipo del staff revisará tu solicitud y se pondrá en contacto por Discord si es necesario — no se requiere ninguna otra acción de tu parte por ahora."
+    }
+  },
+  "report": {
+    "heading": "Reportar a un miembro",
+    "intro": "¿Alguien está infringiendo las reglas? Avisa al equipo del staff para que podamos revisarlo.",
+    "signInPrompt": "Inicia sesión con Discord para presentar un reporte. Esto permite que nuestro equipo del staff te contacte si necesita más información.",
+    "signInFailed": "El inicio de sesión falló o fue cancelado. Inténtalo de nuevo.",
+    "categories": {
+      "harassment": "Acoso o intimidación",
+      "spam": "Spam o publicidad",
+      "cheating_exploiting": "Trampas o explotación de fallos",
+      "inappropriate_content": "Contenido inapropiado",
+      "impersonation": "Suplantación de identidad",
+      "other": "Otro"
+    },
+    "fields": {
+      "reportedDiscordUsername": "Nombre de usuario de Discord del miembro reportado",
+      "reportedDiscordUsernamePlaceholder": "usuario o usuario#0000",
+      "reportedDiscordUserId": "ID de Discord del miembro reportado",
+      "reportedDiscordUserIdHint": "Opcional, pero nos ayuda a identificar a la persona correcta más rápido. Haz clic derecho en su nombre en Discord y copia el ID de usuario (el modo desarrollador debe estar activado).",
+      "category": "Categoría",
+      "selectCategory": "Selecciona una categoría",
+      "description": "¿Qué sucedió?",
+      "descriptionPlaceholder": "Describe lo que sucedió, incluyendo aproximadamente cuándo y dónde (qué canal/llamada de voz).",
+      "evidenceLinks": "Enlaces de evidencia",
+      "evidenceLinksPlaceholder": "Enlaces a capturas de pantalla, clips o mensajes (opcional pero útil)."
+    },
+    "submit": "Enviar reporte",
+    "submitting": "Enviando…",
+    "submitError": "Ocurrió un problema al enviar tu reporte. Inténtalo de nuevo.",
+    "success": {
+      "heading": "Reporte enviado",
+      "message": "Gracias por avisarnos. Tu reporte fue enviado al equipo del staff.",
+      "followUp": "Guarda esta referencia para tus registros. Puedes revisar su estado en cualquier momento desde tu página de Cuenta. Por favor, no tomes cartas en el asunto mientras se revisa."
+    }
+  },
+  "appeal": {
+    "heading": "Apelar baneo",
+    "intro": "¿Crees que te banearon injustamente? Explica tu situación y lo revisaremos.",
+    "signInPrompt": "Inicia sesión con Discord para enviar una apelación de baneo. Esto confirma tu identidad para que el staff pueda revisar tu caso.",
+    "signInFailed": "El inicio de sesión falló o fue cancelado. Inténtalo de nuevo.",
+    "fields": {
+      "discordUsername": "Tu nombre de usuario de Discord",
+      "discordUsernamePlaceholder": "usuario o usuario#0000",
+      "discordUserId": "Tu ID de Discord",
+      "discordUserIdHint": "Haz clic derecho en tu nombre en Discord y copia el ID de usuario (el modo desarrollador debe estar activado).",
+      "banReason": "¿Por qué crees que te banearon?",
+      "banReasonPlaceholder": "¿Qué te dijeron, si te dijeron algo, cuando te banearon?",
+      "appealReason": "¿Por qué debería levantarse tu baneo?",
+      "appealReasonPlaceholder": "Sé honesto y específico — explica qué sucedió y por qué deberías tener otra oportunidad.",
+      "additionalInfo": "¿Hay algo más que te gustaría que supiéramos?"
+    },
+    "submit": "Enviar apelación",
+    "submitting": "Enviando…",
+    "submitError": "Ocurrió un problema al enviar tu apelación. Inténtalo de nuevo.",
+    "success": {
+      "heading": "Apelación enviada",
+      "message": "Gracias por enviar tu apelación. El equipo del staff la revisará.",
+      "followUp": "Guarda esta referencia para tus registros. Puedes revisar su estado en cualquier momento desde tu página de Cuenta."
+    }
+  },
+  "support": {
+    "heading": "Contactar soporte",
+    "intro": "¿Necesitas ayuda con algo que no es un reporte ni una apelación de baneo? Envía un mensaje directamente al equipo del staff.",
+    "signInPrompt": "Inicia sesión con Discord para enviar una solicitud de soporte. El staff responderá directamente, y verás la conversación en tu página de Cuenta.",
+    "signInFailed": "El inicio de sesión falló o fue cancelado. Inténtalo de nuevo.",
+    "fields": {
+      "subject": "Asunto",
+      "subjectPlaceholder": "Un breve resumen de en qué necesitas ayuda",
+      "message": "¿En qué necesitas ayuda?",
+      "messagePlaceholder": "Describe tu pregunta o problema — un miembro del staff responderá aquí."
+    },
+    "submit": "Enviar solicitud de soporte",
+    "submitting": "Enviando…",
+    "submitError": "Ocurrió un problema al enviar tu solicitud. Inténtalo de nuevo.",
+    "success": {
+      "heading": "Solicitud de soporte enviada",
+      "message": "Gracias por contactarnos. Un miembro del staff responderá a tu solicitud.",
+      "followUp": "Guarda esta referencia para tus registros. Verás las respuestas del staff — y podrás responder — desde tu página de Cuenta."
+    }
+  },
+  "account": {
+    "title": "Mi cuenta",
+    "signedInAs": "Sesión iniciada como {username}",
+    "signOut": "Cerrar sesión",
+    "signInPrompt": "Inicia sesión con Discord para ver el estado de tus reportes y apelaciones de baneo.",
+    "signInFailed": "El inicio de sesión falló o fue cancelado. Inténtalo de nuevo.",
+    "myApplications": "Mis solicitudes",
+    "noApplications": "No has enviado ninguna solicitud.",
+    "myReports": "Mis reportes",
+    "noReports": "No has presentado ningún reporte.",
+    "myAppeals": "Mis apelaciones de baneo",
+    "noAppeals": "No has enviado ninguna apelación de baneo.",
+    "mySupportRequests": "Mis solicitudes de soporte",
+    "noSupportRequests": "No has enviado ninguna solicitud de soporte.",
+    "reportedUser": "Reportado {username}",
+    "conversationWithStaff": "Tu conversación con el staff:",
+    "staffQuestion": "El staff tiene una pregunta para ti — responde abajo.",
+    "typeReply": "Escribe tu respuesta…",
+    "sendReply": "Enviar respuesta",
+    "moderatorApplication": "Solicitud de moderador",
+    "updated": "Actualizado",
+    "noMessagesYet": "Aún no hay mensajes.",
+    "sending": "Enviando…",
+    "sendMessageFailed": "No se pudo enviar el mensaje."
+  },
+  "terms": {
+    "title": "Términos de servicio",
+    "intro": "Estos términos cubren tu uso de este sitio web — solicitudes de moderador, reportes de miembros, apelaciones de baneo y páginas relacionadas — para {serverName}. Al usar este sitio, los aceptas.",
+    "sections": [
+      {
+        "title": "Qué es este sitio",
+        "body": "Esta es una herramienta gestionada por la comunidad para {serverName}, un servidor de Discord. No está afiliada a, avalada por, ni operada por Discord Inc. o Roblox Corporation. «Discord» y «Roblox» son marcas registradas de sus respectivos propietarios."
+      },
+      {
+        "title": "Inicio de sesión",
+        "body": "Algunas páginas requieren iniciar sesión con tu cuenta de Discord (a través de la propia pantalla de inicio de sesión de Discord — nunca vemos ni almacenamos tu contraseña de Discord). Las páginas del staff requieren una cuenta separada creada directamente por un administrador. Eres responsable de mantener segura el acceso a tu propia cuenta de Discord."
+      },
+      {
+        "title": "Lo que aceptas al enviar algo",
+        "list": [
+          "La información que envías es precisa y veraz según tu mejor saber y entender.",
+          "No enviarás reportes falsos, apelaciones de baneo falsas ni información engañosa a sabiendas.",
+          "No usarás el sistema de reportes o apelaciones para acosar, hacer spam o atacar a otro miembro de mala fe.",
+          "No intentarás interrumpir, sobrecargar u obtener acceso no autorizado al sitio o a sus sistemas."
+        ],
+        "body": "Las solicitudes que infrinjan estos términos pueden ser rechazadas sin revisión, y el abuso reiterado puede resultar en la revocación de tu acceso a estos sistemas."
+      },
+      {
+        "title": "Sin resultado garantizado",
+        "body": "Enviar una solicitud de moderador, un reporte o una apelación de baneo no garantiza ningún resultado en particular. Las decisiones — aceptación, rechazo, resolución o denegación — se toman a discreción exclusiva del staff de {serverName}."
+      },
+      {
+        "title": "Contenido de terceros",
+        "body": "La página de inicio muestra videos de canales de YouTube cuyo funcionamiento no controlamos. El contenido enlazado o incrustado pertenece a sus respectivos creadores y está sujeto a los propios términos de YouTube, no a estos."
+      },
+      {
+        "title": "Sin garantía",
+        "body": "Este sitio se proporciona «tal cual», gestionado con el mejor esfuerzo por voluntarios de la comunidad. No garantizamos que siempre esté disponible, libre de errores o ininterrumpido."
+      },
+      {
+        "title": "Cambios en estos términos",
+        "body": "Estos términos pueden actualizarse de vez en cuando a medida que el sitio cambia. Continuar usando el sitio después de una actualización significa que aceptas los términos revisados."
+      }
+    ],
+    "contact": {
+      "title": "Contacto",
+      "body": "Las preguntas sobre estos términos pueden enviarse a la administración del servidor a"
+    }
+  },
+  "privacy": {
+    "title": "Aviso de privacidad",
+    "intro": "Este aviso explica qué información recopila {serverName} en este sitio — solicitudes de moderador, reportes de miembros, apelaciones de baneo e inicio de sesión con Discord — y cómo se utiliza.",
+    "whatIsCollected": {
+      "title": "Qué información se recopila",
+      "applications": "tu nombre de usuario de Discord, tu ID de usuario de Discord, edad, país, zona horaria, detalles de actividad, experiencia de moderación, y tus respuestas escritas a las preguntas de la solicitud. Las solicitudes no requieren iniciar sesión.",
+      "applicationsLabel": "Solicitudes de moderador:",
+      "signingIn": "para presentar un reporte, enviar una apelación de baneo o consultar su estado en la página de Cuenta, inicias sesión con tu cuenta de Discord. Discord comparte con nosotros tu nombre de usuario de Discord, tu ID de usuario y tu avatar — nunca tu contraseña de Discord, que nunca vemos.",
+      "signingInLabel": "Inicio de sesión con Discord:",
+      "reports": "tu nombre de usuario de Discord (como quien reporta), el nombre de usuario/ID de Discord del miembro reportado, la categoría y descripción de lo sucedido, y cualquier enlace de evidencia que proporciones.",
+      "reportsLabel": "Reportes:",
+      "appeals": "tu nombre de usuario de Discord y tu ID de usuario, por qué crees que te banearon, tu motivo de apelación, y cualquier información adicional que proporciones.",
+      "appealsLabel": "Apelaciones de baneo:",
+      "ipHash": "En todos estos casos, también registramos un hash criptográfico unidireccional de la dirección IP utilizada para el envío (no la IP en bruto) únicamente para prevenir el spam y el abuso."
+    },
+    "why": {
+      "title": "Por qué se recopila",
+      "body": "Esta información se utiliza únicamente para evaluar solicitudes de moderador, investigar reportes, revisar apelaciones de baneo y — para miembros con sesión iniciada — permitirte ver el estado de tus propias solicitudes. No recopilamos más de lo necesario para estos fines, y no la usamos para publicidad ni la compartimos con terceros."
+    },
+    "howStored": {
+      "title": "Cómo se almacena",
+      "body": "Las solicitudes, reportes y apelaciones de baneo se almacenan en una base de datos segura y con acceso controlado. Nunca son accesibles públicamente, y quienes las envían no pueden ver las solicitudes de otras personas. Tu sesión de inicio de sesión de Discord es gestionada por nuestro proveedor de autenticación (Supabase) y es independiente de los propios sistemas de Discord."
+    },
+    "whoCanAccess": {
+      "title": "Quién puede acceder a estos datos",
+      "body": "Solo los miembros autorizados del staff de {serverName}, con sesión iniciada a través del panel del staff, pueden ver las solicitudes, reportes y apelaciones enviadas. El acceso está limitado a lo necesario para revisar las solicitudes. Si tienes sesión iniciada con Discord, puedes ver el estado de tus propios reportes y apelaciones en la página de Cuenta — nunca los de otras personas."
+    },
+    "yourRights": {
+      "title": "Tus datos, tus derechos",
+      "contactMethod": "Si tienes preguntas sobre tus datos o deseas solicitar su eliminación, contacta a la administración del servidor.",
+      "body": "para preguntar qué datos tenemos sobre ti o para solicitar su eliminación. También puedes revocar el acceso de este sitio a tu cuenta de Discord en cualquier momento desde la configuración de aplicaciones autorizadas de Discord.",
+      "reachAt": "Puedes contactar a la administración del servidor en"
+    }
+  }
+}

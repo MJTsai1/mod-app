@@ -1,6 +1,7 @@
 "use client";
 
 import { useId } from "react";
+import { useTranslations } from "next-intl";
 
 interface FieldWrapperProps {
   label: string;
@@ -12,6 +13,7 @@ interface FieldWrapperProps {
 }
 
 export function FieldWrapper({ label, required, hint, error, htmlFor, children }: FieldWrapperProps) {
+  const t = useTranslations("common");
   return (
     <div>
       <label htmlFor={htmlFor} className="field-label">
@@ -23,7 +25,7 @@ export function FieldWrapper({ label, required, hint, error, htmlFor, children }
         )}
         {!required && (
           <span className="ml-1.5 text-xs font-normal text-[var(--color-text-subtle)]">
-            (optional)
+            {t("optional")}
           </span>
         )}
       </label>
@@ -148,13 +150,14 @@ interface YesNoToggleProps {
 export function YesNoToggle({ label, value, onChange, hint, error }: YesNoToggleProps) {
   const id = useId();
   const name = `${id}-yesno`;
+  const t = useTranslations("common");
 
   return (
     <FieldWrapper label={label} required hint={hint} error={error} htmlFor={id}>
       <div className="flex gap-3" role="radiogroup" aria-labelledby={id}>
         {[
-          { label: "Yes", val: true },
-          { label: "No", val: false },
+          { label: t("yes"), val: true },
+          { label: t("no"), val: false },
         ].map((option) => (
           <label
             key={option.label}
@@ -201,9 +204,11 @@ export function SelectInput({
   required,
   hint,
   error,
-  placeholder = "Select an option",
+  placeholder,
 }: SelectInputProps) {
   const id = useId();
+  const t = useTranslations("common");
+  const resolvedPlaceholder = placeholder ?? t("selectOption");
 
   return (
     <FieldWrapper label={label} required={required} hint={hint} error={error} htmlFor={id}>
@@ -216,7 +221,7 @@ export function SelectInput({
         aria-invalid={Boolean(error)}
       >
         <option value="" disabled>
-          {placeholder}
+          {resolvedPlaceholder}
         </option>
         {options.map((option) => {
           const optionValue = typeof option === "string" ? option : option.value;

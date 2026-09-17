@@ -10,6 +10,11 @@ interface Props {
   placeholder: string;
   submitLabel?: string;
   onSent?: (newStatus?: string) => void;
+  /** English defaults — this component is also used from the (English-only) staff dashboard. */
+  noMessagesLabel?: string;
+  sendingLabel?: string;
+  sendErrorLabel?: string;
+  networkErrorLabel?: string;
 }
 
 export function FollowupThread({
@@ -18,6 +23,10 @@ export function FollowupThread({
   placeholder,
   submitLabel = "Send",
   onSent,
+  noMessagesLabel = "No messages yet.",
+  sendingLabel = "Sending…",
+  sendErrorLabel = "Failed to send message.",
+  networkErrorLabel = "Network error — please try again.",
 }: Props) {
   const { showToast } = useToast();
   const [messages, setMessages] = useState(initialMessages);
@@ -38,7 +47,7 @@ export function FollowupThread({
 
       const body = await response.json().catch(() => null);
       if (!response.ok) {
-        showToast(body?.error ?? "Failed to send message.", "error");
+        showToast(body?.error ?? sendErrorLabel, "error");
         return;
       }
 
@@ -46,7 +55,7 @@ export function FollowupThread({
       setDraft("");
       onSent?.(body.status);
     } catch {
-      showToast("Network error — please try again.", "error");
+      showToast(networkErrorLabel, "error");
     } finally {
       setSending(false);
     }
@@ -55,7 +64,7 @@ export function FollowupThread({
   return (
     <div>
       {messages.length === 0 ? (
-        <p className="text-sm text-[var(--color-text-subtle)]">No messages yet.</p>
+        <p className="text-sm text-[var(--color-text-subtle)]">{noMessagesLabel}</p>
       ) : (
         <ul className="mb-4 space-y-4">
           {messages.map((message) => (
@@ -83,7 +92,7 @@ export function FollowupThread({
         disabled={sending || !draft.trim()}
         className="btn btn-secondary mt-2"
       >
-        {sending ? "Sending…" : submitLabel}
+        {sending ? sendingLabel : submitLabel}
       </button>
     </div>
   );

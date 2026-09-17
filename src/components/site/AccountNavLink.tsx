@@ -1,12 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { DiscordSignInButton } from "@/components/site/DiscordSignInButton";
 
 export function AccountNavLink() {
+  // Deliberately the plain next/navigation usePathname (not the i18n
+  // wrapper) — this needs the full browser path INCLUDING the locale
+  // prefix, since it's threaded through Discord OAuth as the post-login
+  // redirect target.
   const pathname = usePathname();
+  const t = useTranslations("nav");
   const [status, setStatus] = useState<"loading" | "signed-in" | "signed-out">("loading");
   const [discordUsername, setDiscordUsername] = useState<string | null>(null);
 
@@ -47,7 +53,7 @@ export function AccountNavLink() {
   return (
     <DiscordSignInButton
       next={pathname}
-      label="Sign In"
+      label={t("signIn")}
       className="btn btn-secondary px-3 py-2 text-sm sm:px-4"
     />
   );

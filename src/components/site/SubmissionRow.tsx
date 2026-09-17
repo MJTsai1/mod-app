@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { WithdrawButton } from "@/components/site/WithdrawButton";
 import { FollowupThread } from "@/components/site/FollowupThread";
 import type { FollowupMessage } from "@/lib/followups";
@@ -40,6 +41,8 @@ export function SubmissionRow({
   followup,
 }: Props) {
   const router = useRouter();
+  const t = useTranslations("account");
+  const tCommon = useTranslations("common");
   const [isNew, setIsNew] = useState(false);
 
   useEffect(() => {
@@ -75,7 +78,7 @@ export function SubmissionRow({
                 className="badge"
                 style={{ background: "var(--color-danger-bg)", color: "var(--color-danger)" }}
               >
-                Updated
+                {t("updated")}
               </span>
             )}
             {statusBadge}
@@ -87,14 +90,18 @@ export function SubmissionRow({
       {followup && (
         <div className="mt-3 rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-bg-elevated)] p-4">
           <p className="mb-3 text-sm font-medium text-[var(--color-text)]">
-            {followup.label ?? "Staff have a question for you — please reply below."}
+            {followup.label ?? t("staffQuestion")}
           </p>
           <FollowupThread
             endpoint={followup.endpoint}
             initialMessages={followup.initialMessages}
-            placeholder="Type your reply…"
-            submitLabel="Send reply"
+            placeholder={t("typeReply")}
+            submitLabel={t("sendReply")}
             onSent={() => router.refresh()}
+            noMessagesLabel={t("noMessagesYet")}
+            sendingLabel={t("sending")}
+            sendErrorLabel={t("sendMessageFailed")}
+            networkErrorLabel={tCommon("networkError")}
           />
         </div>
       )}

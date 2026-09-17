@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 interface Props {
   heading: string;
@@ -8,6 +9,7 @@ interface Props {
 }
 
 export function SubmissionSuccess({ heading, message, reference, followUp }: Props) {
+  const t = useTranslations("common");
   return (
     <div className="flex min-h-[70vh] items-center justify-center px-4 py-16 sm:px-6">
       <div className="card-elevated w-full max-w-lg p-8 text-center sm:p-10">
@@ -44,7 +46,7 @@ export function SubmissionSuccess({ heading, message, reference, followUp }: Pro
         <p className="field-hint mt-6">{followUp}</p>
 
         <Link href="/" className="btn btn-primary mt-8 w-full sm:w-auto">
-          Return Home
+          {t("returnHome")}
         </Link>
       </div>
     </div>

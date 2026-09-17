@@ -1,7 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { TextArea } from "@/components/apply/fields";
-import { siteConfig } from "@/lib/config";
 import type { ApplicationFormValues, FormErrors } from "@/components/apply/formTypes";
 
 interface StepProps {
@@ -18,10 +18,13 @@ const MOTIVATION_FIELDS = [
 ] as const;
 
 export function StepFive({ values, errors, setField }: StepProps) {
+  const t = useTranslations("apply");
+  const tMotivations = useTranslations("apply.motivations");
+
   return (
     <div className="grid grid-cols-1 gap-6">
       {MOTIVATION_FIELDS.map(({ configId, field }) => {
-        const question = siteConfig.motivationQuestions.find((q) => q.id === configId)?.question ?? "";
+        const question = tMotivations(configId);
         return (
           <TextArea
             key={field}
@@ -37,7 +40,7 @@ export function StepFive({ values, errors, setField }: StepProps) {
       })}
 
       <TextArea
-        label="Is there anything else you'd like the staff team to know?"
+        label={t("fields.additionalInfo")}
         value={values.additionalInfo}
         onChange={(v) => setField("additionalInfo", v)}
         rows={3}
@@ -52,9 +55,7 @@ export function StepFive({ values, errors, setField }: StepProps) {
           onChange={(event) => setField("confirmedAccurate", event.target.checked)}
           className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--color-accent)]"
         />
-        <span className="text-sm text-[var(--color-text)]">
-          {siteConfig.confirmationStatement}
-        </span>
+        <span className="text-sm text-[var(--color-text)]">{t("confirmationStatement")}</span>
       </label>
       {errors.confirmedAccurate && (
         <p className="field-error -mt-4" role="alert">

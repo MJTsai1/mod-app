@@ -1,8 +1,9 @@
 /**
  * Central site configuration.
  *
- * Change server branding, requirements, questions, and contact info here —
- * nothing else in the codebase should need editing for a rebrand.
+ * Change server branding, URLs, rate limits, and IDs here. Translatable
+ * display text (headings, questions, FAQ content, etc.) lives in
+ * messages/*.json instead — see src/i18n/routing.ts for the locale list.
  */
 
 export const reportCategoryValues = [
@@ -14,6 +15,10 @@ export const reportCategoryValues = [
   "other",
 ] as const;
 
+// English-only labels for admin/staff use (dashboard tables, Discord
+// notification embeds) — always English since /admin is staff-only tooling
+// outside the [locale] segment. The public report form uses translated
+// labels from messages/*.json (report.categories.<id>) instead.
 export const reportCategoryLabels: Record<(typeof reportCategoryValues)[number], string> = {
   harassment: "Harassment or bullying",
   spam: "Spam or advertising",
@@ -25,9 +30,6 @@ export const reportCategoryLabels: Record<(typeof reportCategoryValues)[number],
 
 export const siteConfig = {
   serverName: "Washington D.C. ERLC Roleplay",
-  tagline: "Think you've got what it takes to help our community?",
-  description:
-    "Your hub for the community — quick links, moderator applications, member support, and the latest from our YouTube channel.",
 
   // Tailwind-friendly hex values. Used to generate CSS variables in globals.css.
   accentColor: "#8b5cf6", // purple-500
@@ -49,40 +51,15 @@ export const siteConfig = {
     officialChannelUrl: "https://www.youtube.com/@WashingtonERLC",
     officialChannelId: "UC8v_pO8bu5t7rv4D-lBbqyQ",
     coOwnerChannelUrl: "https://www.youtube.com/@RandomMJT",
-    coOwnerChannelLabel: "Co-owner's personal channel",
   },
 
   // Requires "Server Widget" enabled under Discord Server Settings -> Widget.
   // Leave as null to hide the live member count on the homepage.
   discordGuildId: "1500149847158821026" as string | null,
 
-  // Homepage quick-links grid.
-  quickLinks: [
-    {
-      title: "Apply Now",
-      description: "Apply to join the moderation team.",
-      href: "/apply",
-      external: false,
-    },
-    {
-      title: "Report a Member",
-      description: "Let staff know about a rule-breaker.",
-      href: "/report",
-      external: false,
-    },
-    {
-      title: "Ban Appeal",
-      description: "Think you were banned unfairly? Tell us why.",
-      href: "/appeal",
-      external: false,
-    },
-    {
-      title: "FAQ",
-      description: "Answers to common questions.",
-      href: "/faq",
-      external: false,
-    },
-  ] as const,
+  // Homepage quick-links grid — href/order only; title/description text
+  // lives in messages/*.json under home.quickLinks (same order).
+  quickLinkHrefs: ["/apply", "/report", "/appeal", "/faq"] as const,
 
   // Set to a number (e.g. 13) to enforce a minimum age on applications.
   // Leave as null to not enforce or display any minimum age requirement.
@@ -94,93 +71,32 @@ export const siteConfig = {
     withdrawCooldownHours: 72 as number | null,
   },
 
-  aboutRole: {
-    heading: "About the Role",
-    intro:
-      "Moderators are trusted members of the community who help the staff team keep things running smoothly.",
-    responsibilities: [
-      "Enforce server rules fairly and consistently",
-      "Assist members with questions and issues",
-      "Handle reports promptly and discreetly",
-      "De-escalate conflicts between members",
-      "Keep the community welcoming and inclusive",
-      "Work closely with the wider staff team",
-    ],
-  },
-
-  requirements: [
-    "Active member of the server",
-    "Understands and follows the rules",
-    "Mature and responsible",
-    "Respectful towards members",
-    "Works well with staff",
-    "Good moderation history",
-    "Willing to learn",
-  ],
-
   // Rate limiting for the public application submission endpoint.
   rateLimit: {
     windowMinutes: 60 * 24,
     maxSubmissionsPerWindow: 2,
   },
 
-  // Scenario questions asked in Step 4 of the application form.
-  scenarioQuestions: [
-    {
-      id: "scenario_unaware_rules",
-      question:
-        "A member repeatedly breaks the rules but claims they didn't know the rules. What would you do?",
-    },
-    {
-      id: "scenario_toxic_conflict",
-      question:
-        "Two members are arguing and the situation is becoming toxic. How would you handle it?",
-    },
-    {
-      id: "scenario_friend_breaks_rule",
-      question: "A friend of yours breaks a server rule. What would you do?",
-    },
-    {
-      id: "scenario_staff_abuse",
-      question:
-        "You discover another moderator abusing their permissions. What would you do?",
-    },
-    {
-      id: "scenario_biased_report",
-      question:
-        "Someone submits a report against a member you personally dislike. How would you ensure you handle the situation fairly?",
-    },
-  ],
+  // Scenario question ids asked in Step 4 of the application form — text
+  // lives in messages/*.json under apply.scenarios.<id>.
+  scenarioQuestionIds: [
+    "scenario_unaware_rules",
+    "scenario_toxic_conflict",
+    "scenario_friend_breaks_rule",
+    "scenario_staff_abuse",
+    "scenario_biased_report",
+  ] as const,
 
-  // Motivation questions asked in Step 5 of the application form.
-  motivationQuestions: [
-    {
-      id: "motivation_why",
-      question: "Why do you want to become a moderator?",
-    },
-    {
-      id: "motivation_suitable",
-      question: "What makes you suitable for the role?",
-    },
-    {
-      id: "motivation_good_moderator",
-      question: "What makes a good moderator?",
-    },
-    {
-      id: "motivation_improve_server",
-      question: "What could you improve about the server?",
-    },
-  ],
+  // Motivation question ids asked in Step 5 — text lives in messages/*.json
+  // under apply.motivations.<id>.
+  motivationQuestionIds: [
+    "motivation_why",
+    "motivation_suitable",
+    "motivation_good_moderator",
+    "motivation_improve_server",
+  ] as const,
 
-  confirmationStatement:
-    "I confirm that the information provided is accurate and understand that submitting an application does not guarantee acceptance.",
-
-  privacy: {
-    contactMethod:
-      "If you have questions about your data or wish to request its deletion, contact server administration.",
-  },
-
-  // Rate limiting for the report and ban appeal submission endpoints.
+  // Rate limiting for the report, ban appeal, and support request endpoints.
   reportRateLimit: {
     windowMinutes: 60 * 24,
     maxSubmissionsPerWindow: 5,
@@ -194,39 +110,16 @@ export const siteConfig = {
     maxSubmissionsPerWindow: 5,
   },
 
-  faqs: [
-    {
-      question: "How long does it take to hear back about my application?",
-      answer:
-        "The staff team reviews applications as they come in. Response times vary depending on volume, but you can always check your status using the reference code you received.",
-    },
-    {
-      question: "Can I apply again if I'm rejected?",
-      answer:
-        "Yes. Take some time to be more active and engaged in the community, then feel free to apply again later.",
-    },
-    {
-      question: "How do I report a member for breaking the rules?",
-      answer:
-        "Use the Report a Member page. You'll need to sign in with Discord first so we can follow up with you if we need more information.",
-    },
-    {
-      question: "I think I was banned unfairly — what can I do?",
-      answer:
-        "Submit a ban appeal through the Ban Appeal page. Explain your situation clearly and honestly — the staff team reviews every appeal.",
-    },
-    {
-      question: "Will my report or appeal be kept confidential?",
-      answer:
-        "Reports and appeals are only visible to authorised staff. See the Privacy Notice for full details on how your information is handled.",
-    },
-    {
-      question: "Still need support?",
-      answer:
-        "Contact a moderator by filling in the Support Request form with your question or issue. A staff member will reply directly to your request, and you can reply back — you'll find the conversation on your Account page.",
-      link: { href: "/support", label: "Submit a Support Request" },
-    },
-  ],
+  // FAQ ids, in display order — question/answer text lives in
+  // messages/*.json under faq.items.<id>. The last one links to /support.
+  faqIds: [
+    "responseTime",
+    "reapply",
+    "howToReport",
+    "banUnfair",
+    "confidentiality",
+    "stillNeedSupport",
+  ] as const,
 } as const;
 
 export type SiteConfig = typeof siteConfig;

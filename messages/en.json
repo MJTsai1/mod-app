@@ -1,0 +1,363 @@
+{
+  "common": {
+    "siteDescription": "Your hub for the community — quick links, moderator applications, member support, and the latest from our YouTube channel.",
+    "optional": "(optional)",
+    "selectOption": "Select an option",
+    "yes": "Yes",
+    "no": "No",
+    "loading": "Loading…",
+    "fixHighlighted": "Please fix the highlighted fields before submitting.",
+    "networkError": "We couldn't reach the server. Check your connection and try again — your answers are still here.",
+    "returnHome": "Return Home",
+    "signInWithDiscord": "Sign in with Discord"
+  },
+  "languageSwitcher": {
+    "label": "Language"
+  },
+  "nav": {
+    "faq": "FAQ",
+    "report": "Report a Member",
+    "appeal": "Ban Appeal",
+    "staffLogin": "Staff Login",
+    "applyNow": "Apply Now",
+    "signIn": "Sign In"
+  },
+  "footer": {
+    "copyright": "© {year} {serverName}. Not affiliated with Discord Inc.",
+    "requirements": "Requirements",
+    "faq": "FAQ",
+    "report": "Report a Member",
+    "appeal": "Ban Appeal",
+    "privacy": "Privacy Notice",
+    "terms": "Terms of Service",
+    "discord": "Discord",
+    "contact": "Contact"
+  },
+  "home": {
+    "welcome": "Welcome",
+    "joinDiscord": "Join our Discord",
+    "onlineNow": "{count} online now",
+    "quickLinks": [
+      { "title": "Apply Now", "description": "Apply to join the moderation team." },
+      { "title": "Report a Member", "description": "Let staff know about a rule-breaker." },
+      { "title": "Ban Appeal", "description": "Think you were banned unfairly? Tell us why." },
+      { "title": "FAQ", "description": "Answers to common questions." }
+    ],
+    "latestUploads": "Latest Uploads",
+    "recentVideosFrom": "Recent videos from",
+    "ourOfficialChannel": "our official YouTube channel",
+    "coOwnerChannelLabel": "Co-owner's personal channel",
+    "mostRecent": "Most Recent",
+    "mostViewed": "Most Viewed",
+    "views": "views",
+    "couldntLoadUploads": "Couldn't load recent uploads right now — check out the channel directly above.",
+    "alsoCheckOut": "Also check out",
+    "aboutRoleHeading": "About the Role",
+    "aboutRoleIntro": "Moderators are trusted members of the community who help the staff team keep things running smoothly.",
+    "responsibilities": [
+      "Enforce server rules fairly and consistently",
+      "Assist members with questions and issues",
+      "Handle reports promptly and discreetly",
+      "De-escalate conflicts between members",
+      "Keep the community welcoming and inclusive",
+      "Work closely with the wider staff team"
+    ],
+    "requirementsHeading": "Requirements",
+    "requirementsIntro": "We're looking for members who meet the following, before anything else.",
+    "requirements": [
+      "Active member of the server",
+      "Understands and follows the rules",
+      "Mature and responsible",
+      "Respectful towards members",
+      "Works well with staff",
+      "Good moderation history",
+      "Willing to learn"
+    ],
+    "minAge": "Minimum age to apply: {age}+",
+    "ctaHeading": "Ready to join the team?",
+    "ctaBody": "The application takes about 10–15 minutes. Take your time and answer honestly.",
+    "applyNow": "Apply Now"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": {
+      "responseTime": {
+        "question": "How long does it take to hear back about my application?",
+        "answer": "The staff team reviews applications as they come in. Response times vary depending on volume, but you can always check your status using the reference code you received."
+      },
+      "reapply": {
+        "question": "Can I apply again if I'm rejected?",
+        "answer": "Yes. Take some time to be more active and engaged in the community, then feel free to apply again later."
+      },
+      "howToReport": {
+        "question": "How do I report a member for breaking the rules?",
+        "answer": "Use the Report a Member page. You'll need to sign in with Discord first so we can follow up with you if we need more information."
+      },
+      "banUnfair": {
+        "question": "I think I was banned unfairly — what can I do?",
+        "answer": "Submit a ban appeal through the Ban Appeal page. Explain your situation clearly and honestly — the staff team reviews every appeal."
+      },
+      "confidentiality": {
+        "question": "Will my report or appeal be kept confidential?",
+        "answer": "Reports and appeals are only visible to authorised staff. See the Privacy Notice for full details on how your information is handled."
+      },
+      "stillNeedSupport": {
+        "question": "Still need support?",
+        "answer": "Contact a moderator by filling in the Support Request form with your question or issue. A staff member will reply directly to your request, and you can reply back — you'll find the conversation on your Account page.",
+        "linkLabel": "Submit a Support Request"
+      }
+    }
+  },
+  "apply": {
+    "heading": "Moderator Application",
+    "taglineQuoted": "“Think you've got what it takes to help our community?”",
+    "saveHint": "Take your time — your answers are saved as you go, so it's safe to move between steps.",
+    "signInPrompt": "Sign in with Discord to apply. This confirms your Discord identity for your application — no separate account or password needed.",
+    "signInFailed": "Sign-in failed or was cancelled. Please try again.",
+    "loadingForm": "Loading application form…",
+    "applyingAs": "Applying as",
+    "fromDiscordSignIn": "Taken from your Discord sign-in — not editable here.",
+    "steps": {
+      "labels": ["Basics", "Activity", "Experience", "Scenarios", "Motivation"],
+      "stepOf": "Step {current} of {total}: {label}"
+    },
+    "fields": {
+      "age": "Age",
+      "agePlaceholder": "e.g. 19",
+      "country": "Country",
+      "countryPlaceholder": "e.g. Singapore",
+      "countryHint": "Auto-detected from your location — change it if it's wrong.",
+      "timezone": "Timezone",
+      "timezonePlaceholder": "Select your timezone",
+      "timezoneHint": "Auto-detected from your browser — change it if it's wrong.",
+      "noOneLivesHere": "No one lives here (UTC-12)",
+      "timeInServer": "How long have you been in the server?",
+      "timeInServerPlaceholder": "e.g. 8 months",
+      "activityLevel": "How active are you on Discord?",
+      "activityLevels": [
+        "Very active (daily)",
+        "Active (most days)",
+        "Moderate (a few times a week)",
+        "Occasional (rarely online)"
+      ],
+      "onlineTimes": "What times are you normally online?",
+      "onlineTimesPlaceholder": "e.g. Weekdays 6pm-11pm, weekends most of the day (in your timezone)",
+      "weeklyHours": "How many hours per week can you dedicate to moderation?",
+      "weeklyHoursPlaceholder": "e.g. 10",
+      "hasModeratedBefore": "Have you moderated a Discord server before?",
+      "previousExperience": "Describe your previous moderation experience",
+      "previousExperiencePlaceholder": "Which servers, how large, what did you do day-to-day?",
+      "botsToolsUsed": "What moderation bots/tools have you used?",
+      "botsToolsUsedPlaceholder": "e.g. Dyno, MEE6, Carl-bot, AutoMod...",
+      "previousStaffPositions": "Have you previously been staff somewhere else?",
+      "previousStaffPositionsPlaceholder": "List any other communities and your role there.",
+      "additionalInfo": "Is there anything else you'd like the staff team to know?"
+    },
+    "scenarios": {
+      "scenario_unaware_rules": "A member repeatedly breaks the rules but claims they didn't know the rules. What would you do?",
+      "scenario_toxic_conflict": "Two members are arguing and the situation is becoming toxic. How would you handle it?",
+      "scenario_friend_breaks_rule": "A friend of yours breaks a server rule. What would you do?",
+      "scenario_staff_abuse": "You discover another moderator abusing their permissions. What would you do?",
+      "scenario_biased_report": "Someone submits a report against a member you personally dislike. How would you ensure you handle the situation fairly?"
+    },
+    "motivations": {
+      "motivation_why": "Why do you want to become a moderator?",
+      "motivation_suitable": "What makes you suitable for the role?",
+      "motivation_good_moderator": "What makes a good moderator?",
+      "motivation_improve_server": "What could you improve about the server?"
+    },
+    "confirmationStatement": "I confirm that the information provided is accurate and understand that submitting an application does not guarantee acceptance.",
+    "previous": "Previous",
+    "next": "Next",
+    "submit": "Submit Application",
+    "submitting": "Submitting…",
+    "submitError": "Something went wrong submitting your application. Please try again.",
+    "success": {
+      "heading": "Application Submitted",
+      "message": "Thanks for applying! Your application has been successfully received.",
+      "followUp": "Keep this reference for your records. The staff team will review your application and reach out via Discord if needed — no further action is required from you right now."
+    }
+  },
+  "report": {
+    "heading": "Report a Member",
+    "intro": "Breaking the rules? Let the staff team know so we can look into it.",
+    "signInPrompt": "Sign in with Discord to file a report. This lets our staff team follow up with you if they need more information.",
+    "signInFailed": "Sign-in failed or was cancelled. Please try again.",
+    "categories": {
+      "harassment": "Harassment or bullying",
+      "spam": "Spam or advertising",
+      "cheating_exploiting": "Cheating or exploiting",
+      "inappropriate_content": "Inappropriate content",
+      "impersonation": "Impersonation",
+      "other": "Other"
+    },
+    "fields": {
+      "reportedDiscordUsername": "Reported member's Discord username",
+      "reportedDiscordUsernamePlaceholder": "username or username#0000",
+      "reportedDiscordUserId": "Reported member's Discord User ID",
+      "reportedDiscordUserIdHint": "Optional, but helps us find the right person faster. Right-click their name in Discord and Copy User ID (Developer Mode must be enabled).",
+      "category": "Category",
+      "selectCategory": "Select a category",
+      "description": "What happened?",
+      "descriptionPlaceholder": "Describe what happened, including roughly when and where (which channel/voice call).",
+      "evidenceLinks": "Evidence links",
+      "evidenceLinksPlaceholder": "Links to screenshots, clips, or message links (optional but helpful)."
+    },
+    "submit": "Submit Report",
+    "submitting": "Submitting…",
+    "submitError": "Something went wrong submitting your report. Please try again.",
+    "success": {
+      "heading": "Report Submitted",
+      "message": "Thanks for letting us know. Your report has been sent to the staff team.",
+      "followUp": "Keep this reference for your records. You can check its status any time from your Account page. Please don't take matters into your own hands while it's reviewed."
+    }
+  },
+  "appeal": {
+    "heading": "Ban Appeal",
+    "intro": "Think you were banned unfairly? Explain your situation and we'll take a look.",
+    "signInPrompt": "Sign in with Discord to submit a ban appeal. This confirms your identity so staff can review your case.",
+    "signInFailed": "Sign-in failed or was cancelled. Please try again.",
+    "fields": {
+      "discordUsername": "Your Discord username",
+      "discordUsernamePlaceholder": "username or username#0000",
+      "discordUserId": "Your Discord User ID",
+      "discordUserIdHint": "Right-click your name in Discord and Copy User ID (Developer Mode must be enabled).",
+      "banReason": "Why do you believe you were banned?",
+      "banReasonPlaceholder": "What were you told, if anything, when you were banned?",
+      "appealReason": "Why should your ban be lifted?",
+      "appealReasonPlaceholder": "Be honest and specific — explain what happened and why you should be given another chance.",
+      "additionalInfo": "Anything else you'd like us to know?"
+    },
+    "submit": "Submit Appeal",
+    "submitting": "Submitting…",
+    "submitError": "Something went wrong submitting your appeal. Please try again.",
+    "success": {
+      "heading": "Appeal Submitted",
+      "message": "Thanks for submitting your appeal. The staff team will review it.",
+      "followUp": "Keep this reference for your records. You can check its status any time from your Account page."
+    }
+  },
+  "support": {
+    "heading": "Contact Support",
+    "intro": "Need help with something that isn't a report or a ban appeal? Send a message directly to the staff team.",
+    "signInPrompt": "Sign in with Discord to submit a support request. Staff will reply directly, and you'll see the conversation on your Account page.",
+    "signInFailed": "Sign-in failed or was cancelled. Please try again.",
+    "fields": {
+      "subject": "Subject",
+      "subjectPlaceholder": "A short summary of what you need help with",
+      "message": "What do you need help with?",
+      "messagePlaceholder": "Describe your question or issue — a staff member will reply here."
+    },
+    "submit": "Submit Support Request",
+    "submitting": "Submitting…",
+    "submitError": "Something went wrong submitting your request. Please try again.",
+    "success": {
+      "heading": "Support Request Submitted",
+      "message": "Thanks for reaching out. A staff member will reply to your request.",
+      "followUp": "Keep this reference for your records. You'll see staff replies — and can reply back — from your Account page."
+    }
+  },
+  "account": {
+    "title": "My Account",
+    "signedInAs": "Signed in as {username}",
+    "signOut": "Sign out",
+    "signInPrompt": "Sign in with Discord to see the status of your reports and ban appeals.",
+    "signInFailed": "Sign-in failed or was cancelled. Please try again.",
+    "myApplications": "My Applications",
+    "noApplications": "You haven't submitted any applications.",
+    "myReports": "My Reports",
+    "noReports": "You haven't filed any reports.",
+    "myAppeals": "My Ban Appeals",
+    "noAppeals": "You haven't submitted any ban appeals.",
+    "mySupportRequests": "My Support Requests",
+    "noSupportRequests": "You haven't submitted any support requests.",
+    "reportedUser": "Reported {username}",
+    "conversationWithStaff": "Your conversation with staff:",
+    "staffQuestion": "Staff have a question for you — please reply below.",
+    "typeReply": "Type your reply…",
+    "sendReply": "Send reply",
+    "moderatorApplication": "Moderator application",
+    "updated": "Updated",
+    "noMessagesYet": "No messages yet.",
+    "sending": "Sending…",
+    "sendMessageFailed": "Failed to send message."
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "intro": "These terms cover your use of this website — moderator applications, member reports, ban appeals, and related pages — for {serverName}. By using this site, you agree to them.",
+    "sections": [
+      {
+        "title": "What this site is",
+        "body": "This is a community-run tool for {serverName}, a Discord server. It is not affiliated with, endorsed by, or operated by Discord Inc. or Roblox Corporation. “Discord” and “Roblox” are trademarks of their respective owners."
+      },
+      {
+        "title": "Signing in",
+        "body": "Some pages require signing in with your Discord account (via Discord's own login screen — we never see or store your Discord password). Staff pages require a separate account created directly by an administrator. You're responsible for keeping access to your own Discord account secure."
+      },
+      {
+        "title": "What you agree to when submitting something",
+        "list": [
+          "The information you submit is accurate and truthful to the best of your knowledge.",
+          "You won't submit false reports, false ban appeals, or knowingly misleading information.",
+          "You won't use the report or appeal system to harass, spam, or target another member in bad faith.",
+          "You won't attempt to disrupt, overload, or gain unauthorised access to the site or its systems."
+        ],
+        "body": "Submissions that violate these terms may be dismissed without review, and repeated abuse may result in your access to these systems being revoked."
+      },
+      {
+        "title": "No guaranteed outcome",
+        "body": "Submitting a moderator application, report, or ban appeal does not guarantee any particular outcome. Decisions — acceptance, rejection, resolution, or denial — are made at the sole discretion of {serverName} staff."
+      },
+      {
+        "title": "Third-party content",
+        "body": "The homepage displays videos from YouTube channels we don't control the operation of. Linked or embedded content belongs to its respective creators and is subject to YouTube's own terms, not these ones."
+      },
+      {
+        "title": "No warranty",
+        "body": "This site is provided “as is,” run on a best-effort basis by community volunteers. We don't guarantee it will always be available, error-free, or uninterrupted."
+      },
+      {
+        "title": "Changes to these terms",
+        "body": "These terms may be updated from time to time as the site changes. Continuing to use the site after an update means you accept the revised terms."
+      }
+    ],
+    "contact": {
+      "title": "Contact",
+      "body": "Questions about these terms can be sent to server administration at"
+    }
+  },
+  "privacy": {
+    "title": "Privacy Notice",
+    "intro": "This notice explains what information {serverName} collects across this site — moderator applications, member reports, ban appeals, and signing in with Discord — and how it is used.",
+    "whatIsCollected": {
+      "title": "What information is collected",
+      "applications": "your Discord username, Discord User ID, age, country, timezone, activity details, moderation experience, and your written answers to the application questions. Applications don't require signing in.",
+      "applicationsLabel": "Moderator applications:",
+      "signingIn": "to file a report, submit a ban appeal, or check their status on the Account page, you sign in with your Discord account. Discord shares your Discord username, user ID, and avatar with us — never your Discord password, which we never see.",
+      "signingInLabel": "Signing in with Discord:",
+      "reports": "your Discord username (as the reporter), the reported member's Discord username/ID, the category and description of what happened, and any evidence links you provide.",
+      "reportsLabel": "Reports:",
+      "appeals": "your Discord username and User ID, why you believe you were banned, your appeal reason, and any additional information you provide.",
+      "appealsLabel": "Ban appeals:",
+      "ipHash": "Across all of these, we also record a one-way cryptographic hash of the IP address used to submit (not the raw IP) solely to prevent spam and abuse."
+    },
+    "why": {
+      "title": "Why it is collected",
+      "body": "This information is used only to evaluate moderator applications, investigate reports, review ban appeals, and — for signed-in members — to let you see the status of your own submissions. We don't collect more than is needed for these purposes, and we don't use it for advertising or share it with third parties."
+    },
+    "howStored": {
+      "title": "How it is stored",
+      "body": "Applications, reports, and ban appeals are stored in a secured, access-controlled database. They are never publicly accessible, and submitters cannot view anyone else's submissions. Your Discord sign-in session is managed by our authentication provider (Supabase) and is separate from Discord's own systems."
+    },
+    "whoCanAccess": {
+      "title": "Who can access this data",
+      "body": "Only authorised staff members of {serverName}, signed in through the staff dashboard, can view submitted applications, reports, and appeals. Access is limited to what is required to review submissions. If you're signed in with Discord, you can see the status of your own reports and appeals on the Account page — never anyone else's."
+    },
+    "yourRights": {
+      "title": "Your data, your rights",
+      "contactMethod": "If you have questions about your data or wish to request its deletion, contact server administration.",
+      "body": "to ask what data we hold about you or to request that it be deleted. You can also revoke this site's access to your Discord account at any time from Discord's own Authorized Apps settings.",
+      "reachAt": "You can reach server administration at"
+    }
+  }
+}

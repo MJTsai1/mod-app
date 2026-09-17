@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { getLocale, getTranslations } from "next-intl/server";
 import { siteConfig } from "@/lib/config";
 import "./globals.css";
 
@@ -10,21 +11,26 @@ const inter = Inter({
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
-export const metadata: Metadata = {
-  ...(siteUrl ? { metadataBase: new URL(siteUrl) } : {}),
-  title: `${siteConfig.serverName} Moderator Applications`,
-  description: siteConfig.description,
-  openGraph: {
-    type: "website",
-    siteName: siteConfig.serverName,
-    title: `${siteConfig.serverName} Community Hub`,
-    description: siteConfig.description,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("common");
+  const description = t("siteDescription");
+  return {
+    ...(siteUrl ? { metadataBase: new URL(siteUrl) } : {}),
+    title: `${siteConfig.serverName} Moderator Applications`,
+    description,
+    openGraph: {
+      type: "website",
+      siteName: siteConfig.serverName,
+      title: `${siteConfig.serverName} Community Hub`,
+      description,
+    },
+  };
+}
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const locale = await getLocale();
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`}>
+    <html lang={locale} className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

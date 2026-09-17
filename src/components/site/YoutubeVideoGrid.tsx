@@ -1,18 +1,19 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { formatViewCount } from "@/lib/formatViewCount";
 import type { YoutubeVideo } from "@/lib/youtube";
-
-const TABS = [
-  { id: "recent", label: "Most Recent" },
-  { id: "viewed", label: "Most Viewed" },
-] as const;
 
 const DISPLAY_COUNT = 4;
 
 export function YoutubeVideoGrid({ videos }: { videos: YoutubeVideo[] }) {
-  const [tab, setTab] = useState<(typeof TABS)[number]["id"]>("recent");
+  const t = useTranslations("home");
+  const [tab, setTab] = useState<"recent" | "viewed">("recent");
+  const tabs = [
+    { id: "recent" as const, label: t("mostRecent") },
+    { id: "viewed" as const, label: t("mostViewed") },
+  ];
 
   const sorted = useMemo(() => {
     if (tab === "viewed") {
@@ -25,22 +26,22 @@ export function YoutubeVideoGrid({ videos }: { videos: YoutubeVideo[] }) {
 
   return (
     <div>
-      <div role="tablist" aria-label="Sort videos" className="mt-8 flex justify-center gap-2">
-        {TABS.map((t) => (
+      <div role="tablist" aria-label={t("latestUploads")} className="mt-8 flex justify-center gap-2">
+        {tabs.map((item) => (
           <button
-            key={t.id}
+            key={item.id}
             type="button"
             role="tab"
-            aria-selected={tab === t.id}
-            onClick={() => setTab(t.id)}
+            aria-selected={tab === item.id}
+            onClick={() => setTab(item.id)}
             className="rounded-full px-4 py-2 text-sm font-medium transition"
             style={
-              tab === t.id
+              tab === item.id
                 ? { background: "var(--color-accent)", color: "white" }
                 : { background: "var(--color-surface-hover)", color: "var(--color-text-muted)" }
             }
           >
-            {t.label}
+            {item.label}
           </button>
         ))}
       </div>
@@ -67,7 +68,7 @@ export function YoutubeVideoGrid({ videos }: { videos: YoutubeVideo[] }) {
               </p>
               {video.viewCount !== null && (
                 <p className="mt-1 text-xs text-[var(--color-text-subtle)]">
-                  {formatViewCount(video.viewCount)} views
+                  {formatViewCount(video.viewCount)} {t("views")}
                 </p>
               )}
             </div>

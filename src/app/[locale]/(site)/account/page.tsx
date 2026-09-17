@@ -1,0 +1,221 @@
+import type { Metadata } from "next";
+import { getTranslations, getLocale } from "next-intl/server";
+import { siteConfig } from "@/lib/config";
+import { localizedPath } from "@/i18n/routing";
+import { getUserSession } from "@/lib/userAuth";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { getFollowups } from "@/lib/followups";
+import { getSupportMessages } from "@/lib/supportMessages";
+import { DiscordSignInButton } from "@/components/site/DiscordSignInButton";
+import { SubmissionRow } from "@/components/site/SubmissionRow";
+import { StatusBadge, ReportStatusBadge, AppealStatusBadge, SupportStatusBadge } from "@/components/admin/StatusBadge";
+import type {
+  ReportListItem,
+  BanAppealListItem,
+  ApplicationListItem,
+  SupportRequestListItem,
+} from "@/lib/supabase/types";
+
+const NON_WITHDRAWABLE: Record<"applications" | "reports" | "appeals" | "support", string[]> = {
+  applications: ["accepted", "rejected", "withdrawn"],
+  reports: ["resolved", "dismissed", "withdrawn"],
+  appeals: ["approved", "denied", "withdrawn"],
+  support: ["resolved", "withdrawn"],
+};
+
+export const metadata: Metadata = {
+  title: `My Account — ${siteConfig.serverName}`,
+  robots: { index: false },
+};
+
+export default async function AccountPage(props: PageProps<"/[locale]/account">) {
+  const searchParams = await props.searchParams;
+  const session = await getUserSession();
+  const locale = await getLocale();
+  const t = await getTranslations("account");
+
+  if (!session) {
+    return (
+      <div className="px-4 py-16 sm:px-6">
+        <div className="card-elevated mx-auto max-w-md p-8 text-center">
+          <h1 className="text-2xl font-bold text-[var(--color-text)]">{t("title")}</h1>
+          {searchParams.error === "auth" && (
+            <p className="field-error mt-4">{t("signInFailed")}</p>
+          )}
+          <p className="mb-6 mt-3 text-[var(--color-text-muted)]">{t("signInPrompt")}</p>
+          <DiscordSignInButton next={localizedPath(locale, "/account")} />
+        </div>
+      </div>
+    );
+  }
+
+  const supabase = createSupabaseAdminClient();
+
+  const [{ data: applications }, { data: reports }, { data: appeals }, { data: supportRequests }] =
+    await Promise.all([
+      supabase
+        .from("applications")
+        .select("id, reference_code, created_at, updated_at, discord_username, discord_user_id, status, age, country")
+        .eq("applicant_id", session.id)
+        .order("created_at", { ascending: false })
+        .returns<ApplicationListItem[]>(),
+      supabase
+        .from("reports")
+        .select("id, reference_code, created_at, updated_at, reporter_discord_username, reported_discord_username, category, status")
+        .eq("reporter_id", session.id)
+        .order("created_at", { ascending: false })
+        .returns<ReportListItem[]>(),
+      supabase
+        .from("ban_appeals")
+        .select("id, reference_code, created_at, updated_at, discord_username, discord_user_id, status")
+        .eq("appellant_id", session.id)
+        .order("created_at", { ascending: false })
+        .returns<BanAppealListItem[]>(),
+      supabase
+        .from("support_requests")
+        .select("id, reference_code, created_at, updated_at, discord_username, subject, status, claimed_by")
+        .eq("requester_id", session.id)
+        .order("created_at", { ascending: false })
+        .returns<SupportRequestListItem[]>(),
+    ]);
+
+  // Only applications currently awaiting a reply need their thread fetched.
+  const needsInfoApplications = (applications ?? []).filter((a) => a.status === "needs_info");
+  const followupsByApplication = new Map(
+    await Promise.all(
+      needsInfoApplications.map(
+        async (a) => [a.id, await getFollowups(a.id, { viewerRole: "applicant" })] as const
+      )
+    )
+  );
+
+  // Every non-withdrawn support request shows its conversation thread —
+  // unlike applications, this isn't gated to a specific status.
+  const activeSupportRequests = (supportRequests ?? []).filter((s) => s.status !== "withdrawn");
+  const messagesBySupportRequest = new Map(
+    await Promise.all(
+      activeSupportRequests.map(
+        async (s) => [s.id, await getSupportMessages(s.id, { viewerRole: "member" })] as const
+      )
+    )
+  );
+
+  return (
+    <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-16">
+      <div className="mb-8 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-[var(--color-text)]">{t("title")}</h1>
+          <p className="text-sm text-[var(--color-text-muted)]">
+            {t("signedInAs", { username: session.discordUsername })}
+          </p>
+        </div>
+        <form action="/api/account/logout" method="POST">
+          <button type="submit" className="btn btn-ghost px-3 py-1.5 text-sm">
+            {t("signOut")}
+          </button>
+        </form>
+      </div>
+
+      <div className="card mb-6 p-6">
+        <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">{t("myApplications")}</h2>
+        {!applications || applications.length === 0 ? (
+          <p className="text-sm text-[var(--color-text-subtle)]">{t("noApplications")}</p>
+        ) : (
+          applications.map((application) => (
+            <SubmissionRow
+              key={application.id}
+              id={application.id}
+              reference={application.reference_code}
+              statusBadge={<StatusBadge status={application.status} />}
+              updatedAt={application.updated_at}
+              date={application.created_at}
+              detail={t("moderatorApplication")}
+              withdrawEndpoint={`/api/applications/${application.id}/withdraw`}
+              canWithdraw={!NON_WITHDRAWABLE.applications.includes(application.status)}
+              followup={
+                application.status === "needs_info"
+                  ? {
+                      endpoint: `/api/applications/${application.id}/followups`,
+                      initialMessages: followupsByApplication.get(application.id) ?? [],
+                    }
+                  : undefined
+              }
+            />
+          ))
+        )}
+      </div>
+
+      <div className="card mb-6 p-6">
+        <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">{t("myReports")}</h2>
+        {!reports || reports.length === 0 ? (
+          <p className="text-sm text-[var(--color-text-subtle)]">{t("noReports")}</p>
+        ) : (
+          reports.map((report) => (
+            <SubmissionRow
+              key={report.id}
+              id={report.id}
+              reference={report.reference_code}
+              statusBadge={<ReportStatusBadge status={report.status} />}
+              updatedAt={report.updated_at}
+              date={report.created_at}
+              detail={t("reportedUser", { username: report.reported_discord_username })}
+              withdrawEndpoint={`/api/reports/${report.id}/withdraw`}
+              canWithdraw={!NON_WITHDRAWABLE.reports.includes(report.status)}
+            />
+          ))
+        )}
+      </div>
+
+      <div className="card mb-6 p-6">
+        <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">{t("myAppeals")}</h2>
+        {!appeals || appeals.length === 0 ? (
+          <p className="text-sm text-[var(--color-text-subtle)]">{t("noAppeals")}</p>
+        ) : (
+          appeals.map((appeal) => (
+            <SubmissionRow
+              key={appeal.id}
+              id={appeal.id}
+              reference={appeal.reference_code}
+              statusBadge={<AppealStatusBadge status={appeal.status} />}
+              updatedAt={appeal.updated_at}
+              date={appeal.created_at}
+              detail={appeal.discord_username}
+              withdrawEndpoint={`/api/appeals/${appeal.id}/withdraw`}
+              canWithdraw={!NON_WITHDRAWABLE.appeals.includes(appeal.status)}
+            />
+          ))
+        )}
+      </div>
+
+      <div className="card p-6">
+        <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">{t("mySupportRequests")}</h2>
+        {!supportRequests || supportRequests.length === 0 ? (
+          <p className="text-sm text-[var(--color-text-subtle)]">{t("noSupportRequests")}</p>
+        ) : (
+          supportRequests.map((request) => (
+            <SubmissionRow
+              key={request.id}
+              id={request.id}
+              reference={request.reference_code}
+              statusBadge={<SupportStatusBadge status={request.status} />}
+              updatedAt={request.updated_at}
+              date={request.created_at}
+              detail={request.subject}
+              withdrawEndpoint={`/api/support-requests/${request.id}/withdraw`}
+              canWithdraw={!NON_WITHDRAWABLE.support.includes(request.status)}
+              followup={
+                request.status !== "withdrawn"
+                  ? {
+                      endpoint: `/api/support-requests/${request.id}/messages`,
+                      initialMessages: messagesBySupportRequest.get(request.id) ?? [],
+                      label: t("conversationWithStaff"),
+                    }
+                  : undefined
+              }
+            />
+          ))
+        )}
+      </div>
+    </div>
+  );
+}

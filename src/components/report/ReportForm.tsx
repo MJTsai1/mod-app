@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 import { reportSchema } from "@/lib/validation/report";
-import { reportCategoryValues, reportCategoryLabels } from "@/lib/config";
+import { reportCategoryValues } from "@/lib/config";
 import { TextInput, TextArea, FieldWrapper } from "@/components/apply/fields";
 
 type FormValues = {
@@ -37,6 +38,8 @@ function loadDraft(): FormValues {
 
 export function ReportForm() {
   const router = useRouter();
+  const t = useTranslations("report");
+  const tCommon = useTranslations("common");
   const [values, setValues] = useState<FormValues>(EMPTY);
   const [hydrated, setHydrated] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -86,7 +89,7 @@ export function ReportForm() {
           Object.entries(fieldErrors).map(([key, messages]) => [key, messages?.[0] ?? ""])
         )
       );
-      setSubmitError("Please fix the highlighted fields before submitting.");
+      setSubmitError(tCommon("fixHighlighted"));
       return;
     }
 
@@ -112,7 +115,7 @@ export function ReportForm() {
             )
           );
         }
-        setSubmitError(body?.error ?? "Something went wrong submitting your report. Please try again.");
+        setSubmitError(body?.error ?? t("submitError"));
         setSubmitting(false);
         submittingRef.current = false;
         return;
@@ -126,7 +129,7 @@ export function ReportForm() {
 
       router.push(`/report/success?ref=${encodeURIComponent(body.referenceCode)}`);
     } catch {
-      setSubmitError("We couldn't reach the server. Check your connection and try again — your answers are still here.");
+      setSubmitError(tCommon("networkError"));
       setSubmitting(false);
       submittingRef.current = false;
     }
@@ -135,7 +138,7 @@ export function ReportForm() {
   if (!hydrated) {
     return (
       <div className="card-elevated p-8 text-center text-[var(--color-text-muted)]">
-        Loading form&hellip;
+        {tCommon("loading")}
       </div>
     );
   }
@@ -143,24 +146,24 @@ export function ReportForm() {
   return (
     <form onSubmit={handleSubmit} noValidate className="card-elevated space-y-5 p-6 sm:p-8">
       <TextInput
-        label="Reported member's Discord username"
+        label={t("fields.reportedDiscordUsername")}
         value={values.reportedDiscordUsername}
         onChange={(v) => setField("reportedDiscordUsername", v)}
         required
         error={errors.reportedDiscordUsername}
-        placeholder="username or username#0000"
+        placeholder={t("fields.reportedDiscordUsernamePlaceholder")}
       />
       <TextInput
-        label="Reported member's Discord User ID"
+        label={t("fields.reportedDiscordUserId")}
         value={values.reportedDiscordUserId}
         onChange={(v) => setField("reportedDiscordUserId", v)}
         error={errors.reportedDiscordUserId}
-        hint="Optional, but helps us find the right person faster. Right-click their name in Discord and Copy User ID (Developer Mode must be enabled)."
+        hint={t("fields.reportedDiscordUserIdHint")}
         inputMode="numeric"
       />
 
       <FieldWrapper
-        label="Category"
+        label={t("fields.category")}
         required
         htmlFor={categoryId}
         error={errors.category}
@@ -174,34 +177,34 @@ export function ReportForm() {
           aria-invalid={Boolean(errors.category)}
         >
           <option value="" disabled>
-            Select a category
+            {t("fields.selectCategory")}
           </option>
           {reportCategoryValues.map((value) => (
             <option key={value} value={value}>
-              {reportCategoryLabels[value]}
+              {t(`categories.${value}`)}
             </option>
           ))}
         </select>
       </FieldWrapper>
 
       <TextArea
-        label="What happened?"
+        label={t("fields.description")}
         value={values.description}
         onChange={(v) => setField("description", v)}
         required
         error={errors.description}
         rows={6}
         maxLength={3000}
-        placeholder="Describe what happened, including roughly when and where (which channel/voice call)."
+        placeholder={t("fields.descriptionPlaceholder")}
       />
       <TextArea
-        label="Evidence links"
+        label={t("fields.evidenceLinks")}
         value={values.evidenceLinks}
         onChange={(v) => setField("evidenceLinks", v)}
         error={errors.evidenceLinks}
         rows={3}
         maxLength={1000}
-        placeholder="Links to screenshots, clips, or message links (optional but helpful)."
+        placeholder={t("fields.evidenceLinksPlaceholder")}
       />
 
       {submitError && (
@@ -215,7 +218,7 @@ export function ReportForm() {
       )}
 
       <button type="submit" disabled={submitting} className="btn btn-primary w-full sm:w-auto">
-        {submitting ? "Submitting…" : "Submit Report"}
+        {submitting ? t("submitting") : t("submit")}
       </button>
     </form>
   );

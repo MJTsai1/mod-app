@@ -1,0 +1,363 @@
+{
+  "common": {
+    "siteDescription": "Deine Anlaufstelle für die Community — schnelle Links, Moderatoren-Bewerbungen, Mitgliederhilfe und die neuesten Videos von unserem YouTube-Kanal.",
+    "optional": "(optional)",
+    "selectOption": "Wähle eine Option",
+    "yes": "Ja",
+    "no": "Nein",
+    "loading": "Wird geladen…",
+    "fixHighlighted": "Bitte korrigiere die markierten Felder, bevor du absendest.",
+    "networkError": "Der Server konnte nicht erreicht werden. Überprüfe deine Verbindung und versuche es erneut — deine Antworten sind noch vorhanden.",
+    "returnHome": "Zurück zur Startseite",
+    "signInWithDiscord": "Mit Discord anmelden"
+  },
+  "languageSwitcher": {
+    "label": "Sprache"
+  },
+  "nav": {
+    "faq": "FAQ",
+    "report": "Mitglied melden",
+    "appeal": "Bann-Einspruch",
+    "staffLogin": "Staff-Login",
+    "applyNow": "Jetzt bewerben",
+    "signIn": "Anmelden"
+  },
+  "footer": {
+    "copyright": "© {year} {serverName}. Nicht mit Discord Inc. verbunden.",
+    "requirements": "Voraussetzungen",
+    "faq": "FAQ",
+    "report": "Mitglied melden",
+    "appeal": "Bann-Einspruch",
+    "privacy": "Datenschutzerklärung",
+    "terms": "Nutzungsbedingungen",
+    "discord": "Discord",
+    "contact": "Kontakt"
+  },
+  "home": {
+    "welcome": "Willkommen",
+    "joinDiscord": "Unserem Discord beitreten",
+    "onlineNow": "{count} gerade online",
+    "quickLinks": [
+      { "title": "Jetzt bewerben", "description": "Bewirb dich für das Moderations-Team." },
+      { "title": "Mitglied melden", "description": "Informiere das Staff-Team über einen Regelverstoß." },
+      { "title": "Bann-Einspruch", "description": "Denkst du, du wurdest zu Unrecht gebannt? Sag uns warum." },
+      { "title": "FAQ", "description": "Antworten auf häufig gestellte Fragen." }
+    ],
+    "latestUploads": "Neueste Videos",
+    "recentVideosFrom": "Aktuelle Videos von",
+    "ourOfficialChannel": "unserem offiziellen YouTube-Kanal",
+    "coOwnerChannelLabel": "Persönlicher Kanal des Mitinhabers",
+    "mostRecent": "Neueste",
+    "mostViewed": "Meistgesehen",
+    "views": "Aufrufe",
+    "couldntLoadUploads": "Die neuesten Videos konnten gerade nicht geladen werden — schau direkt auf dem Kanal oben vorbei.",
+    "alsoCheckOut": "Schau dir auch",
+    "aboutRoleHeading": "Über die Rolle",
+    "aboutRoleIntro": "Moderatoren sind vertrauenswürdige Community-Mitglieder, die dem Staff-Team helfen, alles am Laufen zu halten.",
+    "responsibilities": [
+      "Serverregeln fair und konsequent durchsetzen",
+      "Mitgliedern bei Fragen und Problemen helfen",
+      "Meldungen zeitnah und diskret bearbeiten",
+      "Konflikte zwischen Mitgliedern entschärfen",
+      "Die Community einladend und inklusiv halten",
+      "Eng mit dem restlichen Staff-Team zusammenarbeiten"
+    ],
+    "requirementsHeading": "Voraussetzungen",
+    "requirementsIntro": "Vor allem anderen suchen wir Mitglieder, die Folgendes erfüllen.",
+    "requirements": [
+      "Aktives Mitglied des Servers",
+      "Versteht die Regeln und hält sich daran",
+      "Reif und verantwortungsbewusst",
+      "Respektvoll gegenüber anderen Mitgliedern",
+      "Arbeitet gut mit dem Staff zusammen",
+      "Gute Moderationshistorie",
+      "Lernbereit"
+    ],
+    "minAge": "Mindestalter für die Bewerbung: {age}+",
+    "ctaHeading": "Bereit, dem Team beizutreten?",
+    "ctaBody": "Die Bewerbung dauert etwa 10–15 Minuten. Nimm dir Zeit und antworte ehrlich.",
+    "applyNow": "Jetzt bewerben"
+  },
+  "faq": {
+    "title": "Häufig gestellte Fragen",
+    "items": {
+      "responseTime": {
+        "question": "Wie lange dauert es, bis ich eine Rückmeldung zu meiner Bewerbung erhalte?",
+        "answer": "Das Staff-Team prüft Bewerbungen in der Reihenfolge ihres Eingangs. Die Bearbeitungszeit variiert je nach Aufkommen, aber du kannst den Status jederzeit mit dem erhaltenen Referenzcode überprüfen."
+      },
+      "reapply": {
+        "question": "Kann ich mich erneut bewerben, wenn ich abgelehnt wurde?",
+        "answer": "Ja. Nimm dir etwas Zeit, um aktiver und engagierter in der Community zu sein, und bewirb dich dann gerne später erneut."
+      },
+      "howToReport": {
+        "question": "Wie melde ich ein Mitglied wegen eines Regelverstoßes?",
+        "answer": "Nutze die Seite Mitglied melden. Du musst dich zuerst mit Discord anmelden, damit wir dich kontaktieren können, falls wir weitere Informationen benötigen."
+      },
+      "banUnfair": {
+        "question": "Ich glaube, ich wurde zu Unrecht gebannt — was kann ich tun?",
+        "answer": "Reiche über die Seite Bann-Einspruch einen Einspruch ein. Erkläre deine Situation klar und ehrlich — das Staff-Team prüft jeden Einspruch."
+      },
+      "confidentiality": {
+        "question": "Bleiben meine Meldung oder mein Einspruch vertraulich?",
+        "answer": "Meldungen und Einsprüche sind nur für autorisierten Staff sichtbar. Alle Details dazu, wie deine Informationen verarbeitet werden, findest du in der Datenschutzerklärung."
+      },
+      "stillNeedSupport": {
+        "question": "Brauchst du noch Hilfe?",
+        "answer": "Kontaktiere einen Moderator, indem du das Support-Anfrage-Formular mit deiner Frage oder deinem Anliegen ausfüllst. Ein Staff-Mitglied antwortet direkt auf deine Anfrage, und du kannst darauf antworten — die Unterhaltung findest du auf deiner Konto-Seite.",
+        "linkLabel": "Support-Anfrage senden"
+      }
+    }
+  },
+  "apply": {
+    "heading": "Moderatoren-Bewerbung",
+    "taglineQuoted": "„Denkst du, du hast das Zeug dazu, unserer Community zu helfen?“",
+    "saveHint": "Nimm dir Zeit — deine Antworten werden laufend gespeichert, du kannst also gefahrlos zwischen den Schritten wechseln.",
+    "signInPrompt": "Melde dich mit Discord an, um dich zu bewerben. Dies bestätigt deine Discord-Identität für deine Bewerbung — kein separates Konto oder Passwort nötig.",
+    "signInFailed": "Die Anmeldung ist fehlgeschlagen oder wurde abgebrochen. Bitte versuche es erneut.",
+    "loadingForm": "Bewerbungsformular wird geladen…",
+    "applyingAs": "Bewerbung als",
+    "fromDiscordSignIn": "Von deiner Discord-Anmeldung übernommen — hier nicht bearbeitbar.",
+    "steps": {
+      "labels": ["Grunddaten", "Aktivität", "Erfahrung", "Szenarien", "Motivation"],
+      "stepOf": "Schritt {current} von {total}: {label}"
+    },
+    "fields": {
+      "age": "Alter",
+      "agePlaceholder": "z. B. 19",
+      "country": "Land",
+      "countryPlaceholder": "z. B. Singapur",
+      "countryHint": "Automatisch anhand deines Standorts erkannt — ändere es, falls falsch.",
+      "timezone": "Zeitzone",
+      "timezonePlaceholder": "Wähle deine Zeitzone",
+      "timezoneHint": "Automatisch von deinem Browser erkannt — ändere sie, falls falsch.",
+      "noOneLivesHere": "Hier lebt niemand (UTC-12)",
+      "timeInServer": "Wie lange bist du schon auf dem Server?",
+      "timeInServerPlaceholder": "z. B. 8 Monate",
+      "activityLevel": "Wie aktiv bist du auf Discord?",
+      "activityLevels": [
+        "Sehr aktiv (täglich)",
+        "Aktiv (an den meisten Tagen)",
+        "Mäßig (ein paar Mal pro Woche)",
+        "Gelegentlich (selten online)"
+      ],
+      "onlineTimes": "Zu welchen Zeiten bist du normalerweise online?",
+      "onlineTimesPlaceholder": "z. B. wochentags 18-23 Uhr, am Wochenende größtenteils (in deiner Zeitzone)",
+      "weeklyHours": "Wie viele Stunden pro Woche kannst du der Moderation widmen?",
+      "weeklyHoursPlaceholder": "z. B. 10",
+      "hasModeratedBefore": "Hast du schon einmal einen Discord-Server moderiert?",
+      "previousExperience": "Beschreibe deine bisherige Moderationserfahrung",
+      "previousExperiencePlaceholder": "Welche Server, wie groß, was hast du im Alltag gemacht?",
+      "botsToolsUsed": "Welche Moderations-Bots/-Tools hast du verwendet?",
+      "botsToolsUsedPlaceholder": "z. B. Dyno, MEE6, Carl-bot, AutoMod...",
+      "previousStaffPositions": "Warst du schon einmal anderswo im Staff-Team?",
+      "previousStaffPositionsPlaceholder": "Liste andere Communitys und deine dortige Rolle auf.",
+      "additionalInfo": "Gibt es sonst noch etwas, das du dem Staff-Team mitteilen möchtest?"
+    },
+    "scenarios": {
+      "scenario_unaware_rules": "Ein Mitglied verstößt wiederholt gegen die Regeln, behauptet aber, sie nicht zu kennen. Was würdest du tun?",
+      "scenario_toxic_conflict": "Zwei Mitglieder streiten sich und die Situation wird zunehmend toxisch. Wie würdest du damit umgehen?",
+      "scenario_friend_breaks_rule": "Ein Freund von dir bricht eine Serverregel. Was würdest du tun?",
+      "scenario_staff_abuse": "Du entdeckst, dass ein anderer Moderator seine Berechtigungen missbraucht. Was würdest du tun?",
+      "scenario_biased_report": "Jemand reicht eine Meldung gegen ein Mitglied ein, das du persönlich nicht magst. Wie würdest du sicherstellen, dass du die Situation fair behandelst?"
+    },
+    "motivations": {
+      "motivation_why": "Warum möchtest du Moderator werden?",
+      "motivation_suitable": "Was macht dich für diese Rolle geeignet?",
+      "motivation_good_moderator": "Was zeichnet einen guten Moderator aus?",
+      "motivation_improve_server": "Was könntest du am Server verbessern?"
+    },
+    "confirmationStatement": "Ich bestätige, dass die angegebenen Informationen korrekt sind, und verstehe, dass das Absenden einer Bewerbung keine Annahme garantiert.",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "submit": "Bewerbung absenden",
+    "submitting": "Wird gesendet…",
+    "submitError": "Beim Absenden deiner Bewerbung ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+    "success": {
+      "heading": "Bewerbung abgeschickt",
+      "message": "Danke für deine Bewerbung! Sie wurde erfolgreich empfangen.",
+      "followUp": "Bewahre diese Referenz für deine Unterlagen auf. Das Staff-Team wird deine Bewerbung prüfen und sich bei Bedarf über Discord bei dir melden — im Moment ist keine weitere Aktion deinerseits erforderlich."
+    }
+  },
+  "report": {
+    "heading": "Mitglied melden",
+    "intro": "Verstößt jemand gegen die Regeln? Informiere das Staff-Team, damit wir uns darum kümmern können.",
+    "signInPrompt": "Melde dich mit Discord an, um eine Meldung einzureichen. So kann unser Staff-Team dich kontaktieren, falls es weitere Informationen benötigt.",
+    "signInFailed": "Die Anmeldung ist fehlgeschlagen oder wurde abgebrochen. Bitte versuche es erneut.",
+    "categories": {
+      "harassment": "Belästigung oder Mobbing",
+      "spam": "Spam oder Werbung",
+      "cheating_exploiting": "Cheating oder Ausnutzen von Bugs",
+      "inappropriate_content": "Unangemessene Inhalte",
+      "impersonation": "Identitätsdiebstahl",
+      "other": "Sonstiges"
+    },
+    "fields": {
+      "reportedDiscordUsername": "Discord-Benutzername des gemeldeten Mitglieds",
+      "reportedDiscordUsernamePlaceholder": "Benutzername oder Benutzername#0000",
+      "reportedDiscordUserId": "Discord-Benutzer-ID des gemeldeten Mitglieds",
+      "reportedDiscordUserIdHint": "Optional, hilft uns aber, die richtige Person schneller zu finden. Klicke mit der rechten Maustaste auf den Namen in Discord und kopiere die Benutzer-ID (Entwicklermodus muss aktiviert sein).",
+      "category": "Kategorie",
+      "selectCategory": "Wähle eine Kategorie",
+      "description": "Was ist passiert?",
+      "descriptionPlaceholder": "Beschreibe, was passiert ist, inklusive ungefährer Zeit und Ort (welcher Kanal/Sprachchat).",
+      "evidenceLinks": "Beweislinks",
+      "evidenceLinksPlaceholder": "Links zu Screenshots, Clips oder Nachrichten (optional, aber hilfreich)."
+    },
+    "submit": "Meldung absenden",
+    "submitting": "Wird gesendet…",
+    "submitError": "Beim Absenden deiner Meldung ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+    "success": {
+      "heading": "Meldung abgeschickt",
+      "message": "Danke, dass du uns informiert hast. Deine Meldung wurde an das Staff-Team weitergeleitet.",
+      "followUp": "Bewahre diese Referenz für deine Unterlagen auf. Du kannst den Status jederzeit auf deiner Konto-Seite überprüfen. Bitte nimm die Sache während der Prüfung nicht selbst in die Hand."
+    }
+  },
+  "appeal": {
+    "heading": "Bann-Einspruch",
+    "intro": "Denkst du, du wurdest zu Unrecht gebannt? Erkläre deine Situation und wir schauen uns das an.",
+    "signInPrompt": "Melde dich mit Discord an, um einen Bann-Einspruch einzureichen. Dies bestätigt deine Identität, damit der Staff deinen Fall prüfen kann.",
+    "signInFailed": "Die Anmeldung ist fehlgeschlagen oder wurde abgebrochen. Bitte versuche es erneut.",
+    "fields": {
+      "discordUsername": "Dein Discord-Benutzername",
+      "discordUsernamePlaceholder": "Benutzername oder Benutzername#0000",
+      "discordUserId": "Deine Discord-Benutzer-ID",
+      "discordUserIdHint": "Klicke mit der rechten Maustaste auf deinen Namen in Discord und kopiere die Benutzer-ID (Entwicklermodus muss aktiviert sein).",
+      "banReason": "Warum glaubst du, wurdest du gebannt?",
+      "banReasonPlaceholder": "Was wurde dir gesagt, falls überhaupt, als du gebannt wurdest?",
+      "appealReason": "Warum sollte dein Bann aufgehoben werden?",
+      "appealReasonPlaceholder": "Sei ehrlich und konkret — erkläre, was passiert ist und warum du eine weitere Chance verdienst.",
+      "additionalInfo": "Gibt es sonst noch etwas, das du uns mitteilen möchtest?"
+    },
+    "submit": "Einspruch absenden",
+    "submitting": "Wird gesendet…",
+    "submitError": "Beim Absenden deines Einspruchs ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+    "success": {
+      "heading": "Einspruch abgeschickt",
+      "message": "Danke für die Einreichung deines Einspruchs. Das Staff-Team wird ihn prüfen.",
+      "followUp": "Bewahre diese Referenz für deine Unterlagen auf. Du kannst den Status jederzeit auf deiner Konto-Seite überprüfen."
+    }
+  },
+  "support": {
+    "heading": "Support kontaktieren",
+    "intro": "Brauchst du Hilfe bei etwas, das keine Meldung oder kein Bann-Einspruch ist? Sende eine Nachricht direkt an das Staff-Team.",
+    "signInPrompt": "Melde dich mit Discord an, um eine Support-Anfrage zu senden. Der Staff antwortet direkt, und du siehst die Unterhaltung auf deiner Konto-Seite.",
+    "signInFailed": "Die Anmeldung ist fehlgeschlagen oder wurde abgebrochen. Bitte versuche es erneut.",
+    "fields": {
+      "subject": "Betreff",
+      "subjectPlaceholder": "Eine kurze Zusammenfassung, wobei du Hilfe benötigst",
+      "message": "Wobei brauchst du Hilfe?",
+      "messagePlaceholder": "Beschreibe deine Frage oder dein Problem — ein Staff-Mitglied antwortet hier."
+    },
+    "submit": "Support-Anfrage senden",
+    "submitting": "Wird gesendet…",
+    "submitError": "Beim Absenden deiner Anfrage ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+    "success": {
+      "heading": "Support-Anfrage gesendet",
+      "message": "Danke für deine Nachricht. Ein Staff-Mitglied wird auf deine Anfrage antworten.",
+      "followUp": "Bewahre diese Referenz für deine Unterlagen auf. Antworten des Staffs siehst du — und kannst darauf antworten — auf deiner Konto-Seite."
+    }
+  },
+  "account": {
+    "title": "Mein Konto",
+    "signedInAs": "Angemeldet als {username}",
+    "signOut": "Abmelden",
+    "signInPrompt": "Melde dich mit Discord an, um den Status deiner Meldungen und Bann-Einsprüche zu sehen.",
+    "signInFailed": "Die Anmeldung ist fehlgeschlagen oder wurde abgebrochen. Bitte versuche es erneut.",
+    "myApplications": "Meine Bewerbungen",
+    "noApplications": "Du hast noch keine Bewerbung eingereicht.",
+    "myReports": "Meine Meldungen",
+    "noReports": "Du hast noch keine Meldung eingereicht.",
+    "myAppeals": "Meine Bann-Einsprüche",
+    "noAppeals": "Du hast noch keinen Bann-Einspruch eingereicht.",
+    "mySupportRequests": "Meine Support-Anfragen",
+    "noSupportRequests": "Du hast noch keine Support-Anfrage eingereicht.",
+    "reportedUser": "{username} gemeldet",
+    "conversationWithStaff": "Deine Unterhaltung mit dem Staff:",
+    "staffQuestion": "Der Staff hat eine Frage an dich — bitte antworte unten.",
+    "typeReply": "Schreibe deine Antwort…",
+    "sendReply": "Antwort senden",
+    "moderatorApplication": "Moderatoren-Bewerbung",
+    "updated": "Aktualisiert",
+    "noMessagesYet": "Noch keine Nachrichten.",
+    "sending": "Wird gesendet…",
+    "sendMessageFailed": "Nachricht konnte nicht gesendet werden."
+  },
+  "terms": {
+    "title": "Nutzungsbedingungen",
+    "intro": "Diese Bedingungen regeln deine Nutzung dieser Website — Moderatoren-Bewerbungen, Mitgliedermeldungen, Bann-Einsprüche und zugehörige Seiten — für {serverName}. Mit der Nutzung dieser Website stimmst du ihnen zu.",
+    "sections": [
+      {
+        "title": "Worum es sich bei dieser Seite handelt",
+        "body": "Dies ist ein von der Community betriebenes Tool für {serverName}, einen Discord-Server. Es ist weder mit Discord Inc. oder der Roblox Corporation verbunden, noch von diesen unterstützt oder betrieben. „Discord“ und „Roblox“ sind Marken ihrer jeweiligen Inhaber."
+      },
+      {
+        "title": "Anmeldung",
+        "body": "Einige Seiten erfordern die Anmeldung mit deinem Discord-Konto (über den eigenen Anmeldebildschirm von Discord — wir sehen oder speichern niemals dein Discord-Passwort). Staff-Seiten erfordern ein separates Konto, das direkt von einem Administrator erstellt wird. Du bist selbst dafür verantwortlich, den Zugang zu deinem eigenen Discord-Konto sicher zu halten."
+      },
+      {
+        "title": "Was du beim Einreichen von etwas zustimmst",
+        "list": [
+          "Die von dir übermittelten Informationen sind nach bestem Wissen korrekt und wahrheitsgemäß.",
+          "Du wirst keine falschen Meldungen, falschen Bann-Einsprüche oder wissentlich irreführenden Informationen einreichen.",
+          "Du wirst das Melde- oder Einspruchssystem nicht nutzen, um ein anderes Mitglied böswillig zu belästigen, zu spammen oder gezielt anzugreifen.",
+          "Du wirst nicht versuchen, die Seite oder ihre Systeme zu stören, zu überlasten oder dir unbefugten Zugriff darauf zu verschaffen."
+        ],
+        "body": "Einreichungen, die gegen diese Bedingungen verstoßen, können ohne Prüfung abgelehnt werden, und wiederholter Missbrauch kann zum Entzug deines Zugangs zu diesen Systemen führen."
+      },
+      {
+        "title": "Kein garantiertes Ergebnis",
+        "body": "Das Einreichen einer Moderatoren-Bewerbung, einer Meldung oder eines Bann-Einspruchs garantiert kein bestimmtes Ergebnis. Entscheidungen — Annahme, Ablehnung, Bearbeitung oder Zurückweisung — liegen im alleinigen Ermessen des Staff-Teams von {serverName}."
+      },
+      {
+        "title": "Inhalte Dritter",
+        "body": "Die Startseite zeigt Videos von YouTube-Kanälen, deren Betrieb wir nicht kontrollieren. Verlinkte oder eingebettete Inhalte gehören den jeweiligen Erstellern und unterliegen den eigenen Bedingungen von YouTube, nicht diesen hier."
+      },
+      {
+        "title": "Keine Gewährleistung",
+        "body": "Diese Seite wird „wie besehen“ bereitgestellt und von Community-Freiwilligen nach bestem Bemühen betrieben. Wir garantieren nicht, dass sie stets verfügbar, fehlerfrei oder unterbrechungsfrei ist."
+      },
+      {
+        "title": "Änderungen dieser Bedingungen",
+        "body": "Diese Bedingungen können sich im Laufe der Zeit ändern, wenn sich die Seite weiterentwickelt. Wenn du die Seite nach einer Aktualisierung weiterhin nutzt, bedeutet das, dass du die überarbeiteten Bedingungen akzeptierst."
+      }
+    ],
+    "contact": {
+      "title": "Kontakt",
+      "body": "Fragen zu diesen Bedingungen können an die Serveradministration gesendet werden unter"
+    }
+  },
+  "privacy": {
+    "title": "Datenschutzerklärung",
+    "intro": "Diese Erklärung beschreibt, welche Informationen {serverName} auf dieser Seite erhebt — Moderatoren-Bewerbungen, Mitgliedermeldungen, Bann-Einsprüche und die Anmeldung mit Discord — und wie diese verwendet werden.",
+    "whatIsCollected": {
+      "title": "Welche Informationen erhoben werden",
+      "applications": "dein Discord-Benutzername, deine Discord-Benutzer-ID, Alter, Land, Zeitzone, Aktivitätsdetails, Moderationserfahrung sowie deine schriftlichen Antworten auf die Bewerbungsfragen. Bewerbungen erfordern keine Anmeldung.",
+      "applicationsLabel": "Moderatoren-Bewerbungen:",
+      "signingIn": "um eine Meldung einzureichen, einen Bann-Einspruch zu senden oder den Status auf der Konto-Seite zu prüfen, meldest du dich mit deinem Discord-Konto an. Discord teilt uns deinen Discord-Benutzernamen, deine Benutzer-ID und deinen Avatar mit — niemals dein Discord-Passwort, das wir nie sehen.",
+      "signingInLabel": "Anmeldung mit Discord:",
+      "reports": "dein Discord-Benutzername (als meldende Person), der Discord-Benutzername/die ID des gemeldeten Mitglieds, die Kategorie und Beschreibung des Vorfalls sowie alle von dir bereitgestellten Beweislinks.",
+      "reportsLabel": "Meldungen:",
+      "appeals": "dein Discord-Benutzername und deine Benutzer-ID, warum du glaubst, gebannt worden zu sein, dein Einspruchsgrund und alle zusätzlichen Informationen, die du bereitstellst.",
+      "appealsLabel": "Bann-Einsprüche:",
+      "ipHash": "In all diesen Fällen speichern wir außerdem einen Einweg-Hash der zum Einreichen verwendeten IP-Adresse (nicht die rohe IP), ausschließlich um Spam und Missbrauch zu verhindern."
+    },
+    "why": {
+      "title": "Warum diese Informationen erhoben werden",
+      "body": "Diese Informationen werden ausschließlich verwendet, um Moderatoren-Bewerbungen auszuwerten, Meldungen zu untersuchen, Bann-Einsprüche zu prüfen und — für angemeldete Mitglieder — dir zu ermöglichen, den Status deiner eigenen Einreichungen zu sehen. Wir erheben nicht mehr, als für diese Zwecke nötig ist, und nutzen sie weder für Werbung noch geben wir sie an Dritte weiter."
+    },
+    "howStored": {
+      "title": "Wie die Daten gespeichert werden",
+      "body": "Bewerbungen, Meldungen und Bann-Einsprüche werden in einer gesicherten, zugriffskontrollierten Datenbank gespeichert. Sie sind niemals öffentlich zugänglich, und Einreichende können die Einreichungen anderer nicht einsehen. Deine Discord-Anmeldesitzung wird von unserem Authentifizierungsanbieter (Supabase) verwaltet und ist von den eigenen Systemen von Discord getrennt."
+    },
+    "whoCanAccess": {
+      "title": "Wer auf diese Daten zugreifen kann",
+      "body": "Nur autorisierte Staff-Mitglieder von {serverName}, die über das Staff-Dashboard angemeldet sind, können eingereichte Bewerbungen, Meldungen und Einsprüche einsehen. Der Zugriff ist auf das für die Prüfung von Einreichungen Notwendige beschränkt. Wenn du mit Discord angemeldet bist, kannst du den Status deiner eigenen Meldungen und Einsprüche auf der Konto-Seite sehen — niemals die von anderen."
+    },
+    "yourRights": {
+      "title": "Deine Daten, deine Rechte",
+      "contactMethod": "Wenn du Fragen zu deinen Daten hast oder deren Löschung beantragen möchtest, kontaktiere die Serveradministration.",
+      "body": "um zu erfahren, welche Daten wir über dich gespeichert haben, oder um deren Löschung zu beantragen. Du kannst dieser Seite den Zugriff auf dein Discord-Konto jederzeit über die Einstellungen für autorisierte Apps von Discord entziehen.",
+      "reachAt": "Du kannst die Serveradministration erreichen unter"
+    }
+  }
+}

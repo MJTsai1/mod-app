@@ -30,6 +30,7 @@ export default async function ActivityPage() {
             reports, and ban appeals.
           </p>
         </div>
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- a file download, not a page navigation */}
         <a href="/api/admin/activity/export" className="btn btn-secondary px-3 py-2 text-sm">
           Export CSV
         </a>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { TextInput, SelectInput } from "@/components/apply/fields";
 import {
   UNINHABITED_TIMEZONE,
@@ -41,7 +42,7 @@ interface TimezoneOption {
   label: string;
 }
 
-function useTimezoneOptions(): TimezoneOption[] {
+function useTimezoneOptions(noOneLivesHereLabel: string): TimezoneOption[] {
   return useMemo(() => {
     let zones: string[];
     try {
@@ -79,7 +80,7 @@ function useTimezoneOptions(): TimezoneOption[] {
         try {
           sortMinutes = offsetMinutesFor(zone, januaryOffsetDate);
           if (zone === UNINHABITED_TIMEZONE) {
-            label = "No one lives here (UTC-12)";
+            label = noOneLivesHereLabel;
           } else {
             const januaryOffset = offsetLabelFor(zone, januaryOffsetDate);
             const julyOffset = offsetLabelFor(zone, julyOffsetDate);
@@ -95,7 +96,7 @@ function useTimezoneOptions(): TimezoneOption[] {
       // UTC-12 first, UTC+14 last; alphabetical within the same offset.
       .sort((a, b) => a.sortMinutes - b.sortMinutes || a.value.localeCompare(b.value))
       .map(({ value, label }) => ({ value, label }));
-  }, []);
+  }, [noOneLivesHereLabel]);
 }
 
 interface StepProps {
@@ -107,13 +108,14 @@ interface StepProps {
 }
 
 export function StepOne({ values, errors, setField, discordUsername, discordUserId }: StepProps) {
-  const timezoneOptions = useTimezoneOptions();
+  const t = useTranslations("apply");
+  const timezoneOptions = useTimezoneOptions(t("fields.noOneLivesHere"));
 
   return (
     <div>
       <div className="mb-5 rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-bg-elevated)] px-4 py-3">
         <p className="text-xs uppercase tracking-wide text-[var(--color-text-subtle)]">
-          Applying as
+          {t("applyingAs")}
         </p>
         <p className="mt-1 text-sm font-medium text-[var(--color-text)]">
           {discordUsername}
@@ -123,48 +125,46 @@ export function StepOne({ values, errors, setField, discordUsername, discordUser
             </span>
           )}
         </p>
-        <p className="field-hint mt-1">
-          Taken from your Discord sign-in — not editable here.
-        </p>
+        <p className="field-hint mt-1">{t("fromDiscordSignIn")}</p>
       </div>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <TextInput
-          label="Age"
+          label={t("fields.age")}
           value={values.age}
           onChange={(v) => setField("age", v.replace(/[^0-9]/g, ""))}
           required
           type="number"
           inputMode="numeric"
-          placeholder="e.g. 19"
+          placeholder={t("fields.agePlaceholder")}
           error={errors.age}
         />
         <TextInput
-          label="Country"
+          label={t("fields.country")}
           value={values.country}
           onChange={(v) => setField("country", v)}
           required
-          placeholder="e.g. Singapore"
+          placeholder={t("fields.countryPlaceholder")}
           autoComplete="country-name"
-          hint="Auto-detected from your location — change it if it's wrong."
+          hint={t("fields.countryHint")}
           error={errors.country}
         />
         <SelectInput
-          label="Timezone"
+          label={t("fields.timezone")}
           value={values.timezone}
           onChange={(v) => setField("timezone", v)}
           options={timezoneOptions}
           required
-          placeholder="Select your timezone"
-          hint="Auto-detected from your browser — change it if it's wrong."
+          placeholder={t("fields.timezonePlaceholder")}
+          hint={t("fields.timezoneHint")}
           error={errors.timezone}
         />
         <TextInput
-          label="How long have you been in the server?"
+          label={t("fields.timeInServer")}
           value={values.timeInServer}
           onChange={(v) => setField("timeInServer", v)}
           required
-          placeholder="e.g. 8 months"
+          placeholder={t("fields.timeInServerPlaceholder")}
           error={errors.timeInServer}
         />
       </div>

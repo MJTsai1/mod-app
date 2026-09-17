@@ -1,9 +1,13 @@
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { siteConfig } from "@/lib/config";
 import { AccountNavLink } from "@/components/site/AccountNavLink";
+import { LanguageSwitcher } from "@/components/site/LanguageSwitcher";
 
 export function SiteHeader() {
+  const t = useTranslations("nav");
+
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
@@ -27,20 +31,22 @@ export function SiteHeader() {
             href="/faq"
             className="hidden rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-text-muted)] transition hover:text-[var(--color-text)] lg:inline-block"
           >
-            FAQ
+            {t("faq")}
           </Link>
           <Link
             href="/report"
             className="hidden rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-text-muted)] transition hover:text-[var(--color-text)] lg:inline-block"
           >
-            Report a Member
+            {t("report")}
           </Link>
           <Link
             href="/appeal"
             className="hidden rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-text-muted)] transition hover:text-[var(--color-text)] lg:inline-block"
           >
-            Ban Appeal
+            {t("appeal")}
           </Link>
+
+          <LanguageSwitcher className="field-input hidden w-auto px-2 py-1.5 text-sm sm:block" />
 
           <AccountNavLink />
 
@@ -54,10 +60,10 @@ export function SiteHeader() {
                 strokeLinecap="round"
               />
             </svg>
-            <span className="hidden sm:inline">Staff Login</span>
+            <span className="hidden sm:inline">{t("staffLogin")}</span>
           </Link>
           <Link href="/apply" className="btn btn-primary text-sm">
-            Apply Now
+            {t("applyNow")}
           </Link>
         </nav>
       </div>

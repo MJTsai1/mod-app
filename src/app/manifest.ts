@@ -5,7 +5,8 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: `${siteConfig.serverName} Community Hub`,
     short_name: siteConfig.serverName,
-    description: siteConfig.description,
+    description:
+      "Your hub for the community — quick links, moderator applications, member support, and the latest from our YouTube channel.",
     start_url: "/",
     display: "standalone",
     background_color: "#0a0a0f",

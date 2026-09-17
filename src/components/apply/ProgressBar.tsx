@@ -1,15 +1,17 @@
 "use client";
 
-const STEP_LABELS = ["Basics", "Activity", "Experience", "Scenarios", "Motivation"];
+import { useTranslations } from "next-intl";
 
 export function ProgressBar({ currentStep }: { currentStep: number }) {
-  const totalSteps = STEP_LABELS.length;
+  const t = useTranslations("apply.steps");
+  const stepLabels = t.raw("labels") as string[];
+  const totalSteps = stepLabels.length;
 
   return (
     <div className="mb-8">
       <div className="mb-3 flex items-center justify-between">
         <span className="text-sm font-semibold text-[var(--color-text)]">
-          Step {currentStep + 1} of {totalSteps}: {STEP_LABELS[currentStep]}
+          {t("stepOf", { current: currentStep + 1, total: totalSteps, label: stepLabels[currentStep] })}
         </span>
         <span className="text-sm text-[var(--color-text-subtle)]">
           {Math.round(((currentStep + 1) / totalSteps) * 100)}%
@@ -21,7 +23,7 @@ export function ProgressBar({ currentStep }: { currentStep: number }) {
         aria-valuenow={currentStep + 1}
         aria-valuemin={1}
         aria-valuemax={totalSteps}
-        aria-label="Application progress"
+        aria-label={t("stepOf", { current: currentStep + 1, total: totalSteps, label: stepLabels[currentStep] })}
       >
         <div
           className="h-full rounded-full transition-all duration-300 ease-out"
@@ -32,7 +34,7 @@ export function ProgressBar({ currentStep }: { currentStep: number }) {
         />
       </div>
       <ol className="mt-4 hidden justify-between sm:flex">
-        {STEP_LABELS.map((label, index) => (
+        {stepLabels.map((label, index) => (
           <li
             key={label}
             className="flex items-center gap-1.5 text-xs font-medium"

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { SelectInput, TextInput } from "@/components/apply/fields";
 import type { ApplicationFormValues, FormErrors } from "@/components/apply/formTypes";
 
@@ -9,40 +10,36 @@ interface StepProps {
   setField: <K extends keyof ApplicationFormValues>(key: K, value: ApplicationFormValues[K]) => void;
 }
 
-const ACTIVITY_LEVELS = [
-  "Very active (daily)",
-  "Active (most days)",
-  "Moderate (a few times a week)",
-  "Occasional (rarely online)",
-];
-
 export function StepTwo({ values, errors, setField }: StepProps) {
+  const t = useTranslations("apply");
+  const activityLevels = t.raw("fields.activityLevels") as string[];
+
   return (
     <div className="grid grid-cols-1 gap-5">
       <SelectInput
-        label="How active are you on Discord?"
+        label={t("fields.activityLevel")}
         value={values.activityLevel}
         onChange={(v) => setField("activityLevel", v)}
-        options={ACTIVITY_LEVELS}
+        options={activityLevels}
         required
         error={errors.activityLevel}
       />
       <TextInput
-        label="What times are you normally online?"
+        label={t("fields.onlineTimes")}
         value={values.onlineTimes}
         onChange={(v) => setField("onlineTimes", v)}
         required
-        placeholder="e.g. Weekdays 6pm-11pm, weekends most of the day (in your timezone)"
+        placeholder={t("fields.onlineTimesPlaceholder")}
         error={errors.onlineTimes}
       />
       <TextInput
-        label="How many hours per week can you dedicate to moderation?"
+        label={t("fields.weeklyHours")}
         value={values.weeklyHours}
         onChange={(v) => setField("weeklyHours", v.replace(/[^0-9.]/g, ""))}
         required
         type="number"
         inputMode="numeric"
-        placeholder="e.g. 10"
+        placeholder={t("fields.weeklyHoursPlaceholder")}
         error={errors.weeklyHours}
       />
     </div>

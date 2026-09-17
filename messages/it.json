@@ -1,0 +1,363 @@
+{
+  "common": {
+    "siteDescription": "Il tuo punto di riferimento per la community — link rapidi, candidature per moderatore, assistenza ai membri e gli ultimi video dal nostro canale YouTube.",
+    "optional": "(facoltativo)",
+    "selectOption": "Seleziona un'opzione",
+    "yes": "Sì",
+    "no": "No",
+    "loading": "Caricamento…",
+    "fixHighlighted": "Correggi i campi evidenziati prima di inviare.",
+    "networkError": "Impossibile contattare il server. Controlla la connessione e riprova — le tue risposte sono ancora qui.",
+    "returnHome": "Torna alla home",
+    "signInWithDiscord": "Accedi con Discord"
+  },
+  "languageSwitcher": {
+    "label": "Lingua"
+  },
+  "nav": {
+    "faq": "FAQ",
+    "report": "Segnala un membro",
+    "appeal": "Ricorso al ban",
+    "staffLogin": "Accesso staff",
+    "applyNow": "Candidati",
+    "signIn": "Accedi"
+  },
+  "footer": {
+    "copyright": "© {year} {serverName}. Non affiliato a Discord Inc.",
+    "requirements": "Requisiti",
+    "faq": "FAQ",
+    "report": "Segnala un membro",
+    "appeal": "Ricorso al ban",
+    "privacy": "Informativa sulla privacy",
+    "terms": "Termini di servizio",
+    "discord": "Discord",
+    "contact": "Contatti"
+  },
+  "home": {
+    "welcome": "Benvenuto",
+    "joinDiscord": "Unisciti al nostro Discord",
+    "onlineNow": "{count} online ora",
+    "quickLinks": [
+      { "title": "Candidati", "description": "Candidati per entrare nel team di moderazione." },
+      { "title": "Segnala un membro", "description": "Segnala allo staff chi infrange le regole." },
+      { "title": "Ricorso al ban", "description": "Pensi di essere stato bannato ingiustamente? Spiegaci perché." },
+      { "title": "FAQ", "description": "Risposte alle domande più comuni." }
+    ],
+    "latestUploads": "Ultimi video",
+    "recentVideosFrom": "Video recenti dal",
+    "ourOfficialChannel": "nostro canale YouTube ufficiale",
+    "coOwnerChannelLabel": "Canale personale del co-proprietario",
+    "mostRecent": "Più recenti",
+    "mostViewed": "Più visti",
+    "views": "visualizzazioni",
+    "couldntLoadUploads": "Al momento non è possibile caricare i video recenti — visita direttamente il canale qui sopra.",
+    "alsoCheckOut": "Dai un'occhiata anche a",
+    "aboutRoleHeading": "Informazioni sul ruolo",
+    "aboutRoleIntro": "I moderatori sono membri fidati della community che aiutano lo staff a mantenere tutto in ordine.",
+    "responsibilities": [
+      "Applicare le regole del server in modo equo e coerente",
+      "Assistere i membri con domande e problemi",
+      "Gestire le segnalazioni tempestivamente e con discrezione",
+      "Disinnescare i conflitti tra membri",
+      "Mantenere una community accogliente e inclusiva",
+      "Collaborare strettamente con il resto dello staff"
+    ],
+    "requirementsHeading": "Requisiti",
+    "requirementsIntro": "Cerchiamo membri che soddisfino quanto segue, prima di ogni altra cosa.",
+    "requirements": [
+      "Membro attivo del server",
+      "Comprende e rispetta le regole",
+      "Maturo e responsabile",
+      "Rispettoso verso gli altri membri",
+      "Collabora bene con lo staff",
+      "Buona reputazione nella moderazione",
+      "Disposto a imparare"
+    ],
+    "minAge": "Età minima per candidarsi: {age}+",
+    "ctaHeading": "Pronto a entrare nel team?",
+    "ctaBody": "La candidatura richiede circa 10-15 minuti. Prenditi il tuo tempo e rispondi con sincerità.",
+    "applyNow": "Candidati"
+  },
+  "faq": {
+    "title": "Domande frequenti",
+    "items": {
+      "responseTime": {
+        "question": "Quanto tempo ci vuole per ricevere una risposta alla mia candidatura?",
+        "answer": "Lo staff esamina le candidature man mano che arrivano. I tempi di risposta variano in base al volume, ma puoi sempre controllare lo stato usando il codice di riferimento ricevuto."
+      },
+      "reapply": {
+        "question": "Posso ricandidarmi se vengo rifiutato?",
+        "answer": "Sì. Prenditi del tempo per essere più attivo e coinvolto nella community, poi non esitare a ricandidarti in seguito."
+      },
+      "howToReport": {
+        "question": "Come segnalo un membro che infrange le regole?",
+        "answer": "Usa la pagina Segnala un membro. Dovrai prima accedere con Discord in modo che possiamo ricontattarti se abbiamo bisogno di ulteriori informazioni."
+      },
+      "banUnfair": {
+        "question": "Penso di essere stato bannato ingiustamente — cosa posso fare?",
+        "answer": "Invia un ricorso tramite la pagina Ricorso al ban. Spiega la tua situazione in modo chiaro e onesto — lo staff esamina ogni ricorso."
+      },
+      "confidentiality": {
+        "question": "La mia segnalazione o il mio ricorso rimarranno confidenziali?",
+        "answer": "Segnalazioni e ricorsi sono visibili solo allo staff autorizzato. Consulta l'Informativa sulla privacy per tutti i dettagli su come vengono trattate le tue informazioni."
+      },
+      "stillNeedSupport": {
+        "question": "Hai ancora bisogno di assistenza?",
+        "answer": "Contatta un moderatore compilando il modulo di richiesta di assistenza con la tua domanda o il tuo problema. Un membro dello staff risponderà direttamente alla tua richiesta, e potrai rispondere a tua volta — troverai la conversazione nella tua pagina Account.",
+        "linkLabel": "Invia una richiesta di assistenza"
+      }
+    }
+  },
+  "apply": {
+    "heading": "Candidatura da moderatore",
+    "taglineQuoted": "«Pensi di avere le carte in regola per aiutare la nostra community?»",
+    "saveHint": "Prenditi il tuo tempo — le tue risposte vengono salvate man mano, quindi puoi muoverti tra i passaggi senza problemi.",
+    "signInPrompt": "Accedi con Discord per candidarti. Questo conferma la tua identità Discord per la candidatura — non serve un account o una password separati.",
+    "signInFailed": "L'accesso non è riuscito o è stato annullato. Riprova.",
+    "loadingForm": "Caricamento del modulo di candidatura…",
+    "applyingAs": "Candidatura come",
+    "fromDiscordSignIn": "Preso dal tuo accesso Discord — non modificabile qui.",
+    "steps": {
+      "labels": ["Informazioni base", "Attività", "Esperienza", "Scenari", "Motivazione"],
+      "stepOf": "Passaggio {current} di {total}: {label}"
+    },
+    "fields": {
+      "age": "Età",
+      "agePlaceholder": "es. 19",
+      "country": "Paese",
+      "countryPlaceholder": "es. Singapore",
+      "countryHint": "Rilevato automaticamente dalla tua posizione — modificalo se errato.",
+      "timezone": "Fuso orario",
+      "timezonePlaceholder": "Seleziona il tuo fuso orario",
+      "timezoneHint": "Rilevato automaticamente dal tuo browser — modificalo se errato.",
+      "noOneLivesHere": "Qui non vive nessuno (UTC-12)",
+      "timeInServer": "Da quanto tempo sei nel server?",
+      "timeInServerPlaceholder": "es. 8 mesi",
+      "activityLevel": "Quanto sei attivo su Discord?",
+      "activityLevels": [
+        "Molto attivo (ogni giorno)",
+        "Attivo (quasi ogni giorno)",
+        "Moderato (qualche volta a settimana)",
+        "Occasionale (raramente online)"
+      ],
+      "onlineTimes": "In quali orari sei solitamente online?",
+      "onlineTimesPlaceholder": "es. Nei giorni feriali 18-23, la maggior parte del weekend (nel tuo fuso orario)",
+      "weeklyHours": "Quante ore a settimana puoi dedicare alla moderazione?",
+      "weeklyHoursPlaceholder": "es. 10",
+      "hasModeratedBefore": "Hai già moderato un server Discord in passato?",
+      "previousExperience": "Descrivi la tua precedente esperienza di moderazione",
+      "previousExperiencePlaceholder": "Quali server, quanto grandi, cosa facevi quotidianamente?",
+      "botsToolsUsed": "Quali bot/strumenti di moderazione hai usato?",
+      "botsToolsUsedPlaceholder": "es. Dyno, MEE6, Carl-bot, AutoMod...",
+      "previousStaffPositions": "Sei già stato staff altrove in passato?",
+      "previousStaffPositionsPlaceholder": "Elenca altre community e il tuo ruolo lì.",
+      "additionalInfo": "C'è qualcos'altro che vorresti far sapere allo staff?"
+    },
+    "scenarios": {
+      "scenario_unaware_rules": "Un membro infrange ripetutamente le regole ma sostiene di non conoscerle. Cosa faresti?",
+      "scenario_toxic_conflict": "Due membri stanno litigando e la situazione sta diventando tossica. Come la gestiresti?",
+      "scenario_friend_breaks_rule": "Un tuo amico infrange una regola del server. Cosa faresti?",
+      "scenario_staff_abuse": "Scopri che un altro moderatore sta abusando dei suoi permessi. Cosa faresti?",
+      "scenario_biased_report": "Qualcuno invia una segnalazione contro un membro che personalmente non ti piace. Come ti assicureresti di gestire la situazione in modo imparziale?"
+    },
+    "motivations": {
+      "motivation_why": "Perché vuoi diventare un moderatore?",
+      "motivation_suitable": "Cosa ti rende adatto a questo ruolo?",
+      "motivation_good_moderator": "Cosa rende un buon moderatore?",
+      "motivation_improve_server": "Cosa potresti migliorare nel server?"
+    },
+    "confirmationStatement": "Confermo che le informazioni fornite sono accurate e comprendo che l'invio di una candidatura non garantisce l'accettazione.",
+    "previous": "Indietro",
+    "next": "Avanti",
+    "submit": "Invia candidatura",
+    "submitting": "Invio in corso…",
+    "submitError": "Si è verificato un problema durante l'invio della candidatura. Riprova.",
+    "success": {
+      "heading": "Candidatura inviata",
+      "message": "Grazie per esserti candidato! La tua candidatura è stata ricevuta correttamente.",
+      "followUp": "Conserva questo riferimento per i tuoi archivi. Lo staff esaminerà la tua candidatura e ti contatterà su Discord se necessario — al momento non è richiesta alcuna altra azione da parte tua."
+    }
+  },
+  "report": {
+    "heading": "Segnala un membro",
+    "intro": "Qualcuno sta infrangendo le regole? Avvisa lo staff così potremo occuparcene.",
+    "signInPrompt": "Accedi con Discord per inviare una segnalazione. Questo permette al nostro staff di ricontattarti se ha bisogno di ulteriori informazioni.",
+    "signInFailed": "L'accesso non è riuscito o è stato annullato. Riprova.",
+    "categories": {
+      "harassment": "Molestie o bullismo",
+      "spam": "Spam o pubblicità",
+      "cheating_exploiting": "Cheating o sfruttamento di bug",
+      "inappropriate_content": "Contenuti inappropriati",
+      "impersonation": "Furto d'identità",
+      "other": "Altro"
+    },
+    "fields": {
+      "reportedDiscordUsername": "Nome utente Discord del membro segnalato",
+      "reportedDiscordUsernamePlaceholder": "nomeutente o nomeutente#0000",
+      "reportedDiscordUserId": "ID Discord del membro segnalato",
+      "reportedDiscordUserIdHint": "Facoltativo, ma ci aiuta a trovare la persona giusta più velocemente. Fai clic destro sul suo nome in Discord e copia l'ID utente (la modalità sviluppatore deve essere attiva).",
+      "category": "Categoria",
+      "selectCategory": "Seleziona una categoria",
+      "description": "Cosa è successo?",
+      "descriptionPlaceholder": "Descrivi cosa è successo, indicando approssimativamente quando e dove (quale canale/chiamata vocale).",
+      "evidenceLinks": "Link alle prove",
+      "evidenceLinksPlaceholder": "Link a screenshot, clip o messaggi (facoltativo ma utile)."
+    },
+    "submit": "Invia segnalazione",
+    "submitting": "Invio in corso…",
+    "submitError": "Si è verificato un problema durante l'invio della segnalazione. Riprova.",
+    "success": {
+      "heading": "Segnalazione inviata",
+      "message": "Grazie per averci avvisato. La tua segnalazione è stata inviata allo staff.",
+      "followUp": "Conserva questo riferimento per i tuoi archivi. Puoi controllare lo stato in qualsiasi momento dalla tua pagina Account. Ti chiediamo di non farti giustizia da solo mentre viene esaminata."
+    }
+  },
+  "appeal": {
+    "heading": "Ricorso al ban",
+    "intro": "Pensi di essere stato bannato ingiustamente? Spiega la tua situazione e la esamineremo.",
+    "signInPrompt": "Accedi con Discord per inviare un ricorso al ban. Questo conferma la tua identità in modo che lo staff possa esaminare il tuo caso.",
+    "signInFailed": "L'accesso non è riuscito o è stato annullato. Riprova.",
+    "fields": {
+      "discordUsername": "Il tuo nome utente Discord",
+      "discordUsernamePlaceholder": "nomeutente o nomeutente#0000",
+      "discordUserId": "Il tuo ID Discord",
+      "discordUserIdHint": "Fai clic destro sul tuo nome in Discord e copia l'ID utente (la modalità sviluppatore deve essere attiva).",
+      "banReason": "Perché pensi di essere stato bannato?",
+      "banReasonPlaceholder": "Cosa ti è stato detto, se ti è stato detto qualcosa, al momento del ban?",
+      "appealReason": "Perché il tuo ban dovrebbe essere revocato?",
+      "appealReasonPlaceholder": "Sii onesto e specifico — spiega cosa è successo e perché dovresti avere un'altra possibilità.",
+      "additionalInfo": "C'è qualcos'altro che vorresti farci sapere?"
+    },
+    "submit": "Invia ricorso",
+    "submitting": "Invio in corso…",
+    "submitError": "Si è verificato un problema durante l'invio del ricorso. Riprova.",
+    "success": {
+      "heading": "Ricorso inviato",
+      "message": "Grazie per aver inviato il tuo ricorso. Lo staff lo esaminerà.",
+      "followUp": "Conserva questo riferimento per i tuoi archivi. Puoi controllare lo stato in qualsiasi momento dalla tua pagina Account."
+    }
+  },
+  "support": {
+    "heading": "Contatta l'assistenza",
+    "intro": "Hai bisogno di aiuto per qualcosa che non è una segnalazione o un ricorso al ban? Invia un messaggio direttamente allo staff.",
+    "signInPrompt": "Accedi con Discord per inviare una richiesta di assistenza. Lo staff risponderà direttamente e vedrai la conversazione nella tua pagina Account.",
+    "signInFailed": "L'accesso non è riuscito o è stato annullato. Riprova.",
+    "fields": {
+      "subject": "Oggetto",
+      "subjectPlaceholder": "Un breve riassunto di ciò per cui hai bisogno di aiuto",
+      "message": "Di cosa hai bisogno?",
+      "messagePlaceholder": "Descrivi la tua domanda o il tuo problema — un membro dello staff risponderà qui."
+    },
+    "submit": "Invia richiesta di assistenza",
+    "submitting": "Invio in corso…",
+    "submitError": "Si è verificato un problema durante l'invio della richiesta. Riprova.",
+    "success": {
+      "heading": "Richiesta di assistenza inviata",
+      "message": "Grazie per averci contattato. Un membro dello staff risponderà alla tua richiesta.",
+      "followUp": "Conserva questo riferimento per i tuoi archivi. Vedrai le risposte dello staff — e potrai rispondere — dalla tua pagina Account."
+    }
+  },
+  "account": {
+    "title": "Il mio account",
+    "signedInAs": "Accesso effettuato come {username}",
+    "signOut": "Esci",
+    "signInPrompt": "Accedi con Discord per vedere lo stato delle tue segnalazioni e dei tuoi ricorsi al ban.",
+    "signInFailed": "L'accesso non è riuscito o è stato annullato. Riprova.",
+    "myApplications": "Le mie candidature",
+    "noApplications": "Non hai inviato alcuna candidatura.",
+    "myReports": "Le mie segnalazioni",
+    "noReports": "Non hai inviato alcuna segnalazione.",
+    "myAppeals": "I miei ricorsi al ban",
+    "noAppeals": "Non hai inviato alcun ricorso al ban.",
+    "mySupportRequests": "Le mie richieste di assistenza",
+    "noSupportRequests": "Non hai inviato alcuna richiesta di assistenza.",
+    "reportedUser": "Hai segnalato {username}",
+    "conversationWithStaff": "La tua conversazione con lo staff:",
+    "staffQuestion": "Lo staff ha una domanda per te — rispondi qui sotto.",
+    "typeReply": "Scrivi la tua risposta…",
+    "sendReply": "Invia risposta",
+    "moderatorApplication": "Candidatura da moderatore",
+    "updated": "Aggiornato",
+    "noMessagesYet": "Ancora nessun messaggio.",
+    "sending": "Invio in corso…",
+    "sendMessageFailed": "Impossibile inviare il messaggio."
+  },
+  "terms": {
+    "title": "Termini di servizio",
+    "intro": "Questi termini regolano l'uso di questo sito — candidature da moderatore, segnalazioni di membri, ricorsi al ban e pagine correlate — per {serverName}. Utilizzando questo sito, li accetti.",
+    "sections": [
+      {
+        "title": "Cos'è questo sito",
+        "body": "Questo è uno strumento gestito dalla community per {serverName}, un server Discord. Non è affiliato, sostenuto o gestito da Discord Inc. o Roblox Corporation. «Discord» e «Roblox» sono marchi dei rispettivi proprietari."
+      },
+      {
+        "title": "Accesso",
+        "body": "Alcune pagine richiedono l'accesso con il tuo account Discord (tramite la schermata di login di Discord stessa — non vediamo né memorizziamo mai la tua password Discord). Le pagine dello staff richiedono un account separato creato direttamente da un amministratore. Sei responsabile della sicurezza dell'accesso al tuo account Discord."
+      },
+      {
+        "title": "Cosa accetti quando invii qualcosa",
+        "list": [
+          "Le informazioni che invii sono accurate e veritiere al meglio delle tue conoscenze.",
+          "Non invierai segnalazioni false, ricorsi al ban falsi, o informazioni consapevolmente fuorvianti.",
+          "Non userai il sistema di segnalazione o ricorso per molestare, spammare o prendere di mira un altro membro in mala fede.",
+          "Non tenterai di interrompere, sovraccaricare o ottenere accesso non autorizzato al sito o ai suoi sistemi."
+        ],
+        "body": "Gli invii che violano questi termini possono essere respinti senza esame, e abusi ripetuti possono comportare la revoca del tuo accesso a questi sistemi."
+      },
+      {
+        "title": "Nessun esito garantito",
+        "body": "L'invio di una candidatura da moderatore, una segnalazione o un ricorso al ban non garantisce alcun esito particolare. Le decisioni — accettazione, rifiuto, risoluzione o diniego — sono prese a esclusiva discrezione dello staff di {serverName}."
+      },
+      {
+        "title": "Contenuti di terze parti",
+        "body": "La homepage mostra video da canali YouTube di cui non controlliamo il funzionamento. I contenuti collegati o incorporati appartengono ai rispettivi creatori e sono soggetti ai termini di YouTube, non a questi."
+      },
+      {
+        "title": "Nessuna garanzia",
+        "body": "Questo sito è fornito «così com'è», gestito su base volontaria da membri della community. Non garantiamo che sarà sempre disponibile, privo di errori o ininterrotto."
+      },
+      {
+        "title": "Modifiche a questi termini",
+        "body": "Questi termini possono essere aggiornati di tanto in tanto man mano che il sito cambia. Continuare a usare il sito dopo un aggiornamento significa accettare i termini rivisti."
+      }
+    ],
+    "contact": {
+      "title": "Contatti",
+      "body": "Le domande su questi termini possono essere inviate all'amministrazione del server all'indirizzo"
+    }
+  },
+  "privacy": {
+    "title": "Informativa sulla privacy",
+    "intro": "Questa informativa spiega quali informazioni {serverName} raccoglie su questo sito — candidature da moderatore, segnalazioni di membri, ricorsi al ban e accesso con Discord — e come vengono utilizzate.",
+    "whatIsCollected": {
+      "title": "Quali informazioni vengono raccolte",
+      "applications": "il tuo nome utente Discord, il tuo ID Discord, età, paese, fuso orario, dettagli sull'attività, esperienza di moderazione e le tue risposte scritte alle domande della candidatura. Le candidature non richiedono l'accesso.",
+      "applicationsLabel": "Candidature da moderatore:",
+      "signingIn": "per inviare una segnalazione, un ricorso al ban o controllare lo stato nella pagina Account, accedi con il tuo account Discord. Discord condivide con noi il tuo nome utente Discord, ID utente e avatar — mai la tua password Discord, che non vediamo mai.",
+      "signingInLabel": "Accesso con Discord:",
+      "reports": "il tuo nome utente Discord (come segnalante), il nome utente/ID Discord del membro segnalato, la categoria e la descrizione dell'accaduto, e qualsiasi link di prova fornito.",
+      "reportsLabel": "Segnalazioni:",
+      "appeals": "il tuo nome utente Discord e ID utente, perché pensi di essere stato bannato, il motivo del ricorso, e qualsiasi informazione aggiuntiva fornita.",
+      "appealsLabel": "Ricorsi al ban:",
+      "ipHash": "In tutti questi casi, registriamo anche un hash crittografico unidirezionale dell'indirizzo IP usato per l'invio (non l'IP in chiaro) esclusivamente per prevenire spam e abusi."
+    },
+    "why": {
+      "title": "Perché viene raccolta",
+      "body": "Queste informazioni sono utilizzate solo per valutare le candidature da moderatore, indagare sulle segnalazioni, esaminare i ricorsi al ban e — per i membri con accesso effettuato — permetterti di vedere lo stato dei tuoi invii. Non raccogliamo più di quanto necessario per questi scopi, e non le usiamo per pubblicità né le condividiamo con terze parti."
+    },
+    "howStored": {
+      "title": "Come vengono conservate",
+      "body": "Candidature, segnalazioni e ricorsi al ban sono conservati in un database sicuro e ad accesso controllato. Non sono mai accessibili pubblicamente, e chi li invia non può vedere gli invii di altri. La tua sessione di accesso Discord è gestita dal nostro fornitore di autenticazione (Supabase) ed è separata dai sistemi propri di Discord."
+    },
+    "whoCanAccess": {
+      "title": "Chi può accedere a questi dati",
+      "body": "Solo i membri autorizzati dello staff di {serverName}, con accesso effettuato tramite il pannello dello staff, possono visualizzare candidature, segnalazioni e ricorsi inviati. L'accesso è limitato a quanto necessario per esaminare gli invii. Se hai effettuato l'accesso con Discord, puoi vedere lo stato delle tue segnalazioni e ricorsi nella pagina Account — mai quelli di altri."
+    },
+    "yourRights": {
+      "title": "I tuoi dati, i tuoi diritti",
+      "contactMethod": "Se hai domande sui tuoi dati o desideri richiederne la cancellazione, contatta l'amministrazione del server.",
+      "body": "per chiedere quali dati conserviamo su di te o per richiederne la cancellazione. Puoi anche revocare in qualsiasi momento l'accesso di questo sito al tuo account Discord dalle impostazioni delle app autorizzate di Discord.",
+      "reachAt": "Puoi contattare l'amministrazione del server all'indirizzo"
+    }
+  }
+}

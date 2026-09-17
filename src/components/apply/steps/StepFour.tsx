@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { TextArea } from "@/components/apply/fields";
 import { siteConfig } from "@/lib/config";
 import type { ApplicationFormValues, FormErrors } from "@/components/apply/formTypes";
@@ -19,10 +20,12 @@ const SCENARIO_FIELDS = [
 ] as const;
 
 export function StepFour({ values, errors, setField }: StepProps) {
+  const t = useTranslations("apply.scenarios");
+
   return (
     <div className="grid grid-cols-1 gap-6">
       {SCENARIO_FIELDS.map(({ configId, field }, index) => {
-        const question = siteConfig.scenarioQuestions.find((q) => q.id === configId)?.question ?? "";
+        const question = siteConfig.scenarioQuestionIds.includes(configId) ? t(configId) : "";
         return (
           <TextArea
             key={field}
