@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getStaffSession } from "@/lib/staffAuth";
+import { hasSection } from "@/lib/permissions";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { appealStatusValues } from "@/lib/validation/appeal";
 import { toCsv } from "@/lib/csv";
@@ -9,6 +10,7 @@ export const dynamic = "force-dynamic";
 export async function GET(request: Request) {
   const session = await getStaffSession();
   if (!session) return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+  if (!hasSection(session.staff, "appeals")) return NextResponse.json({ error: "You don't have access to this section." }, { status: 403 });
 
   const url = new URL(request.url);
   const status = url.searchParams.get("status");

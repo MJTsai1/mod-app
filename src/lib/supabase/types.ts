@@ -91,6 +91,7 @@ export type StaffMemberRow = {
   email: string;
   display_name: string | null;
   role: "staff" | "admin";
+  sections: string[];
   created_at: string;
 };
 

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getStaffSession } from "@/lib/staffAuth";
+import { hasSection } from "@/lib/permissions";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
 export const dynamic = "force-dynamic";
@@ -30,33 +31,48 @@ export async function GET(request: Request) {
   const escaped = q.replace(/[%_]/g, (match) => `\\${match}`);
   const supabase = createSupabaseAdminClient();
 
+  const canSearch = {
+    applications: hasSection(session.staff, "applications"),
+    reports: hasSection(session.staff, "reports"),
+    appeals: hasSection(session.staff, "appeals"),
+    support: hasSection(session.staff, "support"),
+  };
+
   const [applications, reports, appeals, support] = await Promise.all([
-    supabase
-      .from("applications")
-      .select("id, reference_code, discord_username, status")
-      .or(`discord_username.ilike.%${escaped}%,discord_user_id.ilike.%${escaped}%,reference_code.ilike.%${escaped}%`)
-      .order("created_at", { ascending: false })
-      .limit(RESULT_LIMIT_PER_TYPE),
-    supabase
-      .from("reports")
-      .select("id, reference_code, reported_discord_username, reporter_discord_username, status")
-      .or(
-        `reported_discord_username.ilike.%${escaped}%,reporter_discord_username.ilike.%${escaped}%,reference_code.ilike.%${escaped}%`
-      )
-      .order("created_at", { ascending: false })
-      .limit(RESULT_LIMIT_PER_TYPE),
-    supabase
-      .from("ban_appeals")
-      .select("id, reference_code, discord_username, status")
-      .or(`discord_username.ilike.%${escaped}%,discord_user_id.ilike.%${escaped}%,reference_code.ilike.%${escaped}%`)
-      .order("created_at", { ascending: false })
-      .limit(RESULT_LIMIT_PER_TYPE),
-    supabase
-      .from("support_requests")
-      .select("id, reference_code, discord_username, subject, status")
-      .or(`discord_username.ilike.%${escaped}%,subject.ilike.%${escaped}%,reference_code.ilike.%${escaped}%`)
-      .order("created_at", { ascending: false })
-      .limit(RESULT_LIMIT_PER_TYPE),
+    canSearch.applications
+      ? supabase
+          .from("applications")
+          .select("id, reference_code, discord_username, status")
+          .or(`discord_username.ilike.%${escaped}%,discord_user_id.ilike.%${escaped}%,reference_code.ilike.%${escaped}%`)
+          .order("created_at", { ascending: false })
+          .limit(RESULT_LIMIT_PER_TYPE)
+      : { data: null },
+    canSearch.reports
+      ? supabase
+          .from("reports")
+          .select("id, reference_code, reported_discord_username, reporter_discord_username, status")
+          .or(
+            `reported_discord_username.ilike.%${escaped}%,reporter_discord_username.ilike.%${escaped}%,reference_code.ilike.%${escaped}%`
+          )
+          .order("created_at", { ascending: false })
+          .limit(RESULT_LIMIT_PER_TYPE)
+      : { data: null },
+    canSearch.appeals
+      ? supabase
+          .from("ban_appeals")
+          .select("id, reference_code, discord_username, status")
+          .or(`discord_username.ilike.%${escaped}%,discord_user_id.ilike.%${escaped}%,reference_code.ilike.%${escaped}%`)
+          .order("created_at", { ascending: false })
+          .limit(RESULT_LIMIT_PER_TYPE)
+      : { data: null },
+    canSearch.support
+      ? supabase
+          .from("support_requests")
+          .select("id, reference_code, discord_username, subject, status")
+          .or(`discord_username.ilike.%${escaped}%,subject.ilike.%${escaped}%,reference_code.ilike.%${escaped}%`)
+          .order("created_at", { ascending: false })
+          .limit(RESULT_LIMIT_PER_TYPE)
+      : { data: null },
   ]);
 
   const results: SearchResult[] = [

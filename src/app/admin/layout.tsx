@@ -5,6 +5,7 @@ import { siteConfig } from "@/lib/config";
 import { ToastProvider } from "@/components/site/ToastProvider";
 import { GlobalSearch } from "@/components/admin/GlobalSearch";
 import { ThemeToggle } from "@/components/site/ThemeToggle";
+import { hasSection } from "@/lib/permissions";
 
 function NavBadge({ count }: { count: number }) {
   if (count === 0) return null;
@@ -23,14 +24,14 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const counts = session ? await getPendingCounts() : null;
 
   const navLinks = [
-    { href: "/admin/dashboard", label: "Applications", count: counts?.applications ?? 0 },
-    { href: "/admin/reports", label: "Reports", count: counts?.reports ?? 0 },
-    { href: "/admin/appeals", label: "Ban Appeals", count: counts?.appeals ?? 0 },
-    { href: "/admin/support", label: "Support", count: counts?.support ?? 0 },
-    { href: "/admin/my-claims", label: "My Claims", count: 0 },
-    { href: "/admin/activity", label: "Activity", count: 0 },
-    { href: "/admin/stats", label: "Stats", count: 0 },
-  ];
+    { href: "/admin/dashboard", label: "Applications", count: counts?.applications ?? 0, section: "applications" as const },
+    { href: "/admin/reports", label: "Reports", count: counts?.reports ?? 0, section: "reports" as const },
+    { href: "/admin/appeals", label: "Ban Appeals", count: counts?.appeals ?? 0, section: "appeals" as const },
+    { href: "/admin/support", label: "Support", count: counts?.support ?? 0, section: "support" as const },
+    { href: "/admin/my-claims", label: "My Claims", count: 0, section: null },
+    { href: "/admin/activity", label: "Activity", count: 0, section: null },
+    { href: "/admin/stats", label: "Stats", count: 0, section: null },
+  ].filter((link) => link.section === null || (session && hasSection(session.staff, link.section)));
 
   return (
     <div className="min-h-dvh">

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getStaffSession } from "@/lib/staffAuth";
+import { hasSection } from "@/lib/permissions";
 import { supportStatusValues } from "@/lib/validation/support";
 import { bulkStatusSchema } from "@/lib/validation/bulk";
 import { bulkUpdateStatus } from "@/lib/bulkStatus";
@@ -9,6 +10,7 @@ export const dynamic = "force-dynamic";
 export async function POST(request: Request) {
   const session = await getStaffSession();
   if (!session) return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+  if (!hasSection(session.staff, "support")) return NextResponse.json({ error: "You don't have access to this section." }, { status: 403 });
 
   let rawBody: unknown;
   try {

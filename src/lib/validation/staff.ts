@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { SECTIONS } from "@/lib/permissions";
 
 export const staffRoleValues = ["staff", "admin"] as const;
 export type StaffRole = (typeof staffRoleValues)[number];
@@ -16,4 +17,5 @@ export const createStaffSchema = z.object({
     .optional()
     .or(z.literal("")),
   role: z.enum(staffRoleValues),
+  sections: z.array(z.enum(SECTIONS)).optional(),
 });

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { requireStaffSession } from "@/lib/staffAuth";
+import { hasSection } from "@/lib/permissions";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getStaffDisplayName } from "@/lib/staffLookup";
 import { getActivityHistory } from "@/lib/activityLog";
@@ -42,6 +43,7 @@ function AnswerBlock({ question, answer }: { question: string; answer: string | 
 
 export default async function AppealDetailPage(props: PageProps<"/admin/appeals/[id]">) {
   const session = await requireStaffSession();
+  if (!hasSection(session.staff, "appeals")) notFound();
   const { id } = await props.params;
 
   if (!UUID_RE.test(id)) notFound();

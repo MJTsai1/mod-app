@@ -3,6 +3,7 @@ import { getStaffSession } from "@/lib/staffAuth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { upsertStaffAuthUser } from "@/lib/supabase/staffAdmin";
 import { createStaffSchema } from "@/lib/validation/staff";
+import { SECTIONS } from "@/lib/permissions";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +17,7 @@ export async function GET() {
   const supabase = createSupabaseAdminClient();
   const { data, error } = await supabase
     .from("staff_members")
-    .select("id, email, display_name, role, created_at")
+    .select("id, email, display_name, role, sections, created_at")
     .order("created_at", { ascending: true });
 
   if (error) {
@@ -50,17 +51,17 @@ export async function POST(request: Request) {
       );
     }
 
-    const { email, password, displayName, role } = parsed.data;
+    const { email, password, displayName, role, sections } = parsed.data;
     const authUserId = await upsertStaffAuthUser(email, password);
 
     const supabase = createSupabaseAdminClient();
     const { data, error } = await supabase
       .from("staff_members")
       .upsert(
-        { id: authUserId, email, display_name: displayName || null, role },
+        { id: authUserId, email, display_name: displayName || null, role, sections: sections ?? [...SECTIONS] },
         { onConflict: "id" }
       )
-      .select("id, email, display_name, role, created_at")
+      .select("id, email, display_name, role, sections, created_at")
       .single();
 
     if (error) {

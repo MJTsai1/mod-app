@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { requireStaffSession } from "@/lib/staffAuth";
+import { hasSection } from "@/lib/permissions";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { getStaffDisplayName } from "@/lib/staffLookup";
 import { getActivityHistory } from "@/lib/activityLog";
@@ -46,6 +47,7 @@ export default async function ApplicationDetailPage(
   props: PageProps<"/admin/dashboard/[id]">
 ) {
   const session = await requireStaffSession();
+  if (!hasSection(session.staff, "applications")) notFound();
   const { id } = await props.params;
 
   if (!UUID_RE.test(id)) notFound();

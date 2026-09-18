@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { requireStaffSession } from "@/lib/staffAuth";
+import { hasSection } from "@/lib/permissions";
 import { siteConfig } from "@/lib/config";
 import { AppealsClient } from "./AppealsClient";
 
@@ -10,6 +12,9 @@ export const metadata: Metadata = {
 
 export default async function AppealsPage() {
   const session = await requireStaffSession();
+  if (!hasSection(session.staff, "appeals")) {
+    redirect("/admin/my-claims");
+  }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">

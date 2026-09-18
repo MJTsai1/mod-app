@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { staffRoleValues, type StaffRole } from "@/lib/validation/staff";
+import { SECTIONS, SECTION_LABELS, type Section } from "@/lib/permissions";
 import { TableSkeletonRows } from "@/components/admin/TableSkeletonRows";
 
 interface StaffRow {
@@ -9,6 +10,7 @@ interface StaffRow {
   email: string;
   display_name: string | null;
   role: StaffRole;
+  sections: string[];
   created_at: string;
 }
 
@@ -27,6 +29,7 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
   const [password, setPassword] = useState(generatePassword());
   const [displayName, setDisplayName] = useState("");
   const [role, setRole] = useState<StaffRole>("staff");
+  const [sections, setSections] = useState<Section[]>([...SECTIONS]);
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [lastCreated, setLastCreated] = useState<{ email: string; password: string } | null>(null);
@@ -63,7 +66,7 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
       const res = await fetch("/api/admin/staff", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, displayName, role }),
+        body: JSON.stringify({ email, password, displayName, role, sections }),
       });
       const body = await res.json();
 
@@ -76,6 +79,7 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
       setEmail("");
       setDisplayName("");
       setRole("staff");
+      setSections([...SECTIONS]);
       setPassword(generatePassword());
       loadStaff();
     } catch {
@@ -198,6 +202,29 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
           </div>
         </div>
 
+        {role === "staff" && (
+          <div className="mt-4">
+            <span className="field-label">Sections</span>
+            <div className="flex flex-wrap gap-4">
+              {SECTIONS.map((section) => (
+                <label key={section} className="flex items-center gap-1.5 text-sm text-[var(--color-text)]">
+                  <input
+                    type="checkbox"
+                    checked={sections.includes(section)}
+                    onChange={(e) =>
+                      setSections((prev) =>
+                        e.target.checked ? [...prev, section] : prev.filter((s) => s !== section)
+                      )
+                    }
+                  />
+                  {SECTION_LABELS[section]}
+                </label>
+              ))}
+            </div>
+            <p className="field-hint">Admins always have access to every section.</p>
+          </div>
+        )}
+
         <button type="submit" disabled={submitting} className="btn btn-primary mt-5">
           {submitting ? "Creating…" : "Create account"}
         </button>
@@ -211,15 +238,16 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
                 <th className="px-4 py-3">Email</th>
                 <th className="px-4 py-3">Name</th>
                 <th className="px-4 py-3">Role</th>
+                <th className="px-4 py-3">Sections</th>
                 <th className="px-4 py-3">Added</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
             <tbody>
-              {loading && <TableSkeletonRows columns={5} rows={3} />}
+              {loading && <TableSkeletonRows columns={6} rows={3} />}
               {listError && !loading && (
                 <tr>
-                  <td colSpan={5} className="px-4 py-6 text-center text-[var(--color-danger)]">
+                  <td colSpan={6} className="px-4 py-6 text-center text-[var(--color-danger)]">
                     {listError}
                   </td>
                 </tr>
@@ -233,6 +261,11 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
                       {member.display_name || "—"}
                     </td>
                     <td className="px-4 py-3 text-[var(--color-text-muted)]">{member.role}</td>
+                    <td className="px-4 py-3 text-[var(--color-text-muted)]">
+                      {member.role === "admin"
+                        ? "All"
+                        : member.sections.map((s) => SECTION_LABELS[s as Section] ?? s).join(", ") || "None"}
+                    </td>
                     <td className="px-4 py-3 text-[var(--color-text-muted)]">
                       {new Date(member.created_at).toLocaleDateString()}
                     </td>

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getStaffSession } from "@/lib/staffAuth";
+import { hasSection } from "@/lib/permissions";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { updateSupportRequestSchema } from "@/lib/validation/support";
 import { resolveClaimAction } from "@/lib/claim";
@@ -17,6 +18,7 @@ interface RouteParams {
 export async function GET(_request: Request, { params }: RouteParams) {
   const session = await getStaffSession();
   if (!session) return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+  if (!hasSection(session.staff, "support")) return NextResponse.json({ error: "You don't have access to this section." }, { status: 403 });
 
   const { id } = await params;
   if (!UUID_RE.test(id)) return NextResponse.json({ error: "Not found." }, { status: 404 });
@@ -40,6 +42,7 @@ export async function GET(_request: Request, { params }: RouteParams) {
 export async function PATCH(request: Request, { params }: RouteParams) {
   const session = await getStaffSession();
   if (!session) return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+  if (!hasSection(session.staff, "support")) return NextResponse.json({ error: "You don't have access to this section." }, { status: 403 });
 
   const { id } = await params;
   if (!UUID_RE.test(id)) return NextResponse.json({ error: "Not found." }, { status: 404 });

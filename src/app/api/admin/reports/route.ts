@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getStaffSession } from "@/lib/staffAuth";
+import { hasSection } from "@/lib/permissions";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { reportStatusValues } from "@/lib/validation/report";
 import { attachClaimerNames } from "@/lib/attachClaimerNames";
@@ -15,6 +16,9 @@ export async function GET(request: Request) {
   const session = await getStaffSession();
   if (!session) {
     return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+  }
+  if (!hasSection(session.staff, "reports")) {
+    return NextResponse.json({ error: "You don't have access to this section." }, { status: 403 });
   }
 
   const url = new URL(request.url);
