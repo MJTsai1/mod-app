@@ -1,0 +1,363 @@
+{
+  "common": {
+    "siteDescription": "커뮤니티를 위한 허브입니다 — 빠른 링크, 모더레이터 지원, 회원 지원, 그리고 저희 유튜브 채널의 최신 영상을 만나보세요.",
+    "optional": "(선택 사항)",
+    "selectOption": "옵션을 선택하세요",
+    "yes": "예",
+    "no": "아니오",
+    "loading": "불러오는 중…",
+    "fixHighlighted": "제출하기 전에 강조 표시된 항목을 수정해 주세요.",
+    "networkError": "서버에 연결할 수 없습니다. 연결 상태를 확인한 후 다시 시도해 주세요 — 입력하신 내용은 그대로 남아 있습니다.",
+    "returnHome": "홈으로 돌아가기",
+    "signInWithDiscord": "Discord로 로그인"
+  },
+  "languageSwitcher": {
+    "label": "언어"
+  },
+  "nav": {
+    "faq": "자주 묻는 질문",
+    "report": "회원 신고",
+    "appeal": "밴 이의 신청",
+    "staffLogin": "스태프 로그인",
+    "applyNow": "지금 지원하기",
+    "signIn": "로그인"
+  },
+  "footer": {
+    "copyright": "© {year} {serverName}. Discord Inc.와 제휴 관계가 아닙니다.",
+    "requirements": "지원 요건",
+    "faq": "자주 묻는 질문",
+    "report": "회원 신고",
+    "appeal": "밴 이의 신청",
+    "privacy": "개인정보 처리방침",
+    "terms": "이용 약관",
+    "discord": "Discord",
+    "contact": "문의하기"
+  },
+  "home": {
+    "welcome": "환영합니다",
+    "joinDiscord": "Discord 참여하기",
+    "onlineNow": "현재 {count}명 접속 중",
+    "quickLinks": [
+      { "title": "지금 지원하기", "description": "모더레이션 팀에 합류하기 위해 지원하세요." },
+      { "title": "회원 신고", "description": "규칙을 위반한 회원을 스태프에게 알려주세요." },
+      { "title": "밴 이의 신청", "description": "부당하게 밴 당했다고 생각하시나요? 이유를 알려주세요." },
+      { "title": "자주 묻는 질문", "description": "자주 묻는 질문에 대한 답변입니다." }
+    ],
+    "latestUploads": "최신 영상",
+    "recentVideosFrom": "최신 영상 제공:",
+    "ourOfficialChannel": "공식 유튜브 채널",
+    "coOwnerChannelLabel": "공동 운영자의 개인 채널",
+    "mostRecent": "최신순",
+    "mostViewed": "인기순",
+    "views": "회 조회",
+    "couldntLoadUploads": "지금은 최신 영상을 불러올 수 없습니다 — 위의 채널에서 직접 확인해 주세요.",
+    "alsoCheckOut": "함께 확인해 보세요:",
+    "aboutRoleHeading": "역할 소개",
+    "aboutRoleIntro": "모더레이터는 스태프 팀이 커뮤니티를 원활하게 운영할 수 있도록 돕는, 신뢰받는 커뮤니티 구성원입니다.",
+    "responsibilities": [
+      "서버 규칙을 공정하고 일관되게 적용",
+      "질문이나 문제가 있는 회원 지원",
+      "신고를 신속하고 신중하게 처리",
+      "회원 간 갈등 완화",
+      "환영받고 포용적인 커뮤니티 유지",
+      "다른 스태프와 긴밀히 협력"
+    ],
+    "requirementsHeading": "지원 요건",
+    "requirementsIntro": "저희는 다른 무엇보다도 다음 조건을 충족하는 회원을 찾고 있습니다.",
+    "requirements": [
+      "서버의 활동적인 회원",
+      "규칙을 이해하고 준수함",
+      "성숙하고 책임감 있음",
+      "다른 회원을 존중함",
+      "스태프와 원활히 협력함",
+      "양호한 모더레이션 이력",
+      "배우려는 자세"
+    ],
+    "minAge": "지원 최소 연령: {age}세 이상",
+    "ctaHeading": "팀에 합류할 준비가 되셨나요?",
+    "ctaBody": "지원서 작성에는 약 10~15분이 소요됩니다. 시간을 갖고 솔직하게 답변해 주세요.",
+    "applyNow": "지금 지원하기"
+  },
+  "faq": {
+    "title": "자주 묻는 질문",
+    "items": {
+      "responseTime": {
+        "question": "지원 결과를 받기까지 얼마나 걸리나요?",
+        "answer": "스태프 팀은 접수된 순서대로 지원서를 검토합니다. 응답 시간은 지원자 수에 따라 다르지만, 받으신 참조 코드를 사용해 언제든 상태를 확인할 수 있습니다."
+      },
+      "reapply": {
+        "question": "불합격 시 다시 지원할 수 있나요?",
+        "answer": "네. 커뮤니티에서 좀 더 적극적으로 활동하며 시간을 보낸 뒤, 나중에 다시 지원해 주세요."
+      },
+      "howToReport": {
+        "question": "규칙을 위반한 회원은 어떻게 신고하나요?",
+        "answer": "회원 신고 페이지를 이용해 주세요. 추가 정보가 필요할 경우 연락드릴 수 있도록 먼저 Discord로 로그인해야 합니다."
+      },
+      "banUnfair": {
+        "question": "부당하게 밴 당한 것 같아요 — 어떻게 해야 하나요?",
+        "answer": "밴 이의 신청 페이지를 통해 이의를 제기해 주세요. 상황을 명확하고 솔직하게 설명해 주시면 스태프 팀이 모든 이의 신청을 검토합니다."
+      },
+      "confidentiality": {
+        "question": "제 신고나 이의 신청 내용은 비밀로 유지되나요?",
+        "answer": "신고와 이의 신청은 승인된 스태프만 열람할 수 있습니다. 정보 처리 방식에 대한 자세한 내용은 개인정보 처리방침을 참고해 주세요."
+      },
+      "stillNeedSupport": {
+        "question": "아직 도움이 필요하신가요?",
+        "answer": "질문이나 문제를 지원 요청 양식에 작성하여 모더레이터에게 문의해 주세요. 스태프가 요청에 직접 답변드리며, 답장도 가능합니다 — 대화 내용은 계정 페이지에서 확인하실 수 있습니다.",
+        "linkLabel": "지원 요청 보내기"
+      }
+    }
+  },
+  "apply": {
+    "heading": "모더레이터 지원",
+    "taglineQuoted": "“우리 커뮤니티를 도울 자격이 있다고 생각하시나요?”",
+    "saveHint": "천천히 진행해 주세요 — 답변은 자동으로 저장되므로 단계 사이를 자유롭게 이동해도 괜찮습니다.",
+    "signInPrompt": "지원하려면 Discord로 로그인해 주세요. 이를 통해 지원서에 대한 Discord 신원이 확인되며, 별도의 계정이나 비밀번호는 필요하지 않습니다.",
+    "signInFailed": "로그인에 실패했거나 취소되었습니다. 다시 시도해 주세요.",
+    "loadingForm": "지원서를 불러오는 중…",
+    "applyingAs": "지원자",
+    "fromDiscordSignIn": "Discord 로그인 정보에서 가져온 값으로, 여기서는 수정할 수 없습니다.",
+    "steps": {
+      "labels": ["기본 정보", "활동", "경험", "시나리오", "지원 동기"],
+      "stepOf": "{total}단계 중 {current}단계: {label}"
+    },
+    "fields": {
+      "age": "나이",
+      "agePlaceholder": "예: 19",
+      "country": "국가",
+      "countryPlaceholder": "예: 싱가포르",
+      "countryHint": "위치를 기반으로 자동 감지되었습니다 — 잘못된 경우 변경해 주세요.",
+      "timezone": "시간대",
+      "timezonePlaceholder": "시간대를 선택하세요",
+      "timezoneHint": "브라우저를 기반으로 자동 감지되었습니다 — 잘못된 경우 변경해 주세요.",
+      "noOneLivesHere": "아무도 살지 않는 곳 (UTC-12)",
+      "timeInServer": "서버에 참여한 지 얼마나 되셨나요?",
+      "timeInServerPlaceholder": "예: 8개월",
+      "activityLevel": "Discord에서 얼마나 활발하게 활동하시나요?",
+      "activityLevels": [
+        "매우 활발함 (매일)",
+        "활발함 (대부분의 날)",
+        "보통 (주 몇 회)",
+        "가끔 (거의 접속하지 않음)"
+      ],
+      "onlineTimes": "평소 주로 언제 접속하시나요?",
+      "onlineTimesPlaceholder": "예: 평일 오후 6시~11시, 주말 대부분 (본인 시간대 기준)",
+      "weeklyHours": "일주일에 모더레이션에 할애할 수 있는 시간은 몇 시간인가요?",
+      "weeklyHoursPlaceholder": "예: 10",
+      "hasModeratedBefore": "이전에 다른 Discord 서버에서 모더레이터로 활동해 보신 적이 있나요?",
+      "previousExperience": "이전 모더레이션 경험을 설명해 주세요",
+      "previousExperiencePlaceholder": "어떤 서버였고, 규모는 어느 정도였으며, 평소 어떤 일을 하셨나요?",
+      "botsToolsUsed": "사용해 본 모더레이션 봇/도구가 있나요?",
+      "botsToolsUsedPlaceholder": "예: Dyno, MEE6, Carl-bot, AutoMod 등",
+      "previousStaffPositions": "이전에 다른 곳에서 스태프로 활동해 보신 적이 있나요?",
+      "previousStaffPositionsPlaceholder": "활동했던 다른 커뮤니티와 그곳에서의 역할을 알려주세요.",
+      "additionalInfo": "스태프 팀에 알리고 싶은 다른 내용이 있나요?"
+    },
+    "scenarios": {
+      "scenario_unaware_rules": "한 회원이 반복해서 규칙을 어기면서도 규칙을 몰랐다고 주장합니다. 어떻게 대처하시겠습니까?",
+      "scenario_toxic_conflict": "두 회원이 다투고 있고 상황이 점점 험악해지고 있습니다. 어떻게 대처하시겠습니까?",
+      "scenario_friend_breaks_rule": "친구가 서버 규칙을 어겼습니다. 어떻게 하시겠습니까?",
+      "scenario_staff_abuse": "다른 모더레이터가 권한을 남용하는 것을 발견했습니다. 어떻게 하시겠습니까?",
+      "scenario_biased_report": "개인적으로 싫어하는 회원에 대한 신고가 접수되었습니다. 공정하게 처리하기 위해 어떻게 하시겠습니까?"
+    },
+    "motivations": {
+      "motivation_why": "모더레이터가 되고 싶은 이유는 무엇인가요?",
+      "motivation_suitable": "본인이 이 역할에 적합하다고 생각하는 이유는 무엇인가요?",
+      "motivation_good_moderator": "좋은 모더레이터란 어떤 사람이라고 생각하시나요?",
+      "motivation_improve_server": "서버에서 개선할 수 있다고 생각하는 부분은 무엇인가요?"
+    },
+    "confirmationStatement": "제공한 정보가 정확함을 확인하며, 지원서 제출이 합격을 보장하지 않는다는 점을 이해합니다.",
+    "previous": "이전",
+    "next": "다음",
+    "submit": "지원서 제출",
+    "submitting": "제출 중…",
+    "submitError": "지원서 제출 중 문제가 발생했습니다. 다시 시도해 주세요.",
+    "success": {
+      "heading": "지원서가 제출되었습니다",
+      "message": "지원해 주셔서 감사합니다! 지원서가 정상적으로 접수되었습니다.",
+      "followUp": "이 참조 번호를 기록용으로 보관해 주세요. 스태프 팀이 지원서를 검토한 뒤 필요한 경우 Discord로 연락드립니다 — 현재로서는 별도의 조치가 필요하지 않습니다."
+    }
+  },
+  "report": {
+    "heading": "회원 신고",
+    "intro": "규칙을 위반하는 사람이 있나요? 스태프 팀에 알려주시면 저희가 확인하겠습니다.",
+    "signInPrompt": "신고를 제출하려면 Discord로 로그인해 주세요. 이를 통해 추가 정보가 필요할 경우 저희 스태프 팀이 연락드릴 수 있습니다.",
+    "signInFailed": "로그인에 실패했거나 취소되었습니다. 다시 시도해 주세요.",
+    "categories": {
+      "harassment": "괴롭힘 또는 따돌림",
+      "spam": "스팸 또는 광고",
+      "cheating_exploiting": "치팅 또는 버그 악용",
+      "inappropriate_content": "부적절한 콘텐츠",
+      "impersonation": "사칭",
+      "other": "기타"
+    },
+    "fields": {
+      "reportedDiscordUsername": "신고 대상 회원의 Discord 사용자 이름",
+      "reportedDiscordUsernamePlaceholder": "사용자 이름 또는 사용자 이름#0000",
+      "reportedDiscordUserId": "신고 대상 회원의 Discord 사용자 ID",
+      "reportedDiscordUserIdHint": "선택 사항이지만, 입력해 주시면 대상자를 더 빨리 찾는 데 도움이 됩니다. Discord에서 상대방 이름을 우클릭한 후 사용자 ID 복사를 선택하세요 (개발자 모드를 활성화해야 합니다).",
+      "category": "카테고리",
+      "selectCategory": "카테고리를 선택하세요",
+      "description": "무슨 일이 있었나요?",
+      "descriptionPlaceholder": "언제, 어디서 (어떤 채널/음성 채팅) 발생했는지 대략적으로 포함하여 상황을 설명해 주세요.",
+      "evidenceLinks": "증거 링크",
+      "evidenceLinksPlaceholder": "스크린샷, 클립 또는 메시지 링크 (선택 사항이지만 도움이 됩니다)."
+    },
+    "submit": "신고 제출",
+    "submitting": "제출 중…",
+    "submitError": "신고 제출 중 문제가 발생했습니다. 다시 시도해 주세요.",
+    "success": {
+      "heading": "신고가 제출되었습니다",
+      "message": "알려주셔서 감사합니다. 신고 내용이 스태프 팀에 전달되었습니다.",
+      "followUp": "이 참조 번호를 기록용으로 보관해 주세요. 계정 페이지에서 언제든지 상태를 확인할 수 있습니다. 검토가 진행되는 동안에는 직접 조치를 취하지 말아 주세요."
+    }
+  },
+  "appeal": {
+    "heading": "밴 이의 신청",
+    "intro": "부당하게 밴 당했다고 생각하시나요? 상황을 설명해 주시면 저희가 검토하겠습니다.",
+    "signInPrompt": "밴 이의 신청을 제출하려면 Discord로 로그인해 주세요. 이를 통해 신원이 확인되어 스태프가 사안을 검토할 수 있습니다.",
+    "signInFailed": "로그인에 실패했거나 취소되었습니다. 다시 시도해 주세요.",
+    "fields": {
+      "discordUsername": "회원님의 Discord 사용자 이름",
+      "discordUsernamePlaceholder": "사용자 이름 또는 사용자 이름#0000",
+      "discordUserId": "회원님의 Discord 사용자 ID",
+      "discordUserIdHint": "Discord에서 본인 이름을 우클릭한 후 사용자 ID 복사를 선택하세요 (개발자 모드를 활성화해야 합니다).",
+      "banReason": "왜 밴 당했다고 생각하시나요?",
+      "banReasonPlaceholder": "밴 당했을 때 어떤 설명을 들으셨나요 (있는 경우)?",
+      "appealReason": "왜 밴이 해제되어야 한다고 생각하시나요?",
+      "appealReasonPlaceholder": "무슨 일이 있었는지, 그리고 왜 다시 기회를 받아야 하는지 솔직하고 구체적으로 설명해 주세요.",
+      "additionalInfo": "저희에게 알리고 싶은 다른 내용이 있나요?"
+    },
+    "submit": "이의 신청 제출",
+    "submitting": "제출 중…",
+    "submitError": "이의 신청 제출 중 문제가 발생했습니다. 다시 시도해 주세요.",
+    "success": {
+      "heading": "이의 신청이 제출되었습니다",
+      "message": "이의 신청을 제출해 주셔서 감사합니다. 스태프 팀이 검토할 예정입니다.",
+      "followUp": "이 참조 번호를 기록용으로 보관해 주세요. 계정 페이지에서 언제든지 상태를 확인할 수 있습니다."
+    }
+  },
+  "support": {
+    "heading": "지원팀 문의",
+    "intro": "신고나 밴 이의 신청에 해당하지 않는 다른 도움이 필요하신가요? 스태프 팀에 직접 메시지를 보내보세요.",
+    "signInPrompt": "지원 요청을 제출하려면 Discord로 로그인해 주세요. 스태프가 직접 답변드리며, 계정 페이지에서 대화 내용을 확인할 수 있습니다.",
+    "signInFailed": "로그인에 실패했거나 취소되었습니다. 다시 시도해 주세요.",
+    "fields": {
+      "subject": "제목",
+      "subjectPlaceholder": "도움이 필요한 내용을 간단히 요약해 주세요",
+      "message": "어떤 도움이 필요하신가요?",
+      "messagePlaceholder": "질문이나 문제를 설명해 주세요 — 스태프가 이곳에 답변드립니다."
+    },
+    "submit": "지원 요청 보내기",
+    "submitting": "제출 중…",
+    "submitError": "요청 제출 중 문제가 발생했습니다. 다시 시도해 주세요.",
+    "success": {
+      "heading": "지원 요청이 제출되었습니다",
+      "message": "문의해 주셔서 감사합니다. 스태프가 요청에 답변드리겠습니다.",
+      "followUp": "이 참조 번호를 기록용으로 보관해 주세요. 계정 페이지에서 스태프의 답변을 확인하고 답장도 하실 수 있습니다."
+    }
+  },
+  "account": {
+    "title": "내 계정",
+    "signedInAs": "{username}(으)로 로그인됨",
+    "signOut": "로그아웃",
+    "signInPrompt": "신고 및 밴 이의 신청 상태를 확인하려면 Discord로 로그인해 주세요.",
+    "signInFailed": "로그인에 실패했거나 취소되었습니다. 다시 시도해 주세요.",
+    "myApplications": "내 지원서",
+    "noApplications": "제출한 지원서가 없습니다.",
+    "myReports": "내 신고",
+    "noReports": "제출한 신고가 없습니다.",
+    "myAppeals": "내 밴 이의 신청",
+    "noAppeals": "제출한 밴 이의 신청이 없습니다.",
+    "mySupportRequests": "내 지원 요청",
+    "noSupportRequests": "제출한 지원 요청이 없습니다.",
+    "reportedUser": "{username}님을 신고함",
+    "conversationWithStaff": "스태프와의 대화:",
+    "staffQuestion": "스태프가 질문을 남겼습니다 — 아래에 답변해 주세요.",
+    "typeReply": "답장을 입력하세요…",
+    "sendReply": "답장 보내기",
+    "moderatorApplication": "모더레이터 지원",
+    "updated": "업데이트됨",
+    "noMessagesYet": "아직 메시지가 없습니다.",
+    "sending": "전송 중…",
+    "sendMessageFailed": "메시지 전송에 실패했습니다."
+  },
+  "terms": {
+    "title": "이용 약관",
+    "intro": "본 약관은 {serverName}의 모더레이터 지원, 회원 신고, 밴 이의 신청 및 관련 페이지를 포함하여 본 웹사이트 이용에 적용됩니다. 본 사이트를 이용함으로써 귀하는 이 약관에 동의하게 됩니다.",
+    "sections": [
+      {
+        "title": "본 사이트의 성격",
+        "body": "본 사이트는 Discord 서버인 {serverName}을 위해 커뮤니티가 자체적으로 운영하는 도구입니다. Discord Inc. 또는 Roblox Corporation과 제휴, 승인, 운영 관계가 전혀 없습니다. “Discord”와 “Roblox”는 각 소유권자의 상표입니다."
+      },
+      {
+        "title": "로그인",
+        "body": "일부 페이지는 Discord 계정으로 로그인해야 합니다 (Discord 자체 로그인 화면을 통해 진행되며, 저희는 회원님의 Discord 비밀번호를 절대 보거나 저장하지 않습니다). 스태프 페이지는 관리자가 직접 생성한 별도의 계정이 필요합니다. 본인 Discord 계정에 대한 접근 보안을 유지할 책임은 본인에게 있습니다."
+      },
+      {
+        "title": "정보를 제출할 때 동의하는 사항",
+        "list": [
+          "제출하는 정보는 본인이 아는 한 정확하고 진실합니다.",
+          "허위 신고, 허위 밴 이의 신청, 또는 고의로 오해의 소지가 있는 정보를 제출하지 않습니다.",
+          "신고 또는 이의 신청 시스템을 악용하여 다른 회원을 괴롭히거나, 스팸을 보내거나, 악의적으로 표적으로 삼지 않습니다.",
+          "본 사이트 또는 그 시스템을 방해하거나, 과부하를 일으키거나, 무단으로 접근하려 시도하지 않습니다."
+        ],
+        "body": "본 약관을 위반하는 제출물은 검토 없이 반려될 수 있으며, 반복적인 악용 행위는 이러한 시스템에 대한 접근 권한이 취소될 수 있습니다."
+      },
+      {
+        "title": "결과 보장 없음",
+        "body": "모더레이터 지원서, 신고, 밴 이의 신청을 제출한다고 해서 특정 결과가 보장되지는 않습니다. 합격, 불합격, 처리 완료, 기각 등의 결정은 전적으로 {serverName} 스태프의 재량에 따라 이루어집니다."
+      },
+      {
+        "title": "제3자 콘텐츠",
+        "body": "홈페이지에는 저희가 운영에 관여하지 않는 유튜브 채널의 영상이 표시됩니다. 링크되거나 삽입된 콘텐츠는 각 제작자의 소유이며, 본 약관이 아닌 유튜브 자체 약관의 적용을 받습니다."
+      },
+      {
+        "title": "보증 없음",
+        "body": "본 사이트는 “있는 그대로” 제공되며, 커뮤니티 자원봉사자들이 최선을 다해 운영합니다. 저희는 사이트가 항상 이용 가능하거나, 오류가 없거나, 중단 없이 운영됨을 보장하지 않습니다."
+      },
+      {
+        "title": "약관 변경",
+        "body": "본 약관은 사이트 변경에 따라 수시로 업데이트될 수 있습니다. 업데이트 이후에도 사이트를 계속 이용하는 경우, 변경된 약관에 동의한 것으로 간주됩니다."
+      }
+    ],
+    "contact": {
+      "title": "문의하기",
+      "body": "본 약관에 대한 문의는 다음 서버 관리팀 주소로 보내주세요:"
+    }
+  },
+  "privacy": {
+    "title": "개인정보 처리방침",
+    "intro": "본 방침은 {serverName}이 모더레이터 지원, 회원 신고, 밴 이의 신청 및 Discord 로그인과 관련하여 본 사이트에서 수집하는 정보와 그 사용 방식을 설명합니다.",
+    "whatIsCollected": {
+      "title": "수집하는 정보",
+      "applications": "Discord 사용자 이름, Discord 사용자 ID, 나이, 국가, 시간대, 활동 세부사항, 모더레이션 경험, 그리고 지원 질문에 대한 서면 답변입니다. 지원에는 로그인이 필요하지 않습니다.",
+      "applicationsLabel": "모더레이터 지원:",
+      "signingIn": "신고 제출, 밴 이의 신청, 또는 계정 페이지에서 상태 확인을 위해서는 Discord 계정으로 로그인해야 합니다. Discord는 회원님의 Discord 사용자 이름, 사용자 ID, 아바타를 저희와 공유하지만, Discord 비밀번호는 절대 공유되지 않으며 저희는 이를 볼 수 없습니다.",
+      "signingInLabel": "Discord 로그인:",
+      "reports": "회원님의 Discord 사용자 이름 (신고자로서), 신고 대상 회원의 Discord 사용자 이름/ID, 사건의 카테고리 및 설명, 그리고 제공하신 증거 링크입니다.",
+      "reportsLabel": "신고:",
+      "appeals": "회원님의 Discord 사용자 이름 및 사용자 ID, 밴 당했다고 생각하는 이유, 이의 신청 사유, 그리고 제공하신 추가 정보입니다.",
+      "appealsLabel": "밴 이의 신청:",
+      "ipHash": "위 모든 경우에서, 스팸 및 악용 방지를 목적으로만 제출에 사용된 IP 주소의 단방향 암호화 해시값(원본 IP 아님)도 함께 기록합니다."
+    },
+    "why": {
+      "title": "수집 목적",
+      "body": "이 정보는 모더레이터 지원서 평가, 신고 조사, 밴 이의 신청 검토, 그리고 로그인한 회원이 본인의 제출 내역 상태를 확인할 수 있도록 하는 목적으로만 사용됩니다. 저희는 이러한 목적에 필요한 것 이상의 정보를 수집하지 않으며, 광고 목적으로 사용하거나 제3자와 공유하지 않습니다."
+    },
+    "howStored": {
+      "title": "정보 저장 방식",
+      "body": "지원서, 신고, 밴 이의 신청은 보안이 강화되고 접근이 제한된 데이터베이스에 저장됩니다. 이 정보는 공개적으로 접근할 수 없으며, 제출자는 다른 사람의 제출 내역을 볼 수 없습니다. Discord 로그인 세션은 저희 인증 제공업체(Supabase)가 관리하며, Discord 자체 시스템과는 별개로 운영됩니다."
+    },
+    "whoCanAccess": {
+      "title": "누가 이 데이터에 접근할 수 있나요",
+      "body": "스태프 대시보드를 통해 로그인한 {serverName}의 승인된 스태프만 제출된 지원서, 신고, 이의 신청을 열람할 수 있습니다. 접근 권한은 제출 내용을 검토하는 데 필요한 범위로 제한됩니다. Discord로 로그인한 경우, 계정 페이지에서 본인의 신고 및 이의 신청 상태를 확인할 수 있지만 다른 사람의 정보는 볼 수 없습니다."
+    },
+    "yourRights": {
+      "title": "회원님의 데이터와 권리",
+      "contactMethod": "본인의 데이터에 대해 궁금한 점이 있거나 삭제를 요청하고 싶으시면 서버 관리팀에 문의해 주세요.",
+      "body": "저희가 회원님에 대해 보유하고 있는 데이터가 무엇인지 문의하거나 삭제를 요청하실 수 있습니다. 또한 Discord의 “승인된 앱” 설정에서 언제든지 본 사이트의 Discord 계정 접근 권한을 취소할 수 있습니다.",
+      "reachAt": "서버 관리팀 문의처:"
+    }
+  }
+}
