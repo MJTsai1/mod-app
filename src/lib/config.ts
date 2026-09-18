@@ -109,6 +109,12 @@ export const siteConfig = {
     windowMinutes: 60 * 24,
     maxSubmissionsPerWindow: 2,
   },
+  // How long an unclaimed, still-open item can sit before the nudge cron
+  // (/api/cron/nudge, see vercel.json) pings Discord about it. Each item is
+  // only ever nudged once (tracked via activity_log), regardless of how
+  // often the cron runs.
+  nudgeThresholdHours: 24,
+
   supportRateLimit: {
     windowMinutes: 60 * 24,
     maxSubmissionsPerWindow: 5,

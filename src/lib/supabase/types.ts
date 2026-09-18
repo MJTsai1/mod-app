@@ -231,7 +231,7 @@ export type AppealSubmissionAttemptRow = {
 };
 
 export type ActivityEntityType = "application" | "report" | "appeal" | "support";
-export type ActivityActorType = "staff" | "applicant";
+export type ActivityActorType = "staff" | "applicant" | "system";
 
 export type ActivityLogRow = {
   id: number;

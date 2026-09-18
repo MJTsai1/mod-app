@@ -3,6 +3,7 @@ import { getStaffSession } from "@/lib/staffAuth";
 import { getPendingCounts } from "@/lib/pendingCounts";
 import { siteConfig } from "@/lib/config";
 import { ToastProvider } from "@/components/site/ToastProvider";
+import { GlobalSearch } from "@/components/admin/GlobalSearch";
 
 function NavBadge({ count }: { count: number }) {
   if (count === 0) return null;
@@ -35,9 +36,12 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       {session && (
         <header className="border-b border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
           <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-            <Link href="/admin/dashboard" className="font-bold text-[var(--color-text)]">
+            <Link href="/admin/dashboard" className="shrink-0 font-bold text-[var(--color-text)]">
               {siteConfig.serverName} <span className="text-[var(--color-text-muted)]">Staff Dashboard</span>
             </Link>
+            <div className="hidden md:block">
+              <GlobalSearch />
+            </div>
             <div className="flex items-center gap-4 text-sm text-[var(--color-text-muted)]">
               <span className="hidden sm:inline">{session.email}</span>
               <span className="badge" style={{ background: "var(--color-info-bg)", color: "var(--color-info)" }}>
@@ -49,6 +53,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                 </button>
               </form>
             </div>
+          </div>
+          <div className="mx-auto max-w-6xl px-4 pb-3 sm:px-6 md:hidden">
+            <GlobalSearch />
           </div>
           <nav className="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-4 pb-3 sm:px-6">
             {navLinks.map((link) => (

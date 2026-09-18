@@ -67,7 +67,9 @@ async function resolveActorNames(rows: ActivityLogRow[]): Promise<ActivityHistor
     actorName:
       row.actor_type === "applicant"
         ? "The submitter"
-        : (row.staff_id ? nameMap.get(row.staff_id) : undefined) ?? "A staff member",
+        : row.actor_type === "system"
+          ? "Automated reminder"
+          : ((row.staff_id ? nameMap.get(row.staff_id) : undefined) ?? "A staff member"),
     createdAt: row.created_at,
     entityType: row.entity_type,
     entityId: row.entity_id,

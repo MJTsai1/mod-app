@@ -268,3 +268,31 @@ export async function notifyDiscordOfNewAppeal(appeal: BanAppealRow): Promise<vo
     "appeal"
   );
 }
+
+/** Used by the nudge cron (/api/cron/nudge) — a single item that's sat unclaimed too long. */
+export async function notifyDiscordOfStaleItem(params: {
+  entityType: "application" | "report" | "appeal" | "support";
+  entityId: string;
+  title: string;
+  identifier: string;
+  referenceCode: string;
+  ageHours: number;
+  dashboardPath: string;
+}): Promise<void> {
+  const dashboardBaseUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+  await postEmbed(
+    {
+      title: `Unclaimed for ${Math.round(params.ageHours)}h: ${params.title}`,
+      color: 0xf87171,
+      fields: [
+        { name: "From", value: params.identifier, inline: true },
+        { name: "Reference", value: params.referenceCode, inline: true },
+      ],
+      ...(dashboardBaseUrl
+        ? { description: `[Open in staff dashboard](${dashboardBaseUrl}${params.dashboardPath})` }
+        : {}),
+    },
+    `stale ${params.entityType}`
+  );
+}
