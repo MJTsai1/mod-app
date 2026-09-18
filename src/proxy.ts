@@ -37,5 +37,8 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/((?!api|auth|_next|_vercel|.*\\..*).*)"],
+  // /stats is a standalone, English-only public page outside the [locale]
+  // segment (like /admin) — excluded here so next-intl's locale-detection
+  // redirect never sends a visitor to a non-existent /fr/stats etc.
+  matcher: ["/admin/:path*", "/((?!api|auth|stats|_next|_vercel|.*\\..*).*)"],
 };

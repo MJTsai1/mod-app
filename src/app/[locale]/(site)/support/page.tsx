@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, getLocale } from "next-intl/server";
 import { siteConfig } from "@/lib/config";
-import { localizedPath } from "@/i18n/routing";
+import { localizedPath, localeAlternates } from "@/i18n/routing";
 import { getUserSession } from "@/lib/userAuth";
 import { DiscordSignInButton } from "@/components/site/DiscordSignInButton";
 import { SupportRequestForm } from "@/components/support/SupportRequestForm";
@@ -9,6 +9,7 @@ import { SupportRequestForm } from "@/components/support/SupportRequestForm";
 export const metadata: Metadata = {
   title: `Support Request — ${siteConfig.serverName}`,
   description: `Contact a moderator on ${siteConfig.serverName} with a support request.`,
+  alternates: { languages: localeAlternates("/support") },
 };
 
 export default async function SupportPage(props: PageProps<"/[locale]/support">) {

@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { siteConfig } from "@/lib/config";
+import { localeAlternates } from "@/i18n/routing";
 
 export const metadata: Metadata = {
   title: `FAQ — ${siteConfig.serverName}`,
   description: `Frequently asked questions about ${siteConfig.serverName}.`,
+  alternates: { languages: localeAlternates("/faq") },
 };
 
 export default async function FaqPage() {

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, getLocale } from "next-intl/server";
 import { siteConfig } from "@/lib/config";
-import { localizedPath } from "@/i18n/routing";
+import { localizedPath, localeAlternates } from "@/i18n/routing";
 import { getUserSession } from "@/lib/userAuth";
 import { DiscordSignInButton } from "@/components/site/DiscordSignInButton";
 import { AppealForm } from "@/components/appeal/AppealForm";
@@ -9,6 +9,7 @@ import { AppealForm } from "@/components/appeal/AppealForm";
 export const metadata: Metadata = {
   title: `Ban Appeal — ${siteConfig.serverName}`,
   description: `Appeal a ban on ${siteConfig.serverName}.`,
+  alternates: { languages: localeAlternates("/appeal") },
 };
 
 export default async function AppealPage(props: PageProps<"/[locale]/appeal">) {

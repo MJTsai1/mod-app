@@ -5,12 +5,14 @@ import { siteConfig } from "@/lib/config";
 import { getRecentYoutubeVideos } from "@/lib/youtube";
 import { getServerWidget } from "@/lib/discordWidget";
 import { YoutubeVideoGrid } from "@/components/site/YoutubeVideoGrid";
+import { localeAlternates } from "@/i18n/routing";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("common");
   return {
     title: `${siteConfig.serverName} — Community Hub`,
     description: t("siteDescription"),
+    alternates: { languages: localeAlternates("") },
   };
 }
 

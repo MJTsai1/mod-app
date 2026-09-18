@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import NextLink from "next/link";
 import { Link } from "@/i18n/navigation";
 import { siteConfig } from "@/lib/config";
 
@@ -28,6 +29,11 @@ export function SiteFooter() {
           <Link href="/terms" className="transition hover:text-[var(--color-text)]">
             {t("terms")}
           </Link>
+          {/* Plain next/link, not the locale-aware Link — /stats lives
+              outside the [locale] segment (English-only, like /admin). */}
+          <NextLink href="/stats" className="transition hover:text-[var(--color-text)]">
+            {t("stats")}
+          </NextLink>
           {siteConfig.socialLinks.discord && (
             <a
               href={siteConfig.socialLinks.discord}

@@ -33,17 +33,30 @@
     "terms": "服务条款",
     "discord": "Discord",
     "contact": "联系我们",
-    "supportUs": "支持我们"
+    "supportUs": "支持我们",
+    "stats": "社区统计"
   },
   "home": {
     "welcome": "欢迎",
     "joinDiscord": "加入我们的 Discord",
     "onlineNow": "当前有 {count} 人在线",
     "quickLinks": [
-      { "title": "立即申请", "description": "申请加入管理团队。" },
-      { "title": "举报成员", "description": "向管理团队反馈违规行为。" },
-      { "title": "封禁申诉", "description": "觉得自己被误封了吗？告诉我们原因。" },
-      { "title": "常见问题", "description": "常见问题的解答。" }
+      {
+        "title": "立即申请",
+        "description": "申请加入管理团队。"
+      },
+      {
+        "title": "举报成员",
+        "description": "向管理团队反馈违规行为。"
+      },
+      {
+        "title": "封禁申诉",
+        "description": "觉得自己被误封了吗？告诉我们原因。"
+      },
+      {
+        "title": "常见问题",
+        "description": "常见问题的解答。"
+      }
     ],
     "latestUploads": "最新视频",
     "recentVideosFrom": "最新视频来自",
@@ -120,7 +133,13 @@
     "applyingAs": "申请身份",
     "fromDiscordSignIn": "取自您的 Discord 登录信息 — 此处无法编辑。",
     "steps": {
-      "labels": ["基本信息", "活跃度", "经验", "情景问题", "申请动机"],
+      "labels": [
+        "基本信息",
+        "活跃度",
+        "经验",
+        "情景问题",
+        "申请动机"
+      ],
       "stepOf": "第 {current} 步，共 {total} 步：{label}"
     },
     "fields": {

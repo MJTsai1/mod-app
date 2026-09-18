@@ -28,3 +28,19 @@ export const routing = defineRouting({
 export function localizedPath(locale: string, path: string): string {
   return locale === routing.defaultLocale ? path : `/${locale}${path}`;
 }
+
+/**
+ * Builds the `alternates.languages` map for a public page's metadata (and
+ * for sitemap entries) — one absolute URL per locale, plus "x-default"
+ * pointing at the unprefixed (English) version. Pass the unprefixed path,
+ * e.g. "/faq" or "" for the homepage.
+ */
+export function localeAlternates(path: string): Record<string, string> {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const languages: Record<string, string> = {};
+  for (const locale of locales) {
+    languages[locale] = `${siteUrl}${localizedPath(locale, path)}`;
+  }
+  languages["x-default"] = `${siteUrl}${path}`;
+  return languages;
+}

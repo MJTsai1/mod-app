@@ -101,3 +101,45 @@ export async function getStaffBreakdown(): Promise<StaffBreakdownRow[]> {
     .filter((row) => row.total > 0)
     .sort((a, b) => b.total - a.total);
 }
+
+const RESOLVED_STATUSES = {
+  applications: ["accepted", "rejected"],
+  reports: ["resolved", "dismissed"],
+  ban_appeals: ["approved", "denied"],
+} as const;
+
+/**
+ * Average hours between submission and decision, blended across
+ * applications/reports/ban_appeals. No PII involved — only timestamps.
+ * Used by the public stats page, so this intentionally never touches
+ * applicant/reporter identity columns.
+ */
+export async function getAverageResolutionHours(): Promise<number | null> {
+  const supabase = createSupabaseAdminClient();
+
+  const [{ data: applications }, { data: reports }, { data: appeals }] = await Promise.all([
+    supabase
+      .from("applications")
+      .select("created_at, updated_at")
+      .in("status", RESOLVED_STATUSES.applications),
+    supabase
+      .from("reports")
+      .select("created_at, updated_at")
+      .in("status", RESOLVED_STATUSES.reports),
+    supabase
+      .from("ban_appeals")
+      .select("created_at, updated_at")
+      .in("status", RESOLVED_STATUSES.ban_appeals),
+  ]);
+
+  const rows = [...(applications ?? []), ...(reports ?? []), ...(appeals ?? [])];
+  if (rows.length === 0) return null;
+
+  const totalHours = rows.reduce((sum, row) => {
+    const hours =
+      (new Date(row.updated_at).getTime() - new Date(row.created_at).getTime()) / 3_600_000;
+    return sum + Math.max(0, hours);
+  }, 0);
+
+  return totalHours / rows.length;
+}

@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { siteConfig } from "@/lib/config";
+import { localeAlternates } from "@/i18n/routing";
 import { LegalSection as Section } from "@/components/site/LegalSection";
 
 export const metadata: Metadata = {
   title: `Privacy Notice — ${siteConfig.serverName}`,
+  alternates: { languages: localeAlternates("/privacy") },
 };
 
 export default async function PrivacyPage() {
