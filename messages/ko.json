@@ -9,7 +9,8 @@
     "fixHighlighted": "제출하기 전에 강조 표시된 항목을 수정해 주세요.",
     "networkError": "서버에 연결할 수 없습니다. 연결 상태를 확인한 후 다시 시도해 주세요 — 입력하신 내용은 그대로 남아 있습니다.",
     "returnHome": "홈으로 돌아가기",
-    "signInWithDiscord": "Discord로 로그인"
+    "signInWithDiscord": "Discord로 로그인",
+    "toggleTheme": "테마 전환"
   },
   "languageSwitcher": {
     "label": "언어"

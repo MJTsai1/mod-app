@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { getLocale, getTranslations } from "next-intl/server";
 import { siteConfig } from "@/lib/config";
+import { themeInitScript } from "@/lib/theme";
 import "./globals.css";
 
 const inter = Inter({
@@ -30,7 +31,20 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const locale = await getLocale();
   return (
-    <html lang={locale} className={`${inter.variable} h-full antialiased`}>
+    <html
+      lang={locale}
+      className={`${inter.variable} h-full antialiased`}
+      // The inline theme script below sets data-theme on this element
+      // before React hydrates (to avoid a flash of the wrong theme) — that
+      // makes the server/client markup legitimately differ on this one
+      // attribute, which is exactly what suppressHydrationWarning is for.
+      suppressHydrationWarning
+    >
+      <head>
+        {/* Sets data-theme before first paint to avoid a flash of the
+            wrong theme — see src/lib/theme.ts and ThemeToggle.tsx. */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

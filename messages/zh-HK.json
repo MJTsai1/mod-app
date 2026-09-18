@@ -9,7 +9,8 @@
     "fixHighlighted": "請在送出前修正標示的欄位。",
     "networkError": "無法連線到伺服器。請檢查您的網絡連線後再試一次 — 您的回答仍會保留。",
     "returnHome": "返回首頁",
-    "signInWithDiscord": "使用 Discord 登入"
+    "signInWithDiscord": "使用 Discord 登入",
+    "toggleTheme": "切換主題"
   },
   "languageSwitcher": {
     "label": "語言"

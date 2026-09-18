@@ -9,7 +9,8 @@
     "fixHighlighted": "Corrige los campos resaltados antes de enviar.",
     "networkError": "No pudimos contactar con el servidor. Comprueba tu conexión e inténtalo de nuevo — tus respuestas siguen aquí.",
     "returnHome": "Volver al inicio",
-    "signInWithDiscord": "Iniciar sesión con Discord"
+    "signInWithDiscord": "Iniciar sesión con Discord",
+    "toggleTheme": "Cambiar tema"
   },
   "languageSwitcher": {
     "label": "Idioma"

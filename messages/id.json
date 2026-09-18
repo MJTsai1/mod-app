@@ -9,7 +9,8 @@
     "fixHighlighted": "Silakan perbaiki kolom yang ditandai sebelum mengirim.",
     "networkError": "Kami tidak dapat menghubungi server. Periksa koneksi Anda dan coba lagi — jawaban Anda masih tersimpan.",
     "returnHome": "Kembali ke Beranda",
-    "signInWithDiscord": "Masuk dengan Discord"
+    "signInWithDiscord": "Masuk dengan Discord",
+    "toggleTheme": "Ganti tema"
   },
   "languageSwitcher": {
     "label": "Bahasa"

@@ -9,7 +9,8 @@
     "fixHighlighted": "Bitte korrigiere die markierten Felder, bevor du absendest.",
     "networkError": "Der Server konnte nicht erreicht werden. Überprüfe deine Verbindung und versuche es erneut — deine Antworten sind noch vorhanden.",
     "returnHome": "Zurück zur Startseite",
-    "signInWithDiscord": "Mit Discord anmelden"
+    "signInWithDiscord": "Mit Discord anmelden",
+    "toggleTheme": "Design wechseln"
   },
   "languageSwitcher": {
     "label": "Sprache"

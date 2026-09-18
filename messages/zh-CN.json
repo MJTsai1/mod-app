@@ -9,7 +9,8 @@
     "fixHighlighted": "请在提交前修正标出的字段。",
     "networkError": "无法连接到服务器。请检查网络连接后重试 — 您填写的内容仍会保留。",
     "returnHome": "返回首页",
-    "signInWithDiscord": "使用 Discord 登录"
+    "signInWithDiscord": "使用 Discord 登录",
+    "toggleTheme": "切换主题"
   },
   "languageSwitcher": {
     "label": "语言"

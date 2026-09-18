@@ -4,9 +4,11 @@ import { Link } from "@/i18n/navigation";
 import { siteConfig } from "@/lib/config";
 import { AccountNavLink } from "@/components/site/AccountNavLink";
 import { LanguageSwitcher } from "@/components/site/LanguageSwitcher";
+import { ThemeToggle } from "@/components/site/ThemeToggle";
 
 export function SiteHeader() {
   const t = useTranslations("nav");
+  const tCommon = useTranslations("common");
 
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-md">
@@ -62,6 +64,8 @@ export function SiteHeader() {
               {t("supportUs")}
             </a>
           )}
+
+          <ThemeToggle label={tCommon("toggleTheme")} />
 
           <LanguageSwitcher className="field-input hidden w-auto px-2 py-1.5 text-sm sm:block" />
 

@@ -9,7 +9,8 @@
     "fixHighlighted": "Please fix the highlighted fields before submitting.",
     "networkError": "We couldn't reach the server. Check your connection and try again — your answers are still here.",
     "returnHome": "Return Home",
-    "signInWithDiscord": "Sign in with Discord"
+    "signInWithDiscord": "Sign in with Discord",
+    "toggleTheme": "Toggle theme"
   },
   "languageSwitcher": {
     "label": "Language"

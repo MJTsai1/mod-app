@@ -4,6 +4,7 @@ import { getPendingCounts } from "@/lib/pendingCounts";
 import { siteConfig } from "@/lib/config";
 import { ToastProvider } from "@/components/site/ToastProvider";
 import { GlobalSearch } from "@/components/admin/GlobalSearch";
+import { ThemeToggle } from "@/components/site/ThemeToggle";
 
 function NavBadge({ count }: { count: number }) {
   if (count === 0) return null;
@@ -43,6 +44,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               <GlobalSearch />
             </div>
             <div className="flex items-center gap-4 text-sm text-[var(--color-text-muted)]">
+              <ThemeToggle />
               <span className="hidden sm:inline">{session.email}</span>
               <span className="badge" style={{ background: "var(--color-info-bg)", color: "var(--color-info)" }}>
                 {session.staff.role}
