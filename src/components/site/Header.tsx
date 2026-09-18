@@ -46,6 +46,23 @@ export function SiteHeader() {
             {t("appeal")}
           </Link>
 
+          {siteConfig.donationUrl && (
+            <a
+              href={siteConfig.donationUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-[var(--color-text-muted)] transition hover:text-[var(--color-text)] md:inline-flex"
+            >
+              <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4 text-[var(--color-danger)]" aria-hidden>
+                <path
+                  d="M10 17s-6.5-3.9-6.5-8.5C3.5 5.9 5.4 4 7.7 4c1.3 0 2.4.6 3.1 1.6.7-1 1.8-1.6 3.1-1.6 2.3 0 4.2 1.9 4.2 4.5 0 4.6-6.5 8.5-6.5 8.5z"
+                  fill="currentColor"
+                />
+              </svg>
+              {t("supportUs")}
+            </a>
+          )}
+
           <LanguageSwitcher className="field-input hidden w-auto px-2 py-1.5 text-sm sm:block" />
 
           <AccountNavLink />

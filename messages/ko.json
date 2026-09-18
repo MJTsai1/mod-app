@@ -20,7 +20,8 @@
     "appeal": "밴 이의 신청",
     "staffLogin": "스태프 로그인",
     "applyNow": "지금 지원하기",
-    "signIn": "로그인"
+    "signIn": "로그인",
+    "supportUs": "후원하기"
   },
   "footer": {
     "copyright": "© {year} {serverName}. Discord Inc.와 제휴 관계가 아닙니다.",
@@ -31,17 +32,30 @@
     "privacy": "개인정보 처리방침",
     "terms": "이용 약관",
     "discord": "Discord",
-    "contact": "문의하기"
+    "contact": "문의하기",
+    "supportUs": "후원하기"
   },
   "home": {
     "welcome": "환영합니다",
     "joinDiscord": "Discord 참여하기",
     "onlineNow": "현재 {count}명 접속 중",
     "quickLinks": [
-      { "title": "지금 지원하기", "description": "모더레이션 팀에 합류하기 위해 지원하세요." },
-      { "title": "회원 신고", "description": "규칙을 위반한 회원을 스태프에게 알려주세요." },
-      { "title": "밴 이의 신청", "description": "부당하게 밴 당했다고 생각하시나요? 이유를 알려주세요." },
-      { "title": "자주 묻는 질문", "description": "자주 묻는 질문에 대한 답변입니다." }
+      {
+        "title": "지금 지원하기",
+        "description": "모더레이션 팀에 합류하기 위해 지원하세요."
+      },
+      {
+        "title": "회원 신고",
+        "description": "규칙을 위반한 회원을 스태프에게 알려주세요."
+      },
+      {
+        "title": "밴 이의 신청",
+        "description": "부당하게 밴 당했다고 생각하시나요? 이유를 알려주세요."
+      },
+      {
+        "title": "자주 묻는 질문",
+        "description": "자주 묻는 질문에 대한 답변입니다."
+      }
     ],
     "latestUploads": "최신 영상",
     "recentVideosFrom": "최신 영상 제공:",
@@ -118,7 +132,13 @@
     "applyingAs": "지원자",
     "fromDiscordSignIn": "Discord 로그인 정보에서 가져온 값으로, 여기서는 수정할 수 없습니다.",
     "steps": {
-      "labels": ["기본 정보", "활동", "경험", "시나리오", "지원 동기"],
+      "labels": [
+        "기본 정보",
+        "활동",
+        "경험",
+        "시나리오",
+        "지원 동기"
+      ],
       "stepOf": "{total}단계 중 {current}단계: {label}"
     },
     "fields": {

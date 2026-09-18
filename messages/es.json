@@ -20,7 +20,8 @@
     "appeal": "Apelar baneo",
     "staffLogin": "Acceso del staff",
     "applyNow": "Postularme",
-    "signIn": "Iniciar sesión"
+    "signIn": "Iniciar sesión",
+    "supportUs": "Apóyanos"
   },
   "footer": {
     "copyright": "© {year} {serverName}. No afiliado con Discord Inc.",
@@ -31,17 +32,30 @@
     "privacy": "Aviso de privacidad",
     "terms": "Términos de servicio",
     "discord": "Discord",
-    "contact": "Contacto"
+    "contact": "Contacto",
+    "supportUs": "Apóyanos"
   },
   "home": {
     "welcome": "Bienvenido",
     "joinDiscord": "Únete a nuestro Discord",
     "onlineNow": "{count} en línea ahora",
     "quickLinks": [
-      { "title": "Postularme", "description": "Postúlate para unirte al equipo de moderación." },
-      { "title": "Reportar a un miembro", "description": "Avisa al staff sobre alguien que infringe las reglas." },
-      { "title": "Apelar baneo", "description": "¿Crees que te banearon injustamente? Cuéntanos por qué." },
-      { "title": "Preguntas frecuentes", "description": "Respuestas a preguntas comunes." }
+      {
+        "title": "Postularme",
+        "description": "Postúlate para unirte al equipo de moderación."
+      },
+      {
+        "title": "Reportar a un miembro",
+        "description": "Avisa al staff sobre alguien que infringe las reglas."
+      },
+      {
+        "title": "Apelar baneo",
+        "description": "¿Crees que te banearon injustamente? Cuéntanos por qué."
+      },
+      {
+        "title": "Preguntas frecuentes",
+        "description": "Respuestas a preguntas comunes."
+      }
     ],
     "latestUploads": "Últimos videos",
     "recentVideosFrom": "Videos recientes de",
@@ -118,7 +132,13 @@
     "applyingAs": "Postulando como",
     "fromDiscordSignIn": "Tomado de tu inicio de sesión con Discord — no editable aquí.",
     "steps": {
-      "labels": ["Datos básicos", "Actividad", "Experiencia", "Escenarios", "Motivación"],
+      "labels": [
+        "Datos básicos",
+        "Actividad",
+        "Experiencia",
+        "Escenarios",
+        "Motivación"
+      ],
       "stepOf": "Paso {current} de {total}: {label}"
     },
     "fields": {

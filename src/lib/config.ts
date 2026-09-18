@@ -45,6 +45,10 @@ export const siteConfig = {
     twitter: "",
   },
 
+  // Link to a donation/tip page (e.g. Ko-fi, Buy Me a Coffee, Patreon,
+  // PayPal.me). Leave as null to hide the "Support Us" button everywhere.
+  donationUrl: null as string | null,
+
   // Public Atom feed, no API key needed. Find a channel ID via "view page
   // source" on the channel page and searching for "channelId".
   youtube: {

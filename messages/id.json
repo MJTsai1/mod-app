@@ -20,7 +20,8 @@
     "appeal": "Banding Ban",
     "staffLogin": "Masuk Staf",
     "applyNow": "Daftar Sekarang",
-    "signIn": "Masuk"
+    "signIn": "Masuk",
+    "supportUs": "Dukung Kami"
   },
   "footer": {
     "copyright": "© {year} {serverName}. Tidak berafiliasi dengan Discord Inc.",
@@ -31,17 +32,30 @@
     "privacy": "Kebijakan Privasi",
     "terms": "Syarat Layanan",
     "discord": "Discord",
-    "contact": "Kontak"
+    "contact": "Kontak",
+    "supportUs": "Dukung Kami"
   },
   "home": {
     "welcome": "Selamat Datang",
     "joinDiscord": "Gabung Discord Kami",
     "onlineNow": "{count} sedang online",
     "quickLinks": [
-      { "title": "Daftar Sekarang", "description": "Daftar untuk bergabung dengan tim moderasi." },
-      { "title": "Laporkan Anggota", "description": "Beri tahu staf tentang pelanggar aturan." },
-      { "title": "Banding Ban", "description": "Merasa dibanned secara tidak adil? Ceritakan alasannya kepada kami." },
-      { "title": "FAQ", "description": "Jawaban atas pertanyaan umum." }
+      {
+        "title": "Daftar Sekarang",
+        "description": "Daftar untuk bergabung dengan tim moderasi."
+      },
+      {
+        "title": "Laporkan Anggota",
+        "description": "Beri tahu staf tentang pelanggar aturan."
+      },
+      {
+        "title": "Banding Ban",
+        "description": "Merasa dibanned secara tidak adil? Ceritakan alasannya kepada kami."
+      },
+      {
+        "title": "FAQ",
+        "description": "Jawaban atas pertanyaan umum."
+      }
     ],
     "latestUploads": "Video Terbaru",
     "recentVideosFrom": "Video terbaru dari",
@@ -118,7 +132,13 @@
     "applyingAs": "Mendaftar sebagai",
     "fromDiscordSignIn": "Diambil dari akun Discord Anda saat masuk — tidak dapat diedit di sini.",
     "steps": {
-      "labels": ["Dasar", "Aktivitas", "Pengalaman", "Skenario", "Motivasi"],
+      "labels": [
+        "Dasar",
+        "Aktivitas",
+        "Pengalaman",
+        "Skenario",
+        "Motivasi"
+      ],
       "stepOf": "Langkah {current} dari {total}: {label}"
     },
     "fields": {

@@ -20,7 +20,8 @@
     "appeal": "Bann-Einspruch",
     "staffLogin": "Staff-Login",
     "applyNow": "Jetzt bewerben",
-    "signIn": "Anmelden"
+    "signIn": "Anmelden",
+    "supportUs": "Unterstütze uns"
   },
   "footer": {
     "copyright": "© {year} {serverName}. Nicht mit Discord Inc. verbunden.",
@@ -31,17 +32,30 @@
     "privacy": "Datenschutzerklärung",
     "terms": "Nutzungsbedingungen",
     "discord": "Discord",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "supportUs": "Unterstütze uns"
   },
   "home": {
     "welcome": "Willkommen",
     "joinDiscord": "Unserem Discord beitreten",
     "onlineNow": "{count} gerade online",
     "quickLinks": [
-      { "title": "Jetzt bewerben", "description": "Bewirb dich für das Moderations-Team." },
-      { "title": "Mitglied melden", "description": "Informiere das Staff-Team über einen Regelverstoß." },
-      { "title": "Bann-Einspruch", "description": "Denkst du, du wurdest zu Unrecht gebannt? Sag uns warum." },
-      { "title": "FAQ", "description": "Antworten auf häufig gestellte Fragen." }
+      {
+        "title": "Jetzt bewerben",
+        "description": "Bewirb dich für das Moderations-Team."
+      },
+      {
+        "title": "Mitglied melden",
+        "description": "Informiere das Staff-Team über einen Regelverstoß."
+      },
+      {
+        "title": "Bann-Einspruch",
+        "description": "Denkst du, du wurdest zu Unrecht gebannt? Sag uns warum."
+      },
+      {
+        "title": "FAQ",
+        "description": "Antworten auf häufig gestellte Fragen."
+      }
     ],
     "latestUploads": "Neueste Videos",
     "recentVideosFrom": "Aktuelle Videos von",
@@ -118,7 +132,13 @@
     "applyingAs": "Bewerbung als",
     "fromDiscordSignIn": "Von deiner Discord-Anmeldung übernommen — hier nicht bearbeitbar.",
     "steps": {
-      "labels": ["Grunddaten", "Aktivität", "Erfahrung", "Szenarien", "Motivation"],
+      "labels": [
+        "Grunddaten",
+        "Aktivität",
+        "Erfahrung",
+        "Szenarien",
+        "Motivation"
+      ],
       "stepOf": "Schritt {current} von {total}: {label}"
     },
     "fields": {

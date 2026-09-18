@@ -20,7 +20,8 @@
     "appeal": "Ban Appeal",
     "staffLogin": "Staff Login",
     "applyNow": "Apply Now",
-    "signIn": "Sign In"
+    "signIn": "Sign In",
+    "supportUs": "Support Us"
   },
   "footer": {
     "copyright": "© {year} {serverName}. Not affiliated with Discord Inc.",
@@ -31,17 +32,30 @@
     "privacy": "Privacy Notice",
     "terms": "Terms of Service",
     "discord": "Discord",
-    "contact": "Contact"
+    "contact": "Contact",
+    "supportUs": "Support Us"
   },
   "home": {
     "welcome": "Welcome",
     "joinDiscord": "Join our Discord",
     "onlineNow": "{count} online now",
     "quickLinks": [
-      { "title": "Apply Now", "description": "Apply to join the moderation team." },
-      { "title": "Report a Member", "description": "Let staff know about a rule-breaker." },
-      { "title": "Ban Appeal", "description": "Think you were banned unfairly? Tell us why." },
-      { "title": "FAQ", "description": "Answers to common questions." }
+      {
+        "title": "Apply Now",
+        "description": "Apply to join the moderation team."
+      },
+      {
+        "title": "Report a Member",
+        "description": "Let staff know about a rule-breaker."
+      },
+      {
+        "title": "Ban Appeal",
+        "description": "Think you were banned unfairly? Tell us why."
+      },
+      {
+        "title": "FAQ",
+        "description": "Answers to common questions."
+      }
     ],
     "latestUploads": "Latest Uploads",
     "recentVideosFrom": "Recent videos from",
@@ -118,7 +132,13 @@
     "applyingAs": "Applying as",
     "fromDiscordSignIn": "Taken from your Discord sign-in — not editable here.",
     "steps": {
-      "labels": ["Basics", "Activity", "Experience", "Scenarios", "Motivation"],
+      "labels": [
+        "Basics",
+        "Activity",
+        "Experience",
+        "Scenarios",
+        "Motivation"
+      ],
       "stepOf": "Step {current} of {total}: {label}"
     },
     "fields": {

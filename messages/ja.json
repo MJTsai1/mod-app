@@ -20,7 +20,8 @@
     "appeal": "BAN異議申し立て",
     "staffLogin": "スタッフログイン",
     "applyNow": "今すぐ応募",
-    "signIn": "サインイン"
+    "signIn": "サインイン",
+    "supportUs": "サポートする"
   },
   "footer": {
     "copyright": "© {year} {serverName}。Discord Inc. とは提携していません。",
@@ -31,17 +32,30 @@
     "privacy": "プライバシー通知",
     "terms": "利用規約",
     "discord": "Discord",
-    "contact": "お問い合わせ"
+    "contact": "お問い合わせ",
+    "supportUs": "サポートする"
   },
   "home": {
     "welcome": "ようこそ",
     "joinDiscord": "Discordに参加する",
     "onlineNow": "現在 {count} 人がオンライン",
     "quickLinks": [
-      { "title": "今すぐ応募", "description": "モデレーションチームへの参加に応募しましょう。" },
-      { "title": "メンバーを報告", "description": "ルール違反者についてスタッフに知らせましょう。" },
-      { "title": "BAN異議申し立て", "description": "不当にBANされたと思いますか？理由を教えてください。" },
-      { "title": "よくある質問", "description": "よくある質問への回答です。" }
+      {
+        "title": "今すぐ応募",
+        "description": "モデレーションチームへの参加に応募しましょう。"
+      },
+      {
+        "title": "メンバーを報告",
+        "description": "ルール違反者についてスタッフに知らせましょう。"
+      },
+      {
+        "title": "BAN異議申し立て",
+        "description": "不当にBANされたと思いますか？理由を教えてください。"
+      },
+      {
+        "title": "よくある質問",
+        "description": "よくある質問への回答です。"
+      }
     ],
     "latestUploads": "最新の動画",
     "recentVideosFrom": "最新動画の配信元：",
@@ -118,7 +132,13 @@
     "applyingAs": "応募者",
     "fromDiscordSignIn": "Discordサインイン情報から取得されており、ここでは編集できません。",
     "steps": {
-      "labels": ["基本情報", "活動状況", "経験", "シナリオ", "志望動機"],
+      "labels": [
+        "基本情報",
+        "活動状況",
+        "経験",
+        "シナリオ",
+        "志望動機"
+      ],
       "stepOf": "ステップ {current} / {total}：{label}"
     },
     "fields": {

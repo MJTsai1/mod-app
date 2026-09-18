@@ -20,7 +20,8 @@
     "appeal": "Appel de bannissement",
     "staffLogin": "Connexion staff",
     "applyNow": "Postuler",
-    "signIn": "Se connecter"
+    "signIn": "Se connecter",
+    "supportUs": "Nous soutenir"
   },
   "footer": {
     "copyright": "© {year} {serverName}. Non affilié à Discord Inc.",
@@ -31,17 +32,30 @@
     "privacy": "Avis de confidentialité",
     "terms": "Conditions d'utilisation",
     "discord": "Discord",
-    "contact": "Contact"
+    "contact": "Contact",
+    "supportUs": "Nous soutenir"
   },
   "home": {
     "welcome": "Bienvenue",
     "joinDiscord": "Rejoindre notre Discord",
     "onlineNow": "{count} en ligne actuellement",
     "quickLinks": [
-      { "title": "Postuler", "description": "Postulez pour rejoindre l'équipe de modération." },
-      { "title": "Signaler un membre", "description": "Signalez un membre qui enfreint les règles." },
-      { "title": "Appel de bannissement", "description": "Vous pensez avoir été banni injustement ? Expliquez-vous." },
-      { "title": "FAQ", "description": "Réponses aux questions fréquentes." }
+      {
+        "title": "Postuler",
+        "description": "Postulez pour rejoindre l'équipe de modération."
+      },
+      {
+        "title": "Signaler un membre",
+        "description": "Signalez un membre qui enfreint les règles."
+      },
+      {
+        "title": "Appel de bannissement",
+        "description": "Vous pensez avoir été banni injustement ? Expliquez-vous."
+      },
+      {
+        "title": "FAQ",
+        "description": "Réponses aux questions fréquentes."
+      }
     ],
     "latestUploads": "Dernières vidéos",
     "recentVideosFrom": "Vidéos récentes de",
@@ -118,7 +132,13 @@
     "applyingAs": "Candidature en tant que",
     "fromDiscordSignIn": "Récupéré depuis votre connexion Discord — non modifiable ici.",
     "steps": {
-      "labels": ["Bases", "Activité", "Expérience", "Scénarios", "Motivation"],
+      "labels": [
+        "Bases",
+        "Activité",
+        "Expérience",
+        "Scénarios",
+        "Motivation"
+      ],
       "stepOf": "Étape {current} sur {total} : {label}"
     },
     "fields": {

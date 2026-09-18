@@ -20,7 +20,8 @@
     "appeal": "Ricorso al ban",
     "staffLogin": "Accesso staff",
     "applyNow": "Candidati",
-    "signIn": "Accedi"
+    "signIn": "Accedi",
+    "supportUs": "Sostienici"
   },
   "footer": {
     "copyright": "© {year} {serverName}. Non affiliato a Discord Inc.",
@@ -31,17 +32,30 @@
     "privacy": "Informativa sulla privacy",
     "terms": "Termini di servizio",
     "discord": "Discord",
-    "contact": "Contatti"
+    "contact": "Contatti",
+    "supportUs": "Sostienici"
   },
   "home": {
     "welcome": "Benvenuto",
     "joinDiscord": "Unisciti al nostro Discord",
     "onlineNow": "{count} online ora",
     "quickLinks": [
-      { "title": "Candidati", "description": "Candidati per entrare nel team di moderazione." },
-      { "title": "Segnala un membro", "description": "Segnala allo staff chi infrange le regole." },
-      { "title": "Ricorso al ban", "description": "Pensi di essere stato bannato ingiustamente? Spiegaci perché." },
-      { "title": "FAQ", "description": "Risposte alle domande più comuni." }
+      {
+        "title": "Candidati",
+        "description": "Candidati per entrare nel team di moderazione."
+      },
+      {
+        "title": "Segnala un membro",
+        "description": "Segnala allo staff chi infrange le regole."
+      },
+      {
+        "title": "Ricorso al ban",
+        "description": "Pensi di essere stato bannato ingiustamente? Spiegaci perché."
+      },
+      {
+        "title": "FAQ",
+        "description": "Risposte alle domande più comuni."
+      }
     ],
     "latestUploads": "Ultimi video",
     "recentVideosFrom": "Video recenti dal",
@@ -118,7 +132,13 @@
     "applyingAs": "Candidatura come",
     "fromDiscordSignIn": "Preso dal tuo accesso Discord — non modificabile qui.",
     "steps": {
-      "labels": ["Informazioni base", "Attività", "Esperienza", "Scenari", "Motivazione"],
+      "labels": [
+        "Informazioni base",
+        "Attività",
+        "Esperienza",
+        "Scenari",
+        "Motivazione"
+      ],
       "stepOf": "Passaggio {current} di {total}: {label}"
     },
     "fields": {

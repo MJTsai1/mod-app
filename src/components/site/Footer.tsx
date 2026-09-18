@@ -38,6 +38,16 @@ export function SiteFooter() {
               {t("discord")}
             </a>
           )}
+          {siteConfig.donationUrl && (
+            <a
+              href={siteConfig.donationUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-[var(--color-accent-soft)] transition hover:text-[var(--color-accent)]"
+            >
+              {t("supportUs")}
+            </a>
+          )}
           <a
             href={`mailto:${siteConfig.contactEmail}`}
             className="transition hover:text-[var(--color-text)]"
