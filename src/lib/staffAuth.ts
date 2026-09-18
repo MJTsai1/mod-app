@@ -27,6 +27,17 @@ export async function getStaffSession(): Promise<StaffSession | null> {
 
   if (userError || !user) return null;
 
+  // If this staff member has an MFA factor enrolled, the session must have
+  // actually completed that challenge (aal2) — a password-only session
+  // (aal1) for an MFA-enrolled account is not a fully authenticated staff
+  // session. Fails open on an unexpected error from this call itself (so a
+  // transient Supabase hiccup can't lock every staff member out at once);
+  // only denies for the well-defined "MFA required but not completed" case.
+  const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+  if (aal && aal.nextLevel === "aal2" && aal.currentLevel !== "aal2") {
+    return null;
+  }
+
   const { data: staff, error: staffError } = await supabase
     .from("staff_members")
     .select("*")

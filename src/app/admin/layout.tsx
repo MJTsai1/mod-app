@@ -70,6 +70,12 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                 <NavBadge count={link.count} />
               </Link>
             ))}
+            <Link
+              href="/admin/security"
+              className="whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium text-[var(--color-text-muted)] transition hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
+            >
+              Security
+            </Link>
             {session.staff.role === "admin" && (
               <Link
                 href="/admin/staff"
