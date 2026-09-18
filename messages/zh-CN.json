@@ -1,0 +1,365 @@
+{
+  "common": {
+    "siteDescription": "社区的服务中心 — 快速链接、管理员申请、成员支持，以及我们 YouTube 频道的最新视频。",
+    "optional": "（选填）",
+    "selectOption": "请选择一个选项",
+    "yes": "是",
+    "no": "否",
+    "loading": "加载中…",
+    "fixHighlighted": "请在提交前修正标出的字段。",
+    "networkError": "无法连接到服务器。请检查网络连接后重试 — 您填写的内容仍会保留。",
+    "returnHome": "返回首页",
+    "signInWithDiscord": "使用 Discord 登录"
+  },
+  "languageSwitcher": {
+    "label": "语言"
+  },
+  "nav": {
+    "faq": "常见问题",
+    "report": "举报成员",
+    "appeal": "封禁申诉",
+    "staffLogin": "管理团队登录",
+    "applyNow": "立即申请",
+    "signIn": "登录",
+    "supportUs": "支持我们"
+  },
+  "footer": {
+    "copyright": "© {year} {serverName}。与 Discord Inc. 无关联。",
+    "requirements": "申请条件",
+    "faq": "常见问题",
+    "report": "举报成员",
+    "appeal": "封禁申诉",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "discord": "Discord",
+    "contact": "联系我们",
+    "supportUs": "支持我们"
+  },
+  "home": {
+    "welcome": "欢迎",
+    "joinDiscord": "加入我们的 Discord",
+    "onlineNow": "当前有 {count} 人在线",
+    "quickLinks": [
+      { "title": "立即申请", "description": "申请加入管理团队。" },
+      { "title": "举报成员", "description": "向管理团队反馈违规行为。" },
+      { "title": "封禁申诉", "description": "觉得自己被误封了吗？告诉我们原因。" },
+      { "title": "常见问题", "description": "常见问题的解答。" }
+    ],
+    "latestUploads": "最新视频",
+    "recentVideosFrom": "最新视频来自",
+    "ourOfficialChannel": "我们的官方 YouTube 频道",
+    "coOwnerChannelLabel": "联合创始人的个人频道",
+    "mostRecent": "最新发布",
+    "mostViewed": "最多观看",
+    "views": "次观看",
+    "couldntLoadUploads": "暂时无法加载最新视频 — 请直接前往上方频道查看。",
+    "alsoCheckOut": "也欢迎看看",
+    "aboutRoleHeading": "关于这个职位",
+    "aboutRoleIntro": "管理员是社区中值得信赖的成员，协助管理团队维持社区的良好运作。",
+    "responsibilities": [
+      "公平且一致地执行服务器规则",
+      "协助成员解答问题、处理困难",
+      "及时且谨慎地处理举报",
+      "缓解成员之间的冲突",
+      "维护社区的友好与包容氛围",
+      "与其他管理团队成员密切配合"
+    ],
+    "requirementsHeading": "申请条件",
+    "requirementsIntro": "在其他条件之前，我们首先寻找符合以下条件的成员。",
+    "requirements": [
+      "服务器的活跃成员",
+      "了解并遵守规则",
+      "成熟且有责任心",
+      "尊重其他成员",
+      "能与管理团队良好配合",
+      "良好的管理记录",
+      "愿意学习"
+    ],
+    "minAge": "申请最低年龄：{age} 岁以上",
+    "ctaHeading": "准备好加入团队了吗？",
+    "ctaBody": "申请大约需要 10 到 15 分钟。请不要着急，诚实作答。",
+    "applyNow": "立即申请"
+  },
+  "faq": {
+    "title": "常见问题",
+    "items": {
+      "responseTime": {
+        "question": "申请结果大概多久会有回复？",
+        "answer": "管理团队会按收到的顺序审核申请。回复时间取决于申请数量，但您随时可以使用收到的参考编号查询申请状态。"
+      },
+      "reapply": {
+        "question": "如果被拒绝了，我可以再次申请吗？",
+        "answer": "可以。请花一些时间更积极地参与社区，之后欢迎再次申请。"
+      },
+      "howToReport": {
+        "question": "如何举报违反规则的成员？",
+        "answer": "请使用「举报成员」页面。您需要先使用 Discord 登录，以便我们在需要更多信息时联系您。"
+      },
+      "banUnfair": {
+        "question": "我觉得自己被误封了，该怎么办？",
+        "answer": "请通过「封禁申诉」页面提交申诉。请清楚且如实地说明您的情况 — 管理团队会审核每一份申诉。"
+      },
+      "confidentiality": {
+        "question": "我的举报或申诉内容会保密吗？",
+        "answer": "举报与申诉仅对获授权的管理团队成员可见。详细的信息处理方式请参阅隐私政策。"
+      },
+      "stillNeedSupport": {
+        "question": "还有其他问题需要帮助吗？",
+        "answer": "请填写支持请求表单，说明您的问题或需求，即可联系管理员。管理团队会直接回复您的请求，您也可以回复对方 — 对话记录会显示在您的账户页面。",
+        "linkLabel": "提交支持请求"
+      }
+    }
+  },
+  "apply": {
+    "heading": "管理员申请",
+    "taglineQuoted": "“你觉得自己有能力帮助我们的社区吗？”",
+    "saveHint": "请不要着急 — 您的回答会自动保存，因此可以放心地在各步骤之间切换。",
+    "signInPrompt": "请使用 Discord 登录以进行申请。这将确认您的 Discord 身份，无需另外创建账号或密码。",
+    "signInFailed": "登录失败或已取消，请重试。",
+    "loadingForm": "正在加载申请表单…",
+    "applyingAs": "申请身份",
+    "fromDiscordSignIn": "取自您的 Discord 登录信息 — 此处无法编辑。",
+    "steps": {
+      "labels": ["基本信息", "活跃度", "经验", "情景问题", "申请动机"],
+      "stepOf": "第 {current} 步，共 {total} 步：{label}"
+    },
+    "fields": {
+      "age": "年龄",
+      "agePlaceholder": "例如：19",
+      "country": "国家/地区",
+      "countryPlaceholder": "例如：新加坡",
+      "countryHint": "已根据您的位置自动检测 — 如有误请自行修改。",
+      "timezone": "时区",
+      "timezonePlaceholder": "请选择您的时区",
+      "timezoneHint": "已根据您的浏览器自动检测 — 如有误请自行修改。",
+      "noOneLivesHere": "这里没有人居住（UTC-12）",
+      "timeInServer": "您加入服务器多久了？",
+      "timeInServerPlaceholder": "例如：8 个月",
+      "activityLevel": "您在 Discord 上的活跃程度如何？",
+      "activityLevels": [
+        "非常活跃（每天）",
+        "活跃（几乎每天）",
+        "中等（每周几次）",
+        "偶尔（很少上线）"
+      ],
+      "onlineTimes": "您通常在什么时间上线？",
+      "onlineTimesPlaceholder": "例如：工作日晚上 6 点到 11 点，周末大部分时间（按您的时区）",
+      "weeklyHours": "您每周可以投入多少小时用于管理工作？",
+      "weeklyHoursPlaceholder": "例如：10",
+      "hasModeratedBefore": "您之前是否在其他 Discord 服务器担任过管理员？",
+      "previousExperience": "请描述您之前的管理经验",
+      "previousExperiencePlaceholder": "哪些服务器、规模多大、您平时负责哪些工作？",
+      "botsToolsUsed": "您使用过哪些管理机器人或工具？",
+      "botsToolsUsedPlaceholder": "例如：Dyno、MEE6、Carl-bot、AutoMod 等",
+      "previousStaffPositions": "您之前是否在其他社区担任过工作人员？",
+      "previousStaffPositionsPlaceholder": "请列出其他社区以及您在其中担任的职位。",
+      "additionalInfo": "还有什么想让管理团队了解的吗？"
+    },
+    "scenarios": {
+      "scenario_unaware_rules": "一位成员多次违反规则，但表示自己不知道规则。您会怎么处理？",
+      "scenario_toxic_conflict": "两位成员正在争吵，气氛逐渐变得恶劣。您会如何处理？",
+      "scenario_friend_breaks_rule": "您的朋友违反了服务器规则。您会怎么做？",
+      "scenario_staff_abuse": "您发现另一位管理员滥用职权。您会怎么做？",
+      "scenario_biased_report": "有人针对您个人不喜欢的成员提交了举报。您要如何确保自己能公正地处理这个情况？"
+    },
+    "motivations": {
+      "motivation_why": "您为什么想成为管理员？",
+      "motivation_suitable": "是什么让您适合这个职位？",
+      "motivation_good_moderator": "您认为什么样的人才算是好的管理员？",
+      "motivation_improve_server": "您认为服务器有哪些地方可以改进？"
+    },
+    "confirmationStatement": "我确认所提供的信息均属实，并理解提交申请并不代表一定会被录取。",
+    "previous": "上一步",
+    "next": "下一步",
+    "submit": "提交申请",
+    "submitting": "提交中…",
+    "submitError": "提交申请时出现问题，请重试。",
+    "success": {
+      "heading": "申请已提交",
+      "message": "感谢您的申请！我们已成功收到您的申请资料。",
+      "followUp": "请保留此参考编号以便查询。管理团队将审核您的申请，如有需要会通过 Discord 与您联系 — 目前您无需采取其他行动。"
+    }
+  },
+  "report": {
+    "heading": "举报成员",
+    "intro": "有人违反规则了吗？告诉管理团队，我们会进行处理。",
+    "signInPrompt": "请使用 Discord 登录以提交举报。这样一来，如果我们需要更多信息，管理团队便能与您联系。",
+    "signInFailed": "登录失败或已取消，请重试。",
+    "categories": {
+      "harassment": "骚扰或欺凌",
+      "spam": "垃圾信息或广告",
+      "cheating_exploiting": "作弊或利用漏洞",
+      "inappropriate_content": "不当内容",
+      "impersonation": "冒充他人",
+      "other": "其他"
+    },
+    "fields": {
+      "reportedDiscordUsername": "被举报成员的 Discord 用户名",
+      "reportedDiscordUsernamePlaceholder": "用户名 或 用户名#0000",
+      "reportedDiscordUserId": "被举报成员的 Discord 用户 ID",
+      "reportedDiscordUserIdHint": "选填，但填写后有助于我们更快找到正确的人。请在 Discord 中右键点击对方名称并复制用户 ID（需先开启开发者模式）。",
+      "category": "类别",
+      "selectCategory": "请选择类别",
+      "description": "发生了什么事？",
+      "descriptionPlaceholder": "请描述事情的经过，包括大致的时间和地点（哪个频道/语音聊天）。",
+      "evidenceLinks": "证据链接",
+      "evidenceLinksPlaceholder": "截图、录屏片段或消息链接（选填，但有帮助）。"
+    },
+    "submit": "提交举报",
+    "submitting": "提交中…",
+    "submitError": "提交举报时出现问题，请重试。",
+    "success": {
+      "heading": "举报已提交",
+      "message": "感谢您的反馈，您的举报已送达管理团队。",
+      "followUp": "请保留此参考编号以便查询。您随时可以在账户页面查看处理状态。审核期间请不要自行采取行动。"
+    }
+  },
+  "appeal": {
+    "heading": "封禁申诉",
+    "intro": "觉得自己被误封了吗？向我们说明情况，我们会进行审查。",
+    "signInPrompt": "请使用 Discord 登录以提交封禁申诉。这将确认您的身份，以便管理团队审核您的案件。",
+    "signInFailed": "登录失败或已取消，请重试。",
+    "fields": {
+      "discordUsername": "您的 Discord 用户名",
+      "discordUsernamePlaceholder": "用户名 或 用户名#0000",
+      "discordUserId": "您的 Discord 用户 ID",
+      "discordUserIdHint": "请在 Discord 中右键点击您的名称并复制用户 ID（需先开启开发者模式）。",
+      "banReason": "您认为自己是因为什么被封禁的？",
+      "banReasonPlaceholder": "被封禁时，您是否有被告知具体原因？",
+      "appealReason": "为什么应该解除您的封禁？",
+      "appealReasonPlaceholder": "请如实且具体地说明发生的经过，以及为什么应该再给您一次机会。",
+      "additionalInfo": "还有什么想让我们知道的吗？"
+    },
+    "submit": "提交申诉",
+    "submitting": "提交中…",
+    "submitError": "提交申诉时出现问题，请重试。",
+    "success": {
+      "heading": "申诉已提交",
+      "message": "感谢您提交申诉，管理团队将会进行审核。",
+      "followUp": "请保留此参考编号以便查询。您随时可以在账户页面查看处理状态。"
+    }
+  },
+  "support": {
+    "heading": "联系支持团队",
+    "intro": "遇到的问题不属于举报或封禁申诉？直接给管理团队发消息吧。",
+    "signInPrompt": "请使用 Discord 登录以提交支持请求。管理团队会直接回复，您可以在账户页面查看对话内容。",
+    "signInFailed": "登录失败或已取消，请重试。",
+    "fields": {
+      "subject": "主题",
+      "subjectPlaceholder": "简要说明您需要什么帮助",
+      "message": "您需要什么帮助？",
+      "messagePlaceholder": "请描述您的问题或需求 — 管理团队会在此回复。"
+    },
+    "submit": "提交支持请求",
+    "submitting": "提交中…",
+    "submitError": "提交请求时出现问题，请重试。",
+    "success": {
+      "heading": "支持请求已提交",
+      "message": "感谢您的联系，管理团队将会回复您的请求。",
+      "followUp": "请保留此参考编号以便查询。您可以在账户页面查看管理团队的回复，并继续回复对方。"
+    }
+  },
+  "account": {
+    "title": "我的账户",
+    "signedInAs": "当前登录身份：{username}",
+    "signOut": "退出登录",
+    "signInPrompt": "请使用 Discord 登录以查看您的举报和封禁申诉状态。",
+    "signInFailed": "登录失败或已取消，请重试。",
+    "myApplications": "我的申请",
+    "noApplications": "您尚未提交任何申请。",
+    "myReports": "我的举报",
+    "noReports": "您尚未提交任何举报。",
+    "myAppeals": "我的封禁申诉",
+    "noAppeals": "您尚未提交任何封禁申诉。",
+    "mySupportRequests": "我的支持请求",
+    "noSupportRequests": "您尚未提交任何支持请求。",
+    "reportedUser": "已举报 {username}",
+    "conversationWithStaff": "您与管理团队的对话：",
+    "staffQuestion": "管理团队有问题想询问您 — 请在下方回复。",
+    "typeReply": "输入您的回复…",
+    "sendReply": "发送回复",
+    "moderatorApplication": "管理员申请",
+    "updated": "已更新",
+    "noMessagesYet": "暂时没有消息。",
+    "sending": "发送中…",
+    "sendMessageFailed": "消息发送失败。"
+  },
+  "terms": {
+    "title": "服务条款",
+    "intro": "本条款适用于您对本网站的使用，包括 {serverName} 的管理员申请、成员举报、封禁申诉及相关页面。使用本网站即表示您同意本条款。",
+    "sections": [
+      {
+        "title": "关于本网站",
+        "body": "本网站是为 Discord 服务器 {serverName} 提供服务的社区自营工具，与 Discord Inc. 或 Roblox Corporation 没有任何关联，也未获其认可或运营。“Discord”与“Roblox”均为其各自所有者的商标。"
+      },
+      {
+        "title": "登录",
+        "body": "部分页面需要使用您的 Discord 账号登录（通过 Discord 自身的登录界面 — 我们绝不会看到或存储您的 Discord 密码）。管理团队页面则需要由管理员直接创建的独立账号。您需自行负责保护自己 Discord 账号的访问安全。"
+      },
+      {
+        "title": "提交内容时您所同意的事项",
+        "list": [
+          "您所提交的信息，就您所知均为准确且真实。",
+          "您不会提交虚假举报、虚假封禁申诉，或明知虚假的误导性信息。",
+          "您不会利用举报或申诉系统恶意骚扰、发送垃圾信息或针对其他成员。",
+          "您不会尝试干扰、使系统过载，或试图未经授权访问本网站及其系统。"
+        ],
+        "body": "违反本条款的提交内容可能不经审核即被驳回，重复违规者可能会被取消使用这些系统的权限。"
+      },
+      {
+        "title": "结果不作保证",
+        "body": "提交管理员申请、举报或封禁申诉并不保证获得任何特定结果。录取、拒绝、处理结果或驳回等决定，完全由 {serverName} 的管理团队自行决定。"
+      },
+      {
+        "title": "第三方内容",
+        "body": "首页会展示来自我们并不掌控其运营的 YouTube 频道的视频。链接或嵌入的内容归各自创作者所有，并受 YouTube 自身条款约束，而非本条款。"
+      },
+      {
+        "title": "不提供任何保证",
+        "body": "本网站按“现状”提供，由社区志愿者尽力维护运营。我们不保证本网站将始终可用、无错误或不会中断。"
+      },
+      {
+        "title": "条款变更",
+        "body": "本条款可能会随网站变化不时更新。若您在更新后继续使用本网站，即表示您接受修订后的条款。"
+      }
+    ],
+    "contact": {
+      "title": "联系方式",
+      "body": "如对本条款有任何疑问，可将问题发送至服务器管理团队："
+    }
+  },
+  "privacy": {
+    "title": "隐私政策",
+    "intro": "本政策说明 {serverName} 在本网站上收集哪些信息 — 包括管理员申请、成员举报、封禁申诉以及 Discord 登录 — 以及这些信息的使用方式。",
+    "whatIsCollected": {
+      "title": "收集哪些信息",
+      "applications": "您的 Discord 用户名、Discord 用户 ID、年龄、国家/地区、时区、活跃度信息、管理经验，以及您对申请问题的书面回答。申请无需登录。",
+      "applicationsLabel": "管理员申请：",
+      "signingIn": "如需提交举报、封禁申诉，或在账户页面查询状态，您需要使用 Discord 账号登录。Discord 会与我们分享您的 Discord 用户名、用户 ID 与头像 — 但绝不会分享您的 Discord 密码，我们也永远不会看到密码。",
+      "signingInLabel": "使用 Discord 登录：",
+      "reports": "您的 Discord 用户名（作为举报人）、被举报成员的 Discord 用户名/ID、事件的类别与描述，以及您提供的任何证据链接。",
+      "reportsLabel": "举报：",
+      "appeals": "您的 Discord 用户名与用户 ID、您认为自己被封禁的原因、您的申诉理由，以及您提供的任何其他信息。",
+      "appealsLabel": "封禁申诉：",
+      "ipHash": "在以上所有情况中，我们还会记录提交时所用 IP 地址的单向加密哈希值（并非原始 IP），仅用于防止垃圾信息与滥用行为。"
+    },
+    "why": {
+      "title": "为何收集这些信息",
+      "body": "这些信息仅用于评估管理员申请、调查举报、审核封禁申诉，以及让已登录的成员能够查看自己提交内容的处理状态。我们不会收集超出上述目的所需的信息，也不会将其用于广告或与第三方共享。"
+    },
+    "howStored": {
+      "title": "数据如何存储",
+      "body": "申请、举报与封禁申诉均存储于受保护且具访问控制的数据库中，绝不会公开访问，提交者也无法查看他人的提交内容。您的 Discord 登录会话由我们的身份验证服务商（Supabase）管理，与 Discord 自身系统相互独立。"
+    },
+    "whoCanAccess": {
+      "title": "谁可以访问这些数据",
+      "body": "只有通过管理后台登录的 {serverName} 授权管理团队成员，才能查看已提交的申请、举报与申诉。访问范围仅限于审核提交内容所需的部分。如果您以 Discord 登录，可以在账户页面查看自己举报和申诉的状态 — 但无法查看他人的数据。"
+    },
+    "yourRights": {
+      "title": "您的数据，您的权利",
+      "contactMethod": "如果您对自己的数据有任何疑问，或希望申请删除数据，请联系服务器管理团队。",
+      "body": "以询问我们持有您哪些数据，或申请删除这些数据。您也可以随时通过 Discord 的“已授权应用”设置，撤销本网站对您 Discord 账号的访问权限。",
+      "reachAt": "您可以通过以下方式联系服务器管理团队："
+    }
+  }
+}
