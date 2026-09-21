@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { requireStaffSession } from "@/lib/staffAuth";
 import { hasSection } from "@/lib/permissions";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
@@ -32,12 +33,12 @@ function DetailRow({ label, value }: { label: string; value: React.ReactNode }) 
   );
 }
 
-function AnswerBlock({ question, answer }: { question: string; answer: string | null }) {
+function AnswerBlock({ question, answer, dash }: { question: string; answer: string | null; dash: string }) {
   return (
     <div className="border-b border-[var(--color-border)] py-4 last:border-0">
       <p className="text-sm font-semibold text-[var(--color-text)]">{question}</p>
       <p className="mt-2 whitespace-pre-wrap text-sm text-[var(--color-text-muted)]">
-        {answer?.trim() || "—"}
+        {answer?.trim() || dash}
       </p>
     </div>
   );
@@ -61,6 +62,10 @@ export default async function ApplicationDetailPage(
 
   if (!application) notFound();
 
+  const t = await getTranslations("detail");
+  const tCommon = await getTranslations("common");
+  const tThread = await getTranslations("thread");
+
   const [reviewedBy, claimedByName, activity, notes, followups] = await Promise.all([
     getStaffDisplayName(application.last_updated_by),
     getStaffDisplayName(application.claimed_by),
@@ -68,6 +73,8 @@ export default async function ApplicationDetailPage(
     getCaseNotes("application", application.id),
     getFollowups(application.id, { viewerRole: "staff" }),
   ]);
+
+  const dash = tCommon("dash");
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
@@ -84,59 +91,64 @@ export default async function ApplicationDetailPage(
       </div>
 
       <div className="card mb-6 grid grid-cols-2 gap-6 p-6 sm:grid-cols-3">
-        <DetailRow label="Discord User ID" value={application.discord_user_id} />
-        <DetailRow label="Age" value={application.age} />
-        <DetailRow label="Country" value={application.country} />
-        <DetailRow label="Timezone" value={application.timezone} />
-        <DetailRow label="Time in server" value={application.time_in_server} />
+        <DetailRow label={t("discordUserId")} value={application.discord_user_id} />
+        <DetailRow label={t("age")} value={application.age} />
+        <DetailRow label={t("country")} value={application.country} />
+        <DetailRow label={t("timezone")} value={application.timezone} />
+        <DetailRow label={t("timeInServer")} value={application.time_in_server} />
         <DetailRow
-          label="Submitted"
+          label={t("submitted")}
           value={new Date(application.created_at).toLocaleString()}
         />
-        <DetailRow label="Activity level" value={application.activity_level} />
-        <DetailRow label="Online times" value={application.online_times} />
-        <DetailRow label="Weekly hours" value={application.weekly_hours} />
+        <DetailRow label={t("activityLevel")} value={application.activity_level} />
+        <DetailRow label={t("onlineTimes")} value={application.online_times} />
+        <DetailRow label={t("weeklyHours")} value={application.weekly_hours} />
       </div>
 
       <div className="card mb-6 p-6">
-        <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">Experience</h2>
+        <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">{t("experience")}</h2>
         <AnswerBlock
-          question="Moderated a Discord server before?"
-          answer={application.has_moderated_before ? "Yes" : "No"}
+          question={t("hasModeratedBefore")}
+          answer={application.has_moderated_before ? tCommon("yes") : tCommon("no")}
+          dash={dash}
         />
-        <AnswerBlock question="Previous moderation experience" answer={application.previous_experience} />
-        <AnswerBlock question="Bots/tools used" answer={application.bots_tools_used} />
-        <AnswerBlock question="Previous staff positions" answer={application.previous_staff_positions} />
+        <AnswerBlock question={t("previousExperience")} answer={application.previous_experience} dash={dash} />
+        <AnswerBlock question={t("botsToolsUsed")} answer={application.bots_tools_used} dash={dash} />
+        <AnswerBlock question={t("previousStaffPositions")} answer={application.previous_staff_positions} dash={dash} />
       </div>
 
       <div className="card mb-6 p-6">
-        <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">Scenarios</h2>
+        <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">{t("scenarios")}</h2>
         <AnswerBlock
-          question="A member repeatedly breaks the rules but claims they didn't know. What would you do?"
+          question={t("scenarioUnawareRules")}
           answer={application.scenario_unaware_rules}
+          dash={dash}
         />
         <AnswerBlock
-          question="Two members are arguing and it's becoming toxic. How would you handle it?"
+          question={t("scenarioToxicConflict")}
           answer={application.scenario_toxic_conflict}
+          dash={dash}
         />
-        <AnswerBlock question="A friend of yours breaks a server rule. What would you do?" answer={application.scenario_friend_breaks_rule} />
+        <AnswerBlock question={t("scenarioFriendBreaksRule")} answer={application.scenario_friend_breaks_rule} dash={dash} />
         <AnswerBlock
-          question="You discover another moderator abusing their permissions. What would you do?"
+          question={t("scenarioStaffAbuse")}
           answer={application.scenario_staff_abuse}
+          dash={dash}
         />
         <AnswerBlock
-          question="Someone reports a member you personally dislike. How do you stay fair?"
+          question={t("scenarioBiasedReport")}
           answer={application.scenario_biased_report}
+          dash={dash}
         />
       </div>
 
       <div className="card mb-6 p-6">
-        <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">Motivation</h2>
-        <AnswerBlock question="Why do you want to become a moderator?" answer={application.motivation_why} />
-        <AnswerBlock question="What makes you suitable for the role?" answer={application.motivation_suitable} />
-        <AnswerBlock question="What makes a good moderator?" answer={application.motivation_good_moderator} />
-        <AnswerBlock question="What could you improve about the server?" answer={application.motivation_improve_server} />
-        <AnswerBlock question="Anything else?" answer={application.additional_info} />
+        <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">{t("motivation")}</h2>
+        <AnswerBlock question={t("motivationWhy")} answer={application.motivation_why} dash={dash} />
+        <AnswerBlock question={t("motivationSuitable")} answer={application.motivation_suitable} dash={dash} />
+        <AnswerBlock question={t("motivationGoodModerator")} answer={application.motivation_good_moderator} dash={dash} />
+        <AnswerBlock question={t("motivationImproveServer")} answer={application.motivation_improve_server} dash={dash} />
+        <AnswerBlock question={t("additionalInfo")} answer={application.additional_info} dash={dash} />
       </div>
 
       <ApplicationReviewPanel
@@ -149,23 +161,27 @@ export default async function ApplicationDetailPage(
       />
 
       <div className="card mt-6 p-6">
-        <h2 className="mb-1 text-lg font-semibold text-[var(--color-text)]">Message to Applicant</h2>
-        <p className="field-hint mb-4">Visible to the applicant on their account page.</p>
+        <h2 className="mb-1 text-lg font-semibold text-[var(--color-text)]">{t("messageToApplicant")}</h2>
+        <p className="field-hint mb-4">{t("messageToApplicantHint")}</p>
         <FollowupThread
           endpoint={`/api/admin/applications/${application.id}/followups`}
           initialMessages={followups}
-          placeholder="Ask the applicant a question… (visible to them)"
-          submitLabel="Send message"
+          placeholder={t("askApplicantPlaceholder")}
+          submitLabel={t("sendMessage")}
+          noMessagesLabel={tThread("noMessages")}
+          sendingLabel={tThread("sending")}
+          sendErrorLabel={tThread("sendFailed")}
+          networkErrorLabel={tCommon("networkError")}
         />
       </div>
 
       <div className="card mt-6 p-6">
-        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">Staff Notes</h2>
+        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">{t("staffNotes")}</h2>
         <NotesThread endpoint={`/api/admin/applications/${application.id}/notes`} initialNotes={notes} />
       </div>
 
       <div className="card mt-6 p-6">
-        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">Activity History</h2>
+        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">{t("activityHistory")}</h2>
         <ActivityHistoryList entries={activity} />
       </div>
     </div>

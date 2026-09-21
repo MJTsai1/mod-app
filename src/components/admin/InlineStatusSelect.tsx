@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useToast } from "@/components/site/ToastProvider";
-import { formatStatusLabel } from "@/lib/formatStatus";
 
 interface Props<T extends string> {
   status: T;
@@ -17,6 +17,9 @@ export function InlineStatusSelect<T extends string>({
   endpoint,
   onUpdated,
 }: Props<T>) {
+  const t = useTranslations("inlineStatus");
+  const tStatus = useTranslations("status");
+  const tCommon = useTranslations("common");
   const { showToast } = useToast();
   const [value, setValue] = useState(status);
   const [saving, setSaving] = useState(false);
@@ -36,15 +39,15 @@ export function InlineStatusSelect<T extends string>({
       if (!response.ok) {
         const body = await response.json().catch(() => null);
         setValue(previous);
-        showToast(body?.error ?? "Failed to update status.", "error");
+        showToast(body?.error ?? t("updateFailed"), "error");
         return;
       }
 
       onUpdated(newStatus);
-      showToast("Status updated.");
+      showToast(t("updated"));
     } catch {
       setValue(previous);
-      showToast("Network error — please try again.", "error");
+      showToast(tCommon("networkError"), "error");
     } finally {
       setSaving(false);
     }
@@ -57,11 +60,11 @@ export function InlineStatusSelect<T extends string>({
       onClick={(event) => event.stopPropagation()}
       onChange={(event) => handleChange(event.target.value as T)}
       className="field-input w-auto px-2 py-1 text-xs"
-      aria-label="Change status"
+      aria-label={t("changeStatusAria")}
     >
       {statusValues.map((s) => (
         <option key={s} value={s}>
-          {formatStatusLabel(s)}
+          {tStatus(s as never)}
         </option>
       ))}
     </select>

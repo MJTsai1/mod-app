@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { appealStatusValues } from "@/lib/validation/appeal";
 import type { AppealStatus } from "@/lib/supabase/types";
 import { useToast } from "@/components/site/ToastProvider";
@@ -24,6 +25,9 @@ export function AppealReviewPanel({
   claimedByName,
   currentStaffId,
 }: Props) {
+  const t = useTranslations("review");
+  const tStatus = useTranslations("status");
+  const tCommon = useTranslations("common");
   const router = useRouter();
   const { showToast } = useToast();
   const [status, setStatus] = useState<AppealStatus>(initialStatus);
@@ -44,14 +48,14 @@ export function AppealReviewPanel({
 
       if (!response.ok) {
         const body = await response.json().catch(() => null);
-        showToast(body?.error ?? "Failed to save changes.", "error");
+        showToast(body?.error ?? t("saveFailed"), "error");
         return;
       }
 
-      showToast("Changes saved.");
+      showToast(t("changesSaved"));
       router.refresh();
     } catch {
-      showToast("Network error — please try again.", "error");
+      showToast(tCommon("networkError"), "error");
     } finally {
       setSaving(false);
     }
@@ -60,10 +64,10 @@ export function AppealReviewPanel({
   return (
     <div className="card p-6">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-        <h2 className="text-lg font-semibold text-[var(--color-text)]">Staff Review</h2>
+        <h2 className="text-lg font-semibold text-[var(--color-text)]">{t("staffReview")}</h2>
         <div className="flex items-center gap-4">
           {reviewedBy && (
-            <p className="text-xs text-[var(--color-text-subtle)]">Last reviewed by {reviewedBy}</p>
+            <p className="text-xs text-[var(--color-text-subtle)]">{t("lastReviewedBy", { name: reviewedBy })}</p>
           )}
           <ClaimButton
             endpoint={`/api/admin/appeals/${appealId}`}
@@ -79,7 +83,7 @@ export function AppealReviewPanel({
       </div>
 
       <label htmlFor="status" className="field-label">
-        Appeal status
+        {t("appealStatus")}
       </label>
       <select
         id="status"
@@ -89,7 +93,7 @@ export function AppealReviewPanel({
       >
         {appealStatusValues.map((s) => (
           <option key={s} value={s}>
-            {s.charAt(0).toUpperCase() + s.slice(1)}
+            {tStatus(s)}
           </option>
         ))}
       </select>
@@ -100,7 +104,7 @@ export function AppealReviewPanel({
         disabled={saving || !dirty}
         className="btn btn-primary"
       >
-        {saving ? "Saving…" : "Save changes"}
+        {saving ? t("saving") : t("saveChanges")}
       </button>
     </div>
   );

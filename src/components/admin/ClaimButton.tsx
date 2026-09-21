@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useToast } from "@/components/site/ToastProvider";
 
 interface Props {
@@ -12,6 +13,8 @@ interface Props {
 }
 
 export function ClaimButton({ endpoint, claimedBy, claimedByName, currentStaffId, onUpdated }: Props) {
+  const t = useTranslations("claim");
+  const tCommon = useTranslations("common");
   const { showToast } = useToast();
   const [saving, setSaving] = useState(false);
 
@@ -32,13 +35,13 @@ export function ClaimButton({ endpoint, claimedBy, claimedByName, currentStaffId
 
       if (!response.ok) {
         const body = await response.json().catch(() => null);
-        showToast(body?.error ?? "Failed to update claim.", "error");
+        showToast(body?.error ?? t("updateFailed"), "error");
         return;
       }
 
-      onUpdated(isMine ? null : currentStaffId, isMine ? null : "You");
+      onUpdated(isMine ? null : currentStaffId, isMine ? null : t("you"));
     } catch {
-      showToast("Network error — please try again.", "error");
+      showToast(tCommon("networkError"), "error");
     } finally {
       setSaving(false);
     }
@@ -47,7 +50,7 @@ export function ClaimButton({ endpoint, claimedBy, claimedByName, currentStaffId
   if (isClaimedByOther) {
     return (
       <span className="text-xs text-[var(--color-text-subtle)]">
-        Claimed by {claimedByName ?? "someone else"}
+        {t("claimedBy", { name: claimedByName ?? t("someoneElse") })}
       </span>
     );
   }
@@ -59,7 +62,7 @@ export function ClaimButton({ endpoint, claimedBy, claimedByName, currentStaffId
       disabled={saving}
       className="text-xs font-medium text-[var(--color-accent-soft)] hover:underline disabled:opacity-50"
     >
-      {isMine ? "Unclaim" : "Claim"}
+      {isMine ? t("unclaim") : t("claim")}
     </button>
   );
 }

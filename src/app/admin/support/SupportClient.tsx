@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { supportStatusValues } from "@/lib/validation/support";
-import { formatStatusLabel } from "@/lib/formatStatus";
 import type { SupportRequestListItem, SupportStatus } from "@/lib/supabase/types";
 import { InlineStatusSelect } from "@/components/admin/InlineStatusSelect";
 import { TableSkeletonRows } from "@/components/admin/TableSkeletonRows";
@@ -17,6 +17,10 @@ const PAGE_SIZE = 20;
 type SupportListRow = SupportRequestListItem & { claimed_by_name: string | null };
 
 export function SupportClient({ currentStaffId }: { currentStaffId: string }) {
+  const t = useTranslations("table");
+  const tBulk = useTranslations("bulk");
+  const tStatus = useTranslations("status");
+  const tCommon = useTranslations("common");
   const { showToast } = useToast();
   const [requests, setRequests] = useState<SupportListRow[]>([]);
   const [total, setTotal] = useState(0);
@@ -69,12 +73,12 @@ export function SupportClient({ currentStaffId }: { currentStaffId: string }) {
       })
       .catch((err) => {
         if (err.name === "AbortError") return;
-        setError("Couldn't load support requests. Please refresh the page.");
+        setError(t("couldntLoadSupport"));
       })
       .finally(() => setLoading(false));
 
     return () => controller.abort();
-  }, [page, status, debouncedSearch, sortColumn, sortOrder]);
+  }, [page, status, debouncedSearch, sortColumn, sortOrder, t]);
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
@@ -116,14 +120,14 @@ export function SupportClient({ currentStaffId }: { currentStaffId: string }) {
       });
       const body = await response.json().catch(() => null);
       if (!response.ok) {
-        showToast(body?.error ?? "Bulk update failed.", "error");
+        showToast(body?.error ?? tBulk("bulkUpdateFailed"), "error");
         return;
       }
       setRequests((prev) => prev.map((r) => (selected.has(r.id) ? { ...r, status: newStatus } : r)));
-      showToast(`Updated ${body.updated} request${body.updated === 1 ? "" : "s"}.`);
+      showToast(tBulk("updatedSupport", { count: body.updated }));
       setSelected(new Set());
     } catch {
-      showToast("Network error — please try again.", "error");
+      showToast(tCommon("networkError"), "error");
     } finally {
       setBulkApplying(false);
     }
@@ -137,20 +141,20 @@ export function SupportClient({ currentStaffId }: { currentStaffId: string }) {
             type="search"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Search by member, subject, or reference..."
+            placeholder={t("searchSupportPlaceholder")}
             className="field-input sm:max-w-xs"
-            aria-label="Search support requests"
+            aria-label={t("searchSupportAria")}
           />
           <select
             value={status}
             onChange={(event) => setStatus(event.target.value)}
             className="field-input sm:max-w-[180px]"
-            aria-label="Filter by status"
+            aria-label={t("filterByStatusAria")}
           >
-            <option value="">All statuses</option>
+            <option value="">{t("allStatuses")}</option>
             {supportStatusValues.map((s) => (
               <option key={s} value={s}>
-                {formatStatusLabel(s)}
+                {tStatus(s)}
               </option>
             ))}
           </select>
@@ -159,7 +163,7 @@ export function SupportClient({ currentStaffId }: { currentStaffId: string }) {
           href={`/api/admin/support-requests/export?${exportParams.toString()}`}
           className="btn btn-secondary px-3 py-2 text-sm"
         >
-          Export CSV
+          {t("exportCsv")}
         </a>
       </div>
 
@@ -190,14 +194,14 @@ export function SupportClient({ currentStaffId }: { currentStaffId: string }) {
                     type="checkbox"
                     checked={requests.length > 0 && selected.size === requests.length}
                     onChange={toggleSelectAll}
-                    aria-label="Select all on this page"
+                    aria-label={t("selectAllAria")}
                   />
                 </th>
-                <SortableHeader label="Member" column="subject" currentSort={sortColumn} currentOrder={sortOrder} onSort={handleSort} />
-                <th className="px-4 py-3">Reference</th>
-                <SortableHeader label="Status" column="status" currentSort={sortColumn} currentOrder={sortOrder} onSort={handleSort} />
-                <th className="px-4 py-3">Claim</th>
-                <SortableHeader label="Submitted" column="created_at" currentSort={sortColumn} currentOrder={sortOrder} onSort={handleSort} />
+                <SortableHeader label={t("member")} column="subject" currentSort={sortColumn} currentOrder={sortOrder} onSort={handleSort} />
+                <th className="px-4 py-3">{t("reference")}</th>
+                <SortableHeader label={t("status")} column="status" currentSort={sortColumn} currentOrder={sortOrder} onSort={handleSort} />
+                <th className="px-4 py-3">{t("claim")}</th>
+                <SortableHeader label={t("submitted")} column="created_at" currentSort={sortColumn} currentOrder={sortOrder} onSort={handleSort} />
                 <th className="px-4 py-3" />
               </tr>
             </thead>
@@ -206,7 +210,7 @@ export function SupportClient({ currentStaffId }: { currentStaffId: string }) {
               {!loading && requests.length === 0 && (
                 <tr>
                   <td colSpan={7} className="px-4 py-8 text-center text-[var(--color-text-subtle)]">
-                    No support requests found.
+                    {t("noSupport")}
                   </td>
                 </tr>
               )}
@@ -221,7 +225,7 @@ export function SupportClient({ currentStaffId }: { currentStaffId: string }) {
                         type="checkbox"
                         checked={selected.has(request.id)}
                         onChange={() => toggleSelected(request.id)}
-                        aria-label={`Select request from ${request.discord_username}`}
+                        aria-label={t("selectRequestAria", { name: request.discord_username })}
                       />
                     </td>
                     <td className="px-4 py-3">
@@ -272,7 +276,7 @@ export function SupportClient({ currentStaffId }: { currentStaffId: string }) {
                         href={`/admin/support/${request.id}`}
                         className="text-sm font-medium text-[var(--color-accent-soft)] hover:underline"
                       >
-                        Review
+                        {t("review")}
                       </Link>
                     </td>
                   </tr>
@@ -284,9 +288,7 @@ export function SupportClient({ currentStaffId }: { currentStaffId: string }) {
 
       {totalPages > 1 && (
         <div className="mt-4 flex items-center justify-between text-sm text-[var(--color-text-muted)]">
-          <span>
-            Page {page} of {totalPages} &middot; {total} total
-          </span>
+          <span>{t("pageOf", { page, totalPages, total })}</span>
           <div className="flex gap-2">
             <button
               type="button"
@@ -294,7 +296,7 @@ export function SupportClient({ currentStaffId }: { currentStaffId: string }) {
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
             >
-              Previous
+              {t("previous")}
             </button>
             <button
               type="button"
@@ -302,7 +304,7 @@ export function SupportClient({ currentStaffId }: { currentStaffId: string }) {
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
             >
-              Next
+              {t("next")}
             </button>
           </div>
         </div>

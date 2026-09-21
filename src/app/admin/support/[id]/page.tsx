@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { requireStaffSession } from "@/lib/staffAuth";
 import { hasSection } from "@/lib/permissions";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
@@ -48,6 +49,10 @@ export default async function SupportDetailPage(props: PageProps<"/admin/support
 
   if (!supportRequest) notFound();
 
+  const t = await getTranslations("detail");
+  const tCommon = await getTranslations("common");
+  const tThread = await getTranslations("thread");
+
   const [reviewedBy, claimedByName, activity, notes, messages] = await Promise.all([
     getStaffDisplayName(supportRequest.last_updated_by),
     getStaffDisplayName(supportRequest.claimed_by),
@@ -71,12 +76,12 @@ export default async function SupportDetailPage(props: PageProps<"/admin/support
       </div>
 
       <div className="card mb-6 grid grid-cols-2 gap-6 p-6 sm:grid-cols-3">
-        <DetailRow label="From" value={supportRequest.discord_username} />
-        <DetailRow label="Submitted" value={new Date(supportRequest.created_at).toLocaleString()} />
+        <DetailRow label={t("from")} value={supportRequest.discord_username} />
+        <DetailRow label={t("submitted")} value={new Date(supportRequest.created_at).toLocaleString()} />
       </div>
 
       <div className="card mb-6 p-6">
-        <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">Original Request</h2>
+        <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">{t("originalRequest")}</h2>
         <p className="whitespace-pre-wrap text-sm text-[var(--color-text-muted)]">
           {supportRequest.message}
         </p>
@@ -92,23 +97,27 @@ export default async function SupportDetailPage(props: PageProps<"/admin/support
       />
 
       <div className="card mt-6 p-6">
-        <h2 className="mb-1 text-lg font-semibold text-[var(--color-text)]">Conversation</h2>
-        <p className="field-hint mb-4">Visible to the member on their Account page.</p>
+        <h2 className="mb-1 text-lg font-semibold text-[var(--color-text)]">{t("conversation")}</h2>
+        <p className="field-hint mb-4">{t("conversationHint")}</p>
         <FollowupThread
           endpoint={`/api/admin/support-requests/${supportRequest.id}/messages`}
           initialMessages={messages}
-          placeholder="Reply to the member… (visible to them)"
-          submitLabel="Send reply"
+          placeholder={t("replyPlaceholder")}
+          submitLabel={t("sendReply")}
+          noMessagesLabel={tThread("noMessages")}
+          sendingLabel={tThread("sending")}
+          sendErrorLabel={tThread("sendFailed")}
+          networkErrorLabel={tCommon("networkError")}
         />
       </div>
 
       <div className="card mt-6 p-6">
-        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">Staff Notes</h2>
+        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">{t("staffNotes")}</h2>
         <NotesThread endpoint={`/api/admin/support-requests/${supportRequest.id}/notes`} initialNotes={notes} />
       </div>
 
       <div className="card mt-6 p-6">
-        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">Activity History</h2>
+        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">{t("activityHistory")}</h2>
         <ActivityHistoryList entries={activity} />
       </div>
     </div>

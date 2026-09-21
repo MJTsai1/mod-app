@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useToast } from "@/components/site/ToastProvider";
 import type { CaseNote } from "@/lib/caseNotes";
 
 export function NotesThread({ endpoint, initialNotes }: { endpoint: string; initialNotes: CaseNote[] }) {
+  const t = useTranslations("thread");
+  const tCommon = useTranslations("common");
   const { showToast } = useToast();
   const [notes, setNotes] = useState(initialNotes);
   const [draft, setDraft] = useState("");
@@ -24,14 +27,14 @@ export function NotesThread({ endpoint, initialNotes }: { endpoint: string; init
 
       const body = await response.json().catch(() => null);
       if (!response.ok) {
-        showToast(body?.error ?? "Failed to add note.", "error");
+        showToast(body?.error ?? t("addNoteFailed"), "error");
         return;
       }
 
       setNotes((prev) => [body.note, ...prev]);
       setDraft("");
     } catch {
-      showToast("Network error — please try again.", "error");
+      showToast(tCommon("networkError"), "error");
     } finally {
       setSaving(false);
     }
@@ -44,7 +47,7 @@ export function NotesThread({ endpoint, initialNotes }: { endpoint: string; init
         onChange={(event) => setDraft(event.target.value)}
         rows={3}
         maxLength={5000}
-        placeholder="Add a note for other staff (not visible to the submitter)…"
+        placeholder={t("addNotePlaceholder")}
         className="field-input resize-y"
       />
       <button
@@ -53,11 +56,11 @@ export function NotesThread({ endpoint, initialNotes }: { endpoint: string; init
         disabled={saving || !draft.trim()}
         className="btn btn-secondary mt-2"
       >
-        {saving ? "Adding…" : "Add note"}
+        {saving ? t("addingNote") : t("addNote")}
       </button>
 
       {notes.length === 0 ? (
-        <p className="mt-4 text-sm text-[var(--color-text-subtle)]">No notes yet.</p>
+        <p className="mt-4 text-sm text-[var(--color-text-subtle)]">{t("noNotes")}</p>
       ) : (
         <ul className="mt-5 space-y-4 border-t border-[var(--color-border)] pt-4">
           {notes.map((note) => (

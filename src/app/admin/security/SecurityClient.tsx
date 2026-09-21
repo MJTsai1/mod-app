@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 
 interface Factor {
@@ -10,6 +11,8 @@ interface Factor {
 }
 
 export function SecurityClient() {
+  const t = useTranslations("securityPage");
+  const tLogin = useTranslations("login");
   const [factors, setFactors] = useState<Factor[] | null>(null);
   const [enrolling, setEnrolling] = useState<{ factorId: string; qrCode: string; secret: string } | null>(
     null
@@ -39,14 +42,14 @@ export function SecurityClient() {
       const { data, error } = await supabase.auth.mfa.enroll({ factorType: "totp" });
       if (error || !data) {
         setStatus("error");
-        setErrorMessage(error?.message ?? "Could not start enrollment.");
+        setErrorMessage(error?.message ?? t("enrollFailed"));
         return;
       }
       setEnrolling({ factorId: data.id, qrCode: data.totp.qr_code, secret: data.totp.secret });
       setStatus("idle");
     } catch {
       setStatus("error");
-      setErrorMessage("Something went wrong. Please try again.");
+      setErrorMessage(tLogin("somethingWrong"));
     }
   }
 
@@ -63,7 +66,7 @@ export function SecurityClient() {
       });
       if (error) {
         setStatus("error");
-        setErrorMessage("Incorrect code. Please try again.");
+        setErrorMessage(tLogin("incorrectCode"));
         return;
       }
       setEnrolling(null);
@@ -72,7 +75,7 @@ export function SecurityClient() {
       await refreshFactors();
     } catch {
       setStatus("error");
-      setErrorMessage("Something went wrong. Please try again.");
+      setErrorMessage(tLogin("somethingWrong"));
     }
   }
 
@@ -91,7 +94,7 @@ export function SecurityClient() {
       await refreshFactors();
     } catch {
       setStatus("error");
-      setErrorMessage("Something went wrong. Please try again.");
+      setErrorMessage(tLogin("somethingWrong"));
     }
   }
 
@@ -110,18 +113,16 @@ export function SecurityClient() {
       )}
 
       {factors === null ? (
-        <p className="text-sm text-[var(--color-text-subtle)]">Loading…</p>
+        <p className="text-sm text-[var(--color-text-subtle)]">{t("loading")}</p>
       ) : enrolling ? (
         <form onSubmit={confirmEnroll}>
-          <p className="mb-3 text-sm text-[var(--color-text)]">
-            Scan this QR code with your authenticator app, then enter the 6-digit code it shows.
-          </p>
+          <p className="mb-3 text-sm text-[var(--color-text)]">{t("scanQr")}</p>
           {/* eslint-disable-next-line @next/next/no-img-element -- data-URI SVG from Supabase, not a static asset next/image can optimize */}
-          <img src={enrolling.qrCode} alt="Two-factor setup QR code" className="mb-3 h-48 w-48 rounded-lg bg-white p-2" />
-          <p className="field-hint mb-4 break-all">Manual entry code: {enrolling.secret}</p>
+          <img src={enrolling.qrCode} alt={t("qrAlt")} className="mb-3 h-48 w-48 rounded-lg bg-white p-2" />
+          <p className="field-hint mb-4 break-all">{t("manualEntry", { secret: enrolling.secret })}</p>
 
           <label htmlFor="enroll-code" className="field-label">
-            6-digit code
+            {t("codeLabel")}
           </label>
           <input
             id="enroll-code"
@@ -137,7 +138,7 @@ export function SecurityClient() {
 
           <div className="mt-4 flex gap-2">
             <button type="submit" disabled={status === "loading"} className="btn btn-primary">
-              {status === "loading" ? "Verifying…" : "Activate"}
+              {status === "loading" ? tLogin("verifying") : t("activate")}
             </button>
             <button
               type="button"
@@ -147,18 +148,18 @@ export function SecurityClient() {
                 setCode("");
               }}
             >
-              Cancel
+              {t("cancel")}
             </button>
           </div>
         </form>
       ) : verifiedFactors.length > 0 ? (
         <div>
-          <p className="mb-3 text-sm text-[var(--color-text)]">Two-factor authentication is enabled.</p>
+          <p className="mb-3 text-sm text-[var(--color-text)]">{t("enabled")}</p>
           <ul className="space-y-2">
             {verifiedFactors.map((factor) => (
               <li key={factor.id} className="flex items-center justify-between gap-4">
                 <span className="text-sm text-[var(--color-text-subtle)]">
-                  Authenticator app {factor.friendlyName ? `(${factor.friendlyName})` : ""}
+                  {t("authenticatorApp", { name: factor.friendlyName ? `(${factor.friendlyName})` : "" })}
                 </span>
                 <button
                   type="button"
@@ -167,7 +168,7 @@ export function SecurityClient() {
                   style={{ color: "var(--color-danger)" }}
                   onClick={() => removeFactor(factor.id)}
                 >
-                  Remove
+                  {t("remove")}
                 </button>
               </li>
             ))}
@@ -175,11 +176,9 @@ export function SecurityClient() {
         </div>
       ) : (
         <div>
-          <p className="mb-4 text-sm text-[var(--color-text-subtle)]">
-            Two-factor authentication is not enabled on your account.
-          </p>
+          <p className="mb-4 text-sm text-[var(--color-text-subtle)]">{t("notEnabled")}</p>
           <button type="button" disabled={status === "loading"} className="btn btn-primary" onClick={startEnroll}>
-            {status === "loading" ? "Starting…" : "Enable two-factor authentication"}
+            {status === "loading" ? t("starting") : t("enable")}
           </button>
         </div>
       )}

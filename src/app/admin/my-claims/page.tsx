@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { requireStaffSession } from "@/lib/staffAuth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { siteConfig } from "@/lib/config";
@@ -13,6 +14,8 @@ export const metadata: Metadata = {
 export default async function MyClaimsPage() {
   const session = await requireStaffSession();
   const supabase = createSupabaseAdminClient();
+  const t = await getTranslations("myClaims");
+  const tNav = await getTranslations("nav");
 
   const [{ data: applications }, { data: reports }, { data: appeals }] = await Promise.all([
     supabase
@@ -39,19 +42,17 @@ export default async function MyClaimsPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
-      <h1 className="text-2xl font-bold text-[var(--color-text)]">My Claims</h1>
-      <p className="field-hint mb-6">Applications, reports, and ban appeals you&apos;ve claimed.</p>
+      <h1 className="text-2xl font-bold text-[var(--color-text)]">{t("title")}</h1>
+      <p className="field-hint mb-6">{t("subtitle")}</p>
 
       {!hasAny && (
-        <div className="card p-6 text-sm text-[var(--color-text-subtle)]">
-          You haven&apos;t claimed anything yet.
-        </div>
+        <div className="card p-6 text-sm text-[var(--color-text-subtle)]">{t("empty")}</div>
       )}
 
       {applications && applications.length > 0 && (
         <div className="card mb-6 overflow-hidden">
           <h2 className="border-b border-[var(--color-border)] px-4 py-3 text-sm font-semibold text-[var(--color-text)] sm:px-6">
-            Applications
+            {tNav("applications")}
           </h2>
           <ul className="divide-y divide-[var(--color-border)]">
             {applications.map((application) => (
@@ -72,7 +73,7 @@ export default async function MyClaimsPage() {
       {reports && reports.length > 0 && (
         <div className="card mb-6 overflow-hidden">
           <h2 className="border-b border-[var(--color-border)] px-4 py-3 text-sm font-semibold text-[var(--color-text)] sm:px-6">
-            Reports
+            {tNav("reports")}
           </h2>
           <ul className="divide-y divide-[var(--color-border)]">
             {reports.map((report) => (
@@ -93,7 +94,7 @@ export default async function MyClaimsPage() {
       {appeals && appeals.length > 0 && (
         <div className="card overflow-hidden">
           <h2 className="border-b border-[var(--color-border)] px-4 py-3 text-sm font-semibold text-[var(--color-text)] sm:px-6">
-            Ban Appeals
+            {tNav("appeals")}
           </h2>
           <ul className="divide-y divide-[var(--color-border)]">
             {appeals.map((appeal) => (

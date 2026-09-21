@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { requireStaffSession } from "@/lib/staffAuth";
 import { siteConfig } from "@/lib/config";
 import { StaffManagementClient } from "./StaffManagementClient";
@@ -15,13 +16,12 @@ export default async function StaffPage() {
     redirect("/admin/dashboard");
   }
 
+  const t = await getTranslations("staffPage");
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
-      <h1 className="text-2xl font-bold text-[var(--color-text)]">Manage Staff</h1>
-      <p className="field-hint mb-6">
-        Create accounts and assign passwords directly — there&apos;s no public sign-up, so this
-        is the only way to grant dashboard access.
-      </p>
+      <h1 className="text-2xl font-bold text-[var(--color-text)]">{t("title")}</h1>
+      <p className="field-hint mb-6">{t("subtitle")}</p>
       <StaffManagementClient currentStaffId={session.staff.id} />
     </div>
   );

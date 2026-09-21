@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { formatStatusLabel } from "@/lib/formatStatus";
+import { useTranslations } from "next-intl";
 
 interface Props<T extends string> {
   count: number;
@@ -18,22 +18,24 @@ export function BulkActionsBar<T extends string>({
   onClear,
   applying,
 }: Props<T>) {
+  const t = useTranslations("bulk");
+  const tStatus = useTranslations("status");
   const [status, setStatus] = useState<T>(statusValues[0]);
 
   if (count === 0) return null;
 
   return (
     <div className="mb-4 flex flex-wrap items-center gap-3 rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-bg-elevated)] px-4 py-3">
-      <span className="text-sm font-medium text-[var(--color-text)]">{count} selected</span>
+      <span className="text-sm font-medium text-[var(--color-text)]">{t("selected", { count })}</span>
       <select
         value={status}
         onChange={(event) => setStatus(event.target.value as T)}
         className="field-input w-auto py-1.5 text-sm"
-        aria-label="Bulk status to apply"
+        aria-label={t("bulkStatusAria")}
       >
         {statusValues.map((s) => (
           <option key={s} value={s}>
-            Set status: {formatStatusLabel(s)}
+            {t("setStatus", { label: tStatus(s as never) })}
           </option>
         ))}
       </select>
@@ -43,10 +45,10 @@ export function BulkActionsBar<T extends string>({
         disabled={applying}
         className="btn btn-primary px-3 py-1.5 text-sm"
       >
-        {applying ? "Applying…" : "Apply"}
+        {applying ? t("applying") : t("apply")}
       </button>
       <button type="button" onClick={onClear} className="btn btn-ghost px-3 py-1.5 text-sm">
-        Clear selection
+        {t("clearSelection")}
       </button>
     </div>
   );

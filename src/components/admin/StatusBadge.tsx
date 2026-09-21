@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import type { ApplicationStatus, ReportStatus, AppealStatus, SupportStatus } from "@/lib/supabase/types";
 
 const STATUS_STYLES: Record<ApplicationStatus, { bg: string; color: string }> = {
@@ -10,10 +13,11 @@ const STATUS_STYLES: Record<ApplicationStatus, { bg: string; color: string }> = 
 };
 
 export function StatusBadge({ status }: { status: ApplicationStatus }) {
+  const t = useTranslations("status");
   const style = STATUS_STYLES[status];
   return (
     <span className="badge" style={{ background: style.bg, color: style.color }}>
-      {status}
+      {t(status)}
     </span>
   );
 }
@@ -27,10 +31,11 @@ const REPORT_STATUS_STYLES: Record<ReportStatus, { bg: string; color: string }> 
 };
 
 export function ReportStatusBadge({ status }: { status: ReportStatus }) {
+  const t = useTranslations("status");
   const style = REPORT_STATUS_STYLES[status];
   return (
     <span className="badge" style={{ background: style.bg, color: style.color }}>
-      {status}
+      {t(status)}
     </span>
   );
 }
@@ -44,10 +49,11 @@ const APPEAL_STATUS_STYLES: Record<AppealStatus, { bg: string; color: string }> 
 };
 
 export function AppealStatusBadge({ status }: { status: AppealStatus }) {
+  const t = useTranslations("status");
   const style = APPEAL_STATUS_STYLES[status];
   return (
     <span className="badge" style={{ background: style.bg, color: style.color }}>
-      {status}
+      {t(status)}
     </span>
   );
 }
@@ -60,10 +66,11 @@ const SUPPORT_STATUS_STYLES: Record<SupportStatus, { bg: string; color: string }
 };
 
 export function SupportStatusBadge({ status }: { status: SupportStatus }) {
+  const t = useTranslations("status");
   const style = SUPPORT_STATUS_STYLES[status];
   return (
     <span className="badge" style={{ background: style.bg, color: style.color }}>
-      {status}
+      {t(status)}
     </span>
   );
 }

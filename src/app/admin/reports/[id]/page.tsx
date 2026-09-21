@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { requireStaffSession } from "@/lib/staffAuth";
 import { hasSection } from "@/lib/permissions";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
@@ -43,6 +44,10 @@ export default async function ReportDetailPage(props: PageProps<"/admin/reports/
 
   if (!report) notFound();
 
+  const t = await getTranslations("detail");
+  const tCommon = await getTranslations("common");
+  const tCategory = await getTranslations("category");
+
   const [reviewedBy, claimedByName, activity, notes] = await Promise.all([
     getStaffDisplayName(report.last_updated_by),
     getStaffDisplayName(report.claimed_by),
@@ -55,7 +60,7 @@ export default async function ReportDetailPage(props: PageProps<"/admin/reports/
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-[var(--color-text)]">
-            Report against {report.reported_discord_username}
+            {t("reportAgainst", { name: report.reported_discord_username })}
           </h1>
           <p className="font-mono text-sm text-[var(--color-text-subtle)]">{report.reference_code}</p>
         </div>
@@ -63,22 +68,22 @@ export default async function ReportDetailPage(props: PageProps<"/admin/reports/
       </div>
 
       <div className="card mb-6 grid grid-cols-2 gap-6 p-6 sm:grid-cols-3">
-        <DetailRow label="Reported by" value={report.reporter_discord_username} />
-        <DetailRow label="Reported member" value={report.reported_discord_username} />
-        <DetailRow label="Reported Discord ID" value={report.reported_discord_user_id ?? "—"} />
-        <DetailRow label="Category" value={reportCategoryLabels[report.category]} />
-        <DetailRow label="Submitted" value={new Date(report.created_at).toLocaleString()} />
+        <DetailRow label={t("reportedBy")} value={report.reporter_discord_username} />
+        <DetailRow label={t("reportedMember")} value={report.reported_discord_username} />
+        <DetailRow label={t("reportedDiscordId")} value={report.reported_discord_user_id ?? tCommon("dash")} />
+        <DetailRow label={t("category")} value={reportCategoryLabels[report.category] ? tCategory(report.category) : report.category} />
+        <DetailRow label={t("submitted")} value={new Date(report.created_at).toLocaleString()} />
       </div>
 
       <div className="card mb-6 p-6">
-        <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">Description</h2>
+        <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">{t("description")}</h2>
         <p className="whitespace-pre-wrap text-sm text-[var(--color-text-muted)]">{report.description}</p>
       </div>
 
       <div className="card mb-6 p-6">
-        <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">Evidence</h2>
+        <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">{t("evidence")}</h2>
         <p className="whitespace-pre-wrap text-sm text-[var(--color-text-muted)]">
-          {report.evidence_links?.trim() || "None provided."}
+          {report.evidence_links?.trim() || t("noEvidence")}
         </p>
       </div>
 
@@ -92,12 +97,12 @@ export default async function ReportDetailPage(props: PageProps<"/admin/reports/
       />
 
       <div className="card mt-6 p-6">
-        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">Staff Notes</h2>
+        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">{t("staffNotes")}</h2>
         <NotesThread endpoint={`/api/admin/reports/${report.id}/notes`} initialNotes={notes} />
       </div>
 
       <div className="card mt-6 p-6">
-        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">Activity History</h2>
+        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">{t("activityHistory")}</h2>
         <ActivityHistoryList entries={activity} />
       </div>
     </div>

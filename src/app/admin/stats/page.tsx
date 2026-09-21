@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { requireStaffSession } from "@/lib/staffAuth";
 import { getStatusCounts, getStaffBreakdown } from "@/lib/stats";
 import { applicationStatusValues } from "@/lib/validation/application";
@@ -19,6 +20,9 @@ function rate(numerator: number, denominator: number): string | null {
 
 export default async function StatsPage() {
   await requireStaffSession();
+  const t = await getTranslations("statsPage");
+  const tNav = await getTranslations("nav");
+  const tCommon = await getTranslations("common");
 
   const [applications, reports, appeals, staffBreakdown] = await Promise.all([
     getStatusCounts("applications", applicationStatusValues),
@@ -40,61 +44,58 @@ export default async function StatsPage() {
     appeals.byStatus.approved + appeals.byStatus.denied
   );
 
+  const dash = tCommon("dash");
+
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
-      <h1 className="text-2xl font-bold text-[var(--color-text)]">Stats</h1>
-      <p className="field-hint mb-6">
-        A quick look at volume and outcomes across applications, reports, and ban appeals.
-      </p>
+      <h1 className="text-2xl font-bold text-[var(--color-text)]">{t("title")}</h1>
+      <p className="field-hint mb-6">{t("subtitle")}</p>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-        <StatBreakdown title="Applications" counts={applications} />
-        <StatBreakdown title="Reports" counts={reports} />
-        <StatBreakdown title="Ban Appeals" counts={appeals} />
+        <StatBreakdown title={tNav("applications")} counts={applications} />
+        <StatBreakdown title={tNav("reports")} counts={reports} />
+        <StatBreakdown title={tNav("appeals")} counts={appeals} />
       </div>
 
       <div className="card mt-6 grid grid-cols-1 gap-6 p-6 sm:grid-cols-3">
         <div>
           <p className="text-xs uppercase tracking-wide text-[var(--color-text-subtle)]">
-            Acceptance rate
+            {t("acceptanceRate")}
           </p>
-          <p className="mt-1 text-2xl font-bold text-[var(--color-text)]">{acceptanceRate ?? "—"}</p>
-          <p className="text-xs text-[var(--color-text-subtle)]">of decided applications</p>
+          <p className="mt-1 text-2xl font-bold text-[var(--color-text)]">{acceptanceRate ?? dash}</p>
+          <p className="text-xs text-[var(--color-text-subtle)]">{t("acceptanceRateHint")}</p>
         </div>
         <div>
           <p className="text-xs uppercase tracking-wide text-[var(--color-text-subtle)]">
-            Resolution rate
+            {t("resolutionRate")}
           </p>
-          <p className="mt-1 text-2xl font-bold text-[var(--color-text)]">{resolutionRate ?? "—"}</p>
-          <p className="text-xs text-[var(--color-text-subtle)]">of decided reports</p>
+          <p className="mt-1 text-2xl font-bold text-[var(--color-text)]">{resolutionRate ?? dash}</p>
+          <p className="text-xs text-[var(--color-text-subtle)]">{t("resolutionRateHint")}</p>
         </div>
         <div>
           <p className="text-xs uppercase tracking-wide text-[var(--color-text-subtle)]">
-            Approval rate
+            {t("approvalRate")}
           </p>
-          <p className="mt-1 text-2xl font-bold text-[var(--color-text)]">{approvalRate ?? "—"}</p>
-          <p className="text-xs text-[var(--color-text-subtle)]">of decided ban appeals</p>
+          <p className="mt-1 text-2xl font-bold text-[var(--color-text)]">{approvalRate ?? dash}</p>
+          <p className="text-xs text-[var(--color-text-subtle)]">{t("approvalRateHint")}</p>
         </div>
       </div>
 
       <div className="card mt-6 p-6">
-        <h2 className="mb-1 text-lg font-semibold text-[var(--color-text)]">Resolved by staff member</h2>
-        <p className="field-hint mb-4">
-          Applications, reports, and ban appeals each staff member has decided (accepted/rejected,
-          resolved/dismissed, approved/denied).
-        </p>
+        <h2 className="mb-1 text-lg font-semibold text-[var(--color-text)]">{t("resolvedByStaff")}</h2>
+        <p className="field-hint mb-4">{t("resolvedByStaffHint")}</p>
         {staffBreakdown.length === 0 ? (
-          <p className="text-sm text-[var(--color-text-subtle)]">No decided items yet.</p>
+          <p className="text-sm text-[var(--color-text-subtle)]">{t("noDecided")}</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead className="text-xs uppercase tracking-wide text-[var(--color-text-subtle)]">
                 <tr className="border-b border-[var(--color-border)]">
-                  <th className="py-2 pr-4 font-medium">Staff member</th>
-                  <th className="py-2 pr-4 font-medium">Applications</th>
-                  <th className="py-2 pr-4 font-medium">Reports</th>
-                  <th className="py-2 pr-4 font-medium">Appeals</th>
-                  <th className="py-2 pr-4 font-medium">Total</th>
+                  <th className="py-2 pr-4 font-medium">{t("staffMember")}</th>
+                  <th className="py-2 pr-4 font-medium">{tNav("applications")}</th>
+                  <th className="py-2 pr-4 font-medium">{tNav("reports")}</th>
+                  <th className="py-2 pr-4 font-medium">{tNav("appeals")}</th>
+                  <th className="py-2 pr-4 font-medium">{t("total_col")}</th>
                 </tr>
               </thead>
               <tbody>

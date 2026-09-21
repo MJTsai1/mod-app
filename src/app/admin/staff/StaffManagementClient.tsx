@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { staffRoleValues, type StaffRole } from "@/lib/validation/staff";
-import { SECTIONS, SECTION_LABELS, type Section } from "@/lib/permissions";
+import { SECTIONS, type Section } from "@/lib/permissions";
 import { TableSkeletonRows } from "@/components/admin/TableSkeletonRows";
 
 interface StaffRow {
@@ -21,6 +22,9 @@ function generatePassword(): string {
 }
 
 export function StaffManagementClient({ currentStaffId }: { currentStaffId: string }) {
+  const t = useTranslations("staffPage");
+  const tNav = useTranslations("nav");
+  const tCommon = useTranslations("common");
   const [staff, setStaff] = useState<StaffRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [listError, setListError] = useState<string | null>(null);
@@ -43,7 +47,7 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
       const data = await res.json();
       setStaff(data.staff ?? []);
     } catch {
-      setListError("Couldn't load the staff list.");
+      setListError(t("loadFailed"));
     } finally {
       setLoading(false);
     }
@@ -54,6 +58,7 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
     // synchronizes with.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     loadStaff();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function handleCreate(event: React.FormEvent) {
@@ -71,7 +76,7 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
       const body = await res.json();
 
       if (!res.ok) {
-        setFormError(body?.error ?? "Failed to create staff account.");
+        setFormError(body?.error ?? t("createFailed"));
         return;
       }
 
@@ -83,31 +88,31 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
       setPassword(generatePassword());
       loadStaff();
     } catch {
-      setFormError("Network error — please try again.");
+      setFormError(tCommon("networkError"));
     } finally {
       setSubmitting(false);
     }
   }
 
   async function handleRemove(id: string) {
-    if (!confirm("Remove this person's dashboard access?")) return;
+    if (!confirm(t("removeConfirm"))) return;
     try {
       const res = await fetch(`/api/admin/staff/${id}`, { method: "DELETE" });
       if (!res.ok) {
         const body = await res.json().catch(() => null);
-        alert(body?.error ?? "Failed to remove staff access.");
+        alert(body?.error ?? t("removeFailed"));
         return;
       }
       loadStaff();
     } catch {
-      alert("Network error — please try again.");
+      alert(tCommon("networkError"));
     }
   }
 
   return (
     <div>
       <form onSubmit={handleCreate} className="card mb-8 p-6">
-        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">Add a staff member</h2>
+        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">{t("addStaffMember")}</h2>
 
         {formError && (
           <div
@@ -125,17 +130,17 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
             style={{ borderColor: "var(--color-success)", background: "var(--color-success-bg)", color: "var(--color-success)" }}
             role="status"
           >
-            Account created for <strong>{lastCreated.email}</strong>. Password:{" "}
-            <code className="font-mono">{lastCreated.password}</code>
+            {t("accountCreated")} <strong>{lastCreated.email}</strong>
+            {t("passwordColon")} <code className="font-mono">{lastCreated.password}</code>
             <br />
-            Copy this now — it won&apos;t be shown again. Send it to them securely.
+            {t("copyNowHint")}
           </div>
         )}
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label htmlFor="new-email" className="field-label">
-              Email
+              {t("email")}
             </label>
             <input
               id="new-email"
@@ -144,12 +149,12 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="field-input"
-              placeholder="staffmember@example.com"
+              placeholder={t("emailPlaceholder")}
             />
           </div>
           <div>
             <label htmlFor="new-name" className="field-label">
-              Display name
+              {t("displayName")}
             </label>
             <input
               id="new-name"
@@ -157,12 +162,12 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
               className="field-input"
-              placeholder="Optional"
+              placeholder={t("optional")}
             />
           </div>
           <div>
             <label htmlFor="new-role" className="field-label">
-              Role
+              {t("role")}
             </label>
             <select
               id="new-role"
@@ -172,14 +177,14 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
             >
               {staffRoleValues.map((r) => (
                 <option key={r} value={r}>
-                  {r.charAt(0).toUpperCase() + r.slice(1)}
+                  {r === "admin" ? t("roleAdmin") : t("roleStaff")}
                 </option>
               ))}
             </select>
           </div>
           <div>
             <label htmlFor="new-password" className="field-label">
-              Password
+              {t("password")}
             </label>
             <div className="flex gap-2">
               <input
@@ -196,7 +201,7 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
                 onClick={() => setPassword(generatePassword())}
                 className="btn btn-secondary shrink-0 px-3 text-sm"
               >
-                Generate
+                {t("generate")}
               </button>
             </div>
           </div>
@@ -204,7 +209,7 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
 
         {role === "staff" && (
           <div className="mt-4">
-            <span className="field-label">Sections</span>
+            <span className="field-label">{t("sections")}</span>
             <div className="flex flex-wrap gap-4">
               {SECTIONS.map((section) => (
                 <label key={section} className="flex items-center gap-1.5 text-sm text-[var(--color-text)]">
@@ -217,16 +222,16 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
                       )
                     }
                   />
-                  {SECTION_LABELS[section]}
+                  {tNav(section)}
                 </label>
               ))}
             </div>
-            <p className="field-hint">Admins always have access to every section.</p>
+            <p className="field-hint">{t("adminsAllSections")}</p>
           </div>
         )}
 
         <button type="submit" disabled={submitting} className="btn btn-primary mt-5">
-          {submitting ? "Creating…" : "Create account"}
+          {submitting ? t("creating") : t("createAccount")}
         </button>
       </form>
 
@@ -235,11 +240,11 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
           <table className="w-full text-left text-sm">
             <thead className="border-b border-[var(--color-border)] text-xs uppercase tracking-wide text-[var(--color-text-subtle)]">
               <tr>
-                <th className="px-4 py-3">Email</th>
-                <th className="px-4 py-3">Name</th>
-                <th className="px-4 py-3">Role</th>
-                <th className="px-4 py-3">Sections</th>
-                <th className="px-4 py-3">Added</th>
+                <th className="px-4 py-3">{t("email")}</th>
+                <th className="px-4 py-3">{t("name")}</th>
+                <th className="px-4 py-3">{t("role")}</th>
+                <th className="px-4 py-3">{t("sections")}</th>
+                <th className="px-4 py-3">{t("added")}</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
@@ -258,13 +263,15 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
                   <tr key={member.id} className="border-b border-[var(--color-border)] last:border-0">
                     <td className="px-4 py-3 text-[var(--color-text)]">{member.email}</td>
                     <td className="px-4 py-3 text-[var(--color-text-muted)]">
-                      {member.display_name || "—"}
+                      {member.display_name || tCommon("dash")}
                     </td>
-                    <td className="px-4 py-3 text-[var(--color-text-muted)]">{member.role}</td>
+                    <td className="px-4 py-3 text-[var(--color-text-muted)]">
+                      {member.role === "admin" ? t("roleAdmin") : t("roleStaff")}
+                    </td>
                     <td className="px-4 py-3 text-[var(--color-text-muted)]">
                       {member.role === "admin"
-                        ? "All"
-                        : member.sections.map((s) => SECTION_LABELS[s as Section] ?? s).join(", ") || "None"}
+                        ? t("all")
+                        : member.sections.map((s) => tNav(s as Section)).join(", ") || t("none")}
                     </td>
                     <td className="px-4 py-3 text-[var(--color-text-muted)]">
                       {new Date(member.created_at).toLocaleDateString()}
@@ -276,7 +283,7 @@ export function StaffManagementClient({ currentStaffId }: { currentStaffId: stri
                           onClick={() => handleRemove(member.id)}
                           className="text-sm font-medium text-[var(--color-danger)] hover:underline"
                         >
-                          Remove
+                          {t("remove")}
                         </button>
                       )}
                     </td>

@@ -1,8 +1,13 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import type { ActivityHistoryEntry } from "@/lib/activityLog";
 
 export function ActivityHistoryList({ entries }: { entries: ActivityHistoryEntry[] }) {
+  const t = useTranslations("activityList");
+
   if (entries.length === 0) {
-    return <p className="text-sm text-[var(--color-text-subtle)]">No activity recorded yet.</p>;
+    return <p className="text-sm text-[var(--color-text-subtle)]">{t("noActivity")}</p>;
   }
 
   return (

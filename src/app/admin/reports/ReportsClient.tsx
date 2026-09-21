@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { reportStatusValues } from "@/lib/validation/report";
-import { reportCategoryLabels } from "@/lib/config";
 import type { ReportListItem, ReportStatus } from "@/lib/supabase/types";
 import { InlineStatusSelect } from "@/components/admin/InlineStatusSelect";
 import { TableSkeletonRows } from "@/components/admin/TableSkeletonRows";
@@ -17,6 +17,11 @@ const PAGE_SIZE = 20;
 type ReportListRow = ReportListItem & { claimed_by_name: string | null };
 
 export function ReportsClient({ currentStaffId }: { currentStaffId: string }) {
+  const t = useTranslations("table");
+  const tBulk = useTranslations("bulk");
+  const tStatus = useTranslations("status");
+  const tCategory = useTranslations("category");
+  const tCommon = useTranslations("common");
   const { showToast } = useToast();
   const [reports, setReports] = useState<ReportListRow[]>([]);
   const [total, setTotal] = useState(0);
@@ -69,12 +74,12 @@ export function ReportsClient({ currentStaffId }: { currentStaffId: string }) {
       })
       .catch((err) => {
         if (err.name === "AbortError") return;
-        setError("Couldn't load reports. Please refresh the page.");
+        setError(t("couldntLoadReports"));
       })
       .finally(() => setLoading(false));
 
     return () => controller.abort();
-  }, [page, status, debouncedSearch, sortColumn, sortOrder]);
+  }, [page, status, debouncedSearch, sortColumn, sortOrder, t]);
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
@@ -114,14 +119,14 @@ export function ReportsClient({ currentStaffId }: { currentStaffId: string }) {
       });
       const body = await response.json().catch(() => null);
       if (!response.ok) {
-        showToast(body?.error ?? "Bulk update failed.", "error");
+        showToast(body?.error ?? tBulk("bulkUpdateFailed"), "error");
         return;
       }
       setReports((prev) => prev.map((r) => (selected.has(r.id) ? { ...r, status: newStatus } : r)));
-      showToast(`Updated ${body.updated} report${body.updated === 1 ? "" : "s"}.`);
+      showToast(tBulk("updatedReports", { count: body.updated }));
       setSelected(new Set());
     } catch {
-      showToast("Network error — please try again.", "error");
+      showToast(tCommon("networkError"), "error");
     } finally {
       setBulkApplying(false);
     }
@@ -135,20 +140,20 @@ export function ReportsClient({ currentStaffId }: { currentStaffId: string }) {
             type="search"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Search by reporter, reported member, or reference..."
+            placeholder={t("searchReportsPlaceholder")}
             className="field-input sm:max-w-xs"
-            aria-label="Search reports"
+            aria-label={t("searchReportsAria")}
           />
           <select
             value={status}
             onChange={(event) => setStatus(event.target.value)}
             className="field-input sm:max-w-[180px]"
-            aria-label="Filter by status"
+            aria-label={t("filterByStatusAria")}
           >
-            <option value="">All statuses</option>
+            <option value="">{t("allStatuses")}</option>
             {reportStatusValues.map((s) => (
               <option key={s} value={s}>
-                {s.charAt(0).toUpperCase() + s.slice(1)}
+                {tStatus(s)}
               </option>
             ))}
           </select>
@@ -157,7 +162,7 @@ export function ReportsClient({ currentStaffId }: { currentStaffId: string }) {
           href={`/api/admin/reports/export?${exportParams.toString()}`}
           className="btn btn-secondary px-3 py-2 text-sm"
         >
-          Export CSV
+          {t("exportCsv")}
         </a>
       </div>
 
@@ -188,15 +193,15 @@ export function ReportsClient({ currentStaffId }: { currentStaffId: string }) {
                     type="checkbox"
                     checked={reports.length > 0 && selected.size === reports.length}
                     onChange={toggleSelectAll}
-                    aria-label="Select all on this page"
+                    aria-label={t("selectAllAria")}
                   />
                 </th>
-                <th className="px-4 py-3">Reported member</th>
-                <SortableHeader label="Category" column="category" currentSort={sortColumn} currentOrder={sortOrder} onSort={handleSort} />
-                <th className="px-4 py-3">Reference</th>
-                <SortableHeader label="Status" column="status" currentSort={sortColumn} currentOrder={sortOrder} onSort={handleSort} />
-                <th className="px-4 py-3">Claim</th>
-                <SortableHeader label="Submitted" column="created_at" currentSort={sortColumn} currentOrder={sortOrder} onSort={handleSort} />
+                <th className="px-4 py-3">{t("reportedMember")}</th>
+                <SortableHeader label={t("category")} column="category" currentSort={sortColumn} currentOrder={sortOrder} onSort={handleSort} />
+                <th className="px-4 py-3">{t("reference")}</th>
+                <SortableHeader label={t("status")} column="status" currentSort={sortColumn} currentOrder={sortOrder} onSort={handleSort} />
+                <th className="px-4 py-3">{t("claim")}</th>
+                <SortableHeader label={t("submitted")} column="created_at" currentSort={sortColumn} currentOrder={sortOrder} onSort={handleSort} />
                 <th className="px-4 py-3" />
               </tr>
             </thead>
@@ -205,7 +210,7 @@ export function ReportsClient({ currentStaffId }: { currentStaffId: string }) {
               {!loading && reports.length === 0 && (
                 <tr>
                   <td colSpan={8} className="px-4 py-8 text-center text-[var(--color-text-subtle)]">
-                    No reports found.
+                    {t("noReports")}
                   </td>
                 </tr>
               )}
@@ -220,7 +225,7 @@ export function ReportsClient({ currentStaffId }: { currentStaffId: string }) {
                         type="checkbox"
                         checked={selected.has(report.id)}
                         onChange={() => toggleSelected(report.id)}
-                        aria-label={`Select report against ${report.reported_discord_username}`}
+                        aria-label={t("selectReportAria", { name: report.reported_discord_username })}
                       />
                     </td>
                     <td className="px-4 py-3">
@@ -228,11 +233,11 @@ export function ReportsClient({ currentStaffId }: { currentStaffId: string }) {
                         {report.reported_discord_username}
                       </div>
                       <div className="text-xs text-[var(--color-text-subtle)]">
-                        Reported by {report.reporter_discord_username}
+                        {t("reportedBy", { name: report.reporter_discord_username })}
                       </div>
                     </td>
                     <td className="px-4 py-3 text-[var(--color-text-muted)]">
-                      {reportCategoryLabels[report.category]}
+                      {tCategory(report.category)}
                     </td>
                     <td className="px-4 py-3 font-mono text-xs text-[var(--color-text-muted)]">
                       {report.reference_code}
@@ -278,7 +283,7 @@ export function ReportsClient({ currentStaffId }: { currentStaffId: string }) {
                         href={`/admin/reports/${report.id}`}
                         className="text-sm font-medium text-[var(--color-accent-soft)] hover:underline"
                       >
-                        Review
+                        {t("review")}
                       </Link>
                     </td>
                   </tr>
@@ -290,9 +295,7 @@ export function ReportsClient({ currentStaffId }: { currentStaffId: string }) {
 
       {totalPages > 1 && (
         <div className="mt-4 flex items-center justify-between text-sm text-[var(--color-text-muted)]">
-          <span>
-            Page {page} of {totalPages} &middot; {total} total
-          </span>
+          <span>{t("pageOf", { page, totalPages, total })}</span>
           <div className="flex gap-2">
             <button
               type="button"
@@ -300,7 +303,7 @@ export function ReportsClient({ currentStaffId }: { currentStaffId: string }) {
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
             >
-              Previous
+              {t("previous")}
             </button>
             <button
               type="button"
@@ -308,7 +311,7 @@ export function ReportsClient({ currentStaffId }: { currentStaffId: string }) {
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
             >
-              Next
+              {t("next")}
             </button>
           </div>
         </div>
