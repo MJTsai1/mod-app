@@ -2,16 +2,17 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import type { SearchResult } from "@/app/api/admin/search/route";
 
-const TYPE_LABELS: Record<SearchResult["type"], string> = {
-  application: "Application",
-  report: "Report",
-  appeal: "Ban Appeal",
-  support: "Support",
-};
-
 export function GlobalSearch() {
+  const t = useTranslations("nav");
+  const TYPE_LABELS: Record<SearchResult["type"], string> = {
+    application: t("resultApplication"),
+    report: t("resultReport"),
+    appeal: t("resultAppeal"),
+    support: t("resultSupport"),
+  };
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [open, setOpen] = useState(false);
@@ -69,17 +70,17 @@ export function GlobalSearch() {
           setOpen(true);
         }}
         onFocus={() => setOpen(true)}
-        placeholder="Search everything…"
-        aria-label="Search applications, reports, appeals, and support requests"
+        placeholder={t("searchPlaceholder")}
+        aria-label={t("searchAria")}
         className="field-input py-1.5 text-sm"
       />
 
       {open && query.trim().length >= 2 && (
         <div className="absolute left-0 right-0 top-full z-50 mt-1 max-h-96 overflow-y-auto rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-surface-solid)] shadow-lg">
           {loading ? (
-            <p className="px-4 py-3 text-sm text-[var(--color-text-subtle)]">Searching…</p>
+            <p className="px-4 py-3 text-sm text-[var(--color-text-subtle)]">{t("searching")}</p>
           ) : results.length === 0 ? (
-            <p className="px-4 py-3 text-sm text-[var(--color-text-subtle)]">No matches found.</p>
+            <p className="px-4 py-3 text-sm text-[var(--color-text-subtle)]">{t("noMatches")}</p>
           ) : (
             <ul>
               {results.map((result) => (

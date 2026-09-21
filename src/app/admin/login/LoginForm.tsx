@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 
 export function LoginForm() {
+  const t = useTranslations("login");
   const searchParams = useSearchParams();
   const authError = searchParams.get("error");
   const next = searchParams.get("next");
@@ -34,9 +36,7 @@ export function LoginForm() {
       if (error) {
         setStatus("error");
         setErrorMessage(
-          error.message === "Invalid login credentials"
-            ? "Incorrect email or password."
-            : error.message
+          error.message === "Invalid login credentials" ? t("incorrectCredentials") : error.message
         );
         return;
       }
@@ -51,7 +51,7 @@ export function LoginForm() {
       proceed();
     } catch {
       setStatus("error");
-      setErrorMessage("Something went wrong. Please try again.");
+      setErrorMessage(t("somethingWrong"));
     }
   }
 
@@ -67,7 +67,7 @@ export function LoginForm() {
 
       if (factorsError || !totpFactor) {
         setStatus("error");
-        setErrorMessage("No two-factor method found on this account. Contact an admin.");
+        setErrorMessage(t("noMfaFactor"));
         return;
       }
 
@@ -78,14 +78,14 @@ export function LoginForm() {
 
       if (error) {
         setStatus("error");
-        setErrorMessage("Incorrect code. Please try again.");
+        setErrorMessage(t("incorrectCode"));
         return;
       }
 
       proceed();
     } catch {
       setStatus("error");
-      setErrorMessage("Something went wrong. Please try again.");
+      setErrorMessage(t("somethingWrong"));
     }
   }
 
@@ -105,7 +105,7 @@ export function LoginForm() {
         {status === "error" && errorMessage && alertBanner(errorMessage)}
 
         <label htmlFor="code" className="field-label">
-          Two-factor code
+          {t("mfaCodeLabel")}
         </label>
         <input
           id="code"
@@ -119,10 +119,10 @@ export function LoginForm() {
           placeholder="123456"
           className="field-input"
         />
-        <p className="field-hint">Enter the 6-digit code from your authenticator app.</p>
+        <p className="field-hint">{t("mfaHint")}</p>
 
         <button type="submit" disabled={status === "loading"} className="btn btn-primary mt-6 w-full">
-          {status === "loading" ? "Verifying…" : "Verify"}
+          {status === "loading" ? t("verifying") : t("verify")}
         </button>
       </form>
     );
@@ -130,11 +130,11 @@ export function LoginForm() {
 
   return (
     <form onSubmit={handlePasswordSubmit} noValidate>
-      {authError && alertBanner("Please sign in to continue.")}
+      {authError && alertBanner(t("pleaseSignIn"))}
       {status === "error" && errorMessage && alertBanner(errorMessage)}
 
       <label htmlFor="email" className="field-label">
-        Email
+        {t("emailLabel")}
       </label>
       <input
         id="email"
@@ -143,12 +143,12 @@ export function LoginForm() {
         autoComplete="email"
         value={email}
         onChange={(event) => setEmail(event.target.value)}
-        placeholder="you@example.com"
+        placeholder={t("emailPlaceholder")}
         className="field-input mb-4"
       />
 
       <label htmlFor="password" className="field-label">
-        Password
+        {t("passwordLabel")}
       </label>
       <input
         id="password"
@@ -157,15 +157,13 @@ export function LoginForm() {
         autoComplete="current-password"
         value={password}
         onChange={(event) => setPassword(event.target.value)}
-        placeholder="••••••••"
+        placeholder={t("passwordPlaceholder")}
         className="field-input"
       />
-      <p className="field-hint">
-        Don&apos;t have an account? Ask an admin to create one for you.
-      </p>
+      <p className="field-hint">{t("noAccount")}</p>
 
       <button type="submit" disabled={status === "loading"} className="btn btn-primary mt-6 w-full">
-        {status === "loading" ? "Signing in…" : "Sign in"}
+        {status === "loading" ? t("signingIn") : t("signIn")}
       </button>
     </form>
   );

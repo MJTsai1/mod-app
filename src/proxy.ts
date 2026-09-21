@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
 import { updateSupabaseSession } from "@/lib/supabase/middleware";
 import { routing } from "@/i18n/routing";
+import { ADMIN_LOCALE_COOKIE, ADMIN_LOCALE_HEADER, defaultAdminLocale, isAdminLocale } from "@/i18n/adminLocales";
 
 const PUBLIC_ADMIN_PATHS = new Set(["/admin/login"]);
 const intlMiddleware = createIntlMiddleware(routing);
@@ -10,9 +11,14 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isAdminRoute = pathname.startsWith("/admin");
 
-  // /admin is English-only staff tooling, outside the [locale] segment —
-  // unchanged from before locale routing was added.
+  // /admin stays outside the [locale] URL segment (staff bookmarks, cron
+  // links, etc. must keep working unprefixed), but staff can still pick a
+  // language — that preference lives in its own cookie and is forwarded to
+  // Server Components as a request header for src/i18n/request.ts to read.
   if (isAdminRoute) {
+    const cookieLocale = request.cookies.get(ADMIN_LOCALE_COOKIE)?.value;
+    const adminLocale = isAdminLocale(cookieLocale) ? cookieLocale : defaultAdminLocale;
+
     const { supabaseResponse, user } = await updateSupabaseSession(request);
     const isPublicAdminPath = PUBLIC_ADMIN_PATHS.has(pathname);
 
@@ -29,7 +35,18 @@ export async function proxy(request: NextRequest) {
     // dashboard sends them). The DB-backed "already staff, skip the form"
     // redirect lives in src/app/admin/login/page.tsx instead.
 
-    return supabaseResponse;
+    // Rebuild the response with the resolved admin locale as an explicit
+    // request-header override — mutating request.headers in place does not
+    // propagate through to the page render, only a fresh
+    // NextResponse.next({ request: { headers } }) does. Any Set-Cookie from
+    // the Supabase session refresh above still needs to ride along.
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set(ADMIN_LOCALE_HEADER, adminLocale);
+    const response = NextResponse.next({ request: { headers: requestHeaders } });
+    for (const cookie of supabaseResponse.cookies.getAll()) {
+      response.cookies.set(cookie);
+    }
+    return response;
   }
 
   // Every other matched path is part of the public, locale-routed site.

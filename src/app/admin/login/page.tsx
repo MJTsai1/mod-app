@@ -2,8 +2,10 @@ import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { siteConfig } from "@/lib/config";
 import { getStaffSession } from "@/lib/staffAuth";
+import { AdminLanguageSwitcher } from "@/components/admin/AdminLanguageSwitcher";
 import { LoginForm } from "./LoginForm";
 
 export const metadata: Metadata = {
@@ -20,12 +22,14 @@ export default async function AdminLoginPage() {
     redirect("/admin/dashboard");
   }
 
+  const t = await getTranslations("login");
+
   return (
     <div className="flex min-h-dvh items-center justify-center px-4 py-16 sm:px-6">
       <div className="card-elevated relative w-full max-w-sm p-8">
         <Link
           href="/"
-          aria-label="Close and return home"
+          aria-label={t("closeAria")}
           className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-lg text-[var(--color-text-subtle)] transition hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
         >
           <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden>
@@ -37,13 +41,14 @@ export default async function AdminLoginPage() {
             />
           </svg>
         </Link>
-        <h1 className="text-xl font-bold text-[var(--color-text)]">Staff Sign In</h1>
-        <p className="field-hint mb-6">
-          {siteConfig.serverName} moderator application dashboard.
-        </p>
+        <h1 className="text-xl font-bold text-[var(--color-text)]">{t("title")}</h1>
+        <p className="field-hint mb-6">{t("subtitle", { serverName: siteConfig.serverName })}</p>
         <Suspense fallback={null}>
           <LoginForm />
         </Suspense>
+        <div className="mt-6 flex justify-center">
+          <AdminLanguageSwitcher />
+        </div>
       </div>
     </div>
   );
