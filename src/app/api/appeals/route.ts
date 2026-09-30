@@ -73,8 +73,9 @@ async function handleSubmission(request: Request): Promise<NextResponse> {
   const insertPayload: BanAppealInsert = {
     reference_code: "",
     appellant_id: session.id,
-    discord_username: data.discordUsername,
-    discord_user_id: data.discordUserId,
+    // Identity comes from the Discord sign-in, never from the request body.
+    discord_username: session.discordUsername,
+    discord_user_id: session.discordUserId ?? data.discordUserId,
     ban_reason: data.banReason || null,
     appeal_reason: data.appealReason,
     additional_info: data.additionalInfo || null,

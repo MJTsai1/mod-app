@@ -43,6 +43,7 @@ interface AppealFormProps {
 export function AppealForm({ discordUsername, discordUserId }: AppealFormProps) {
   const router = useRouter();
   const t = useTranslations("appeal");
+  const tApply = useTranslations("apply");
   const tCommon = useTranslations("common");
   const [values, setValues] = useState<FormValues>(EMPTY);
   const [hydrated, setHydrated] = useState(false);
@@ -56,11 +57,10 @@ export function AppealForm({ discordUsername, discordUserId }: AppealFormProps) 
     // hydration mismatch (the server has no access to browser storage).
     /* eslint-disable react-hooks/set-state-in-effect */
     const draft = loadDraft();
-    // Only fill in from the Discord session when the appellant hasn't
-    // already entered (or previously saved a draft with) a value — never
-    // overwrite a real answer with the session's.
-    if (!draft.discordUsername && discordUsername) draft.discordUsername = discordUsername;
-    if (!draft.discordUserId && discordUserId) draft.discordUserId = discordUserId;
+    // Identity comes from the Discord sign-in and is not editable, so it
+    // always overrides whatever an older saved draft holds.
+    draft.discordUsername = discordUsername;
+    if (discordUserId) draft.discordUserId = discordUserId;
     setValues(draft);
     setHydrated(true);
     /* eslint-enable react-hooks/set-state-in-effect */
@@ -154,23 +154,31 @@ export function AppealForm({ discordUsername, discordUserId }: AppealFormProps) 
 
   return (
     <form onSubmit={handleSubmit} noValidate className="card-elevated space-y-5 p-6 sm:p-8">
-      <TextInput
-        label={t("fields.discordUsername")}
-        value={values.discordUsername}
-        onChange={(v) => setField("discordUsername", v)}
-        required
-        error={errors.discordUsername}
-        placeholder={t("fields.discordUsernamePlaceholder")}
-      />
-      <TextInput
-        label={t("fields.discordUserId")}
-        value={values.discordUserId}
-        onChange={(v) => setField("discordUserId", v)}
-        required
-        error={errors.discordUserId}
-        hint={t("fields.discordUserIdHint")}
-        inputMode="numeric"
-      />
+      <div className="rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-bg-elevated)] px-4 py-3">
+        <p className="text-xs uppercase tracking-wide text-[var(--color-text-subtle)]">
+          {tApply("applyingAs")}
+        </p>
+        <p className="mt-1 text-sm font-medium text-[var(--color-text)]">
+          {discordUsername}
+          {discordUserId && (
+            <span className="ms-2 font-mono text-xs text-[var(--color-text-subtle)]">
+              {discordUserId}
+            </span>
+          )}
+        </p>
+        <p className="field-hint mt-1">{tApply("fromDiscordSignIn")}</p>
+      </div>
+      {!discordUserId && (
+        <TextInput
+          label={t("fields.discordUserId")}
+          value={values.discordUserId}
+          onChange={(v) => setField("discordUserId", v)}
+          required
+          error={errors.discordUserId}
+          hint={t("fields.discordUserIdHint")}
+          inputMode="numeric"
+        />
+      )}
       <TextArea
         label={t("fields.banReason")}
         value={values.banReason}
