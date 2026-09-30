@@ -35,7 +35,12 @@ function loadDraft(): FormValues {
   }
 }
 
-export function AppealForm() {
+interface AppealFormProps {
+  discordUsername: string;
+  discordUserId: string | null;
+}
+
+export function AppealForm({ discordUsername, discordUserId }: AppealFormProps) {
   const router = useRouter();
   const t = useTranslations("appeal");
   const tCommon = useTranslations("common");
@@ -50,10 +55,16 @@ export function AppealForm() {
     // Reading sessionStorage must happen post-mount to avoid an SSR
     // hydration mismatch (the server has no access to browser storage).
     /* eslint-disable react-hooks/set-state-in-effect */
-    setValues(loadDraft());
+    const draft = loadDraft();
+    // Only fill in from the Discord session when the appellant hasn't
+    // already entered (or previously saved a draft with) a value — never
+    // overwrite a real answer with the session's.
+    if (!draft.discordUsername && discordUsername) draft.discordUsername = discordUsername;
+    if (!draft.discordUserId && discordUserId) draft.discordUserId = discordUserId;
+    setValues(draft);
     setHydrated(true);
     /* eslint-enable react-hooks/set-state-in-effect */
-  }, []);
+  }, [discordUsername, discordUserId]);
 
   useEffect(() => {
     if (!hydrated) return;

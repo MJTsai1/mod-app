@@ -39,7 +39,7 @@ export default async function AppealPage(props: PageProps<"/[locale]/appeal">) {
             />
           </div>
         ) : (
-          <AppealForm />
+          <AppealForm discordUsername={session.discordUsername} discordUserId={session.discordUserId} />
         )}
       </div>
     </div>
