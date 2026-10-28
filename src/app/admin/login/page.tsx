@@ -5,8 +5,9 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { siteConfig } from "@/lib/config";
 import { getStaffSession } from "@/lib/staffAuth";
+import { getUserSession } from "@/lib/userAuth";
 import { AdminLanguageSwitcher } from "@/components/admin/AdminLanguageSwitcher";
-import { LoginForm } from "./LoginForm";
+import { DiscordSignInButton } from "@/components/site/DiscordSignInButton";
 
 export const metadata: Metadata = {
   title: `Staff Sign In — ${siteConfig.serverName}`,
@@ -21,6 +22,8 @@ export default async function AdminLoginPage() {
   if (session) {
     redirect("/admin/dashboard");
   }
+
+  const user = await getUserSession();
 
   const t = await getTranslations("login");
 
@@ -42,9 +45,24 @@ export default async function AdminLoginPage() {
           </svg>
         </Link>
         <h1 className="text-xl font-bold text-[var(--color-text)]">{t("title")}</h1>
-        <p className="field-hint mb-6">{t("subtitle", { serverName: siteConfig.serverName })}</p>
+        <p className="field-hint mb-6">
+          Sign in with Discord to access the {siteConfig.serverName} staff dashboard.
+        </p>
+        {user && (
+          <div
+            className="mb-4 rounded-xl border px-4 py-3 text-sm"
+            style={{ borderColor: "var(--color-danger)", background: "var(--color-danger-bg)", color: "var(--color-danger)" }}
+            role="alert"
+          >
+            Your Discord account does not have the required staff role.
+          </div>
+        )}
         <Suspense fallback={null}>
-          <LoginForm />
+          <DiscordSignInButton
+            next="/admin/dashboard"
+            className="btn btn-primary w-full"
+            label="Continue with Discord"
+          />
         </Suspense>
         <div className="mt-6 flex justify-center">
           <AdminLanguageSwitcher />
